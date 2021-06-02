@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <div className="text-green-400 text-8xl">
+    <div className="text-primary text-8xl">
       CVVT
     </div>
   )
