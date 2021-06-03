@@ -30,6 +30,10 @@ module.exports = {
       "alert-light": "#ff9e93",
       "alert-light-light": "#ffd5d0",
     },
+    fontFamily: {
+      sans: ["Jost", "ui-sans-serif", "system-ui"],
+      serif: ["EB Garamond", "ui-serif", "Georgia"],
+    },
   },
   variants: {
     extend: {},

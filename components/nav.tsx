@@ -1,22 +1,48 @@
 import Link from "next/link";
+import React from "react";
 
 export default function Nav() {
   return (
     <nav className="flex justify-between items-center px-16 py-4 shadow-md">
-      <div>
+      <div className="flex items-center space-x-3">
+        <img src="/assets/celo-logo-32.png" />
         <h1 className="text-2xl">CVVT</h1>
       </div>
       <div className="flex items-center space-x-10">
-        <Link href="#">
-          <a className="text-gray">How it works?</a>
-        </Link>
-        <Link href="#">
-          <a className="text-gray">For Validator Groups</a>
-        </Link>
-        <button className="bg-primary px-14 py-3 rounded-md text-white text-sm shadow-sm">
+        <NavLink isButton={false} to="#">
+          How it works?
+        </NavLink>
+        <NavLink isButton={false} to="#">
+          For Validator Groups
+        </NavLink>
+        <NavLink isButton={true} to="#">
           Dashboard
-        </button>
+        </NavLink>
       </div>
     </nav>
+  );
+}
+
+function NavLink({
+  children,
+  isButton,
+  to,
+}: {
+  children: React.ReactChild;
+  isButton: boolean;
+  to: string;
+}) {
+  return (
+    <Link href={to}>
+      <a
+        className={`${
+          !isButton
+            ? "text-gray"
+            : "bg-primary px-14 py-3 rounded-md text-white text-sm shadow-sm"
+        }`}
+      >
+        {children}
+      </a>
+    </Link>
   );
 }
