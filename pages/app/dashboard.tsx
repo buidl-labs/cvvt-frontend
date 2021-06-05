@@ -21,6 +21,8 @@ export default function dashboard() {
 
   useEffect(() => {
     state.setUser(address);
+    updateNetwork(Mainnet);
+    state.setNetwork(network.name);
   }, []);
 
   async function connectWallet() {
@@ -42,9 +44,9 @@ export default function dashboard() {
           <div>
             <h3 className="text-2xl font-medium">Welcome, celo holder!</h3>
             <p className="mt-2.5 text-gray text-lg">
-              Safest way to put your CELOs to work & earn profits on the go! All
-              you need to get started is a Celo Wallet & some CELOs in it.
-              Investing CELOs has never been this easy.
+              Safest way to put your CELOs to work &amp; earn profits on the go!
+              All you need to get started is a Celo Wallet &amp; some CELOs in
+              it. Investing CELOs has never been this easy.
               <br /> Let’s get started by connecting your Celo Wallet...
             </p>
           </div>
