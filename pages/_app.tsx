@@ -27,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         dappName="CVVT"
         dappDescription="Stake your Celo"
         dappUrl="http://localhost:3000/"
-        networks={[Mainnet, Alfajores, Baklava]}
       >
         <Component {...pageProps} />
       </ContractKitProvider>
