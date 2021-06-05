@@ -15,7 +15,7 @@ export default function Nav() {
         <NavLink isButton={false} to="#">
           For Validator Groups
         </NavLink>
-        <NavLink isButton={true} to="#">
+        <NavLink isButton={true} to="/app/dashboard">
           Dashboard
         </NavLink>
       </div>
@@ -33,13 +33,14 @@ function NavLink({
   to: string;
 }) {
   return (
-    <Link href={to}>
+    <Link href={to} passHref>
       <a
         className={`${
           !isButton
-            ? "text-gray"
-            : "bg-primary px-14 py-3 rounded-md text-white text-sm shadow-sm"
+            ? "text-gray text-lg"
+            : "bg-primary px-14 py-3 rounded-md text-white text-base shadow-sm"
         }`}
+        href="#"
       >
         {children}
       </a>

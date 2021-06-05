@@ -1,6 +1,13 @@
-import "tailwindcss/tailwind.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import {
+  ContractKitProvider,
+  Mainnet,
+  Alfajores,
+  Baklava,
+} from "@celo-tools/use-contractkit";
+import "tailwindcss/tailwind.css";
+import "@celo-tools/use-contractkit/lib/styles.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,7 +23,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      <Component {...pageProps} />
+      <ContractKitProvider
+        dappName="CVVT"
+        dappDescription="Stake your Celo"
+        dappUrl="http://localhost:3000/"
+        networks={[Mainnet, Alfajores, Baklava]}
+      >
+        <Component {...pageProps} />
+      </ContractKitProvider>
     </div>
   );
 }
