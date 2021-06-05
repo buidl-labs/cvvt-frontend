@@ -1,5 +1,8 @@
 module.exports = {
   target: "serverless",
+  future: {
+    webpack5: true,
+  },
   webpack: (config, { webpack }) => {
     config.node = {
       fs: "empty",

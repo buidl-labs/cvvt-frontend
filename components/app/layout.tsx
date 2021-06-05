@@ -6,7 +6,7 @@ import Nav from "./nav";
 interface layoutProps {
   children: React.ReactChild;
   userConnected: boolean;
-  disconnectWallet(): null;
+  disconnectWallet(): Promise<void>;
 }
 
 export default function layout({

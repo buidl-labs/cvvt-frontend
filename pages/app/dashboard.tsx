@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import Layout from "../../components/app/layout";
 import { Mainnet, useContractKit } from "@celo-tools/use-contractkit";
+import Layout from "../../components/app/layout";
+import StatGrid from "../../components/app/dashboard/stat-grid";
+import VotingSummary from "../../components/app/dashboard/voting-summary";
 
 export default function dashboard() {
   const {
@@ -58,14 +60,9 @@ export default function dashboard() {
         </div>
       ) : (
         <div>
-          <pre>{address}</pre>
-          <button
-            className="text-white bg-primary rounded-md px-10 py-3 space-x-3 flex items-center mt-4"
-            onClick={destroyWallet}
-          >
-            <img src="/assets/celo-wallet.png" />
-            <span>Disconnect Celo Wallet</span>
-          </button>
+          <h3 className="text-2xl font-medium">Dashboard</h3>
+          <StatGrid />
+          <VotingSummary />
         </div>
       )}
     </Layout>
