@@ -3,6 +3,7 @@ import { Mainnet, useContractKit } from "@celo-tools/use-contractkit";
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/dashboard/stat-grid";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
+import useStore from "../../store/store";
 
 export default function dashboard() {
   const {
@@ -16,27 +17,27 @@ export default function dashboard() {
     walletType,
   } = useContractKit();
 
+  const state = useStore();
+
   useEffect(() => {
-    updateNetwork(Mainnet);
-    console.log(kit);
-    console.log(address);
-    console.log(network);
-    console.log(address);
+    state.setUser(address);
   }, []);
 
   async function connectWallet() {
     await connect();
-    console.log("Wallet connected", address);
+    state.setUser(address);
+    console.log(state);
   }
 
   async function destroyWallet() {
     await destroy();
+    state.setUser("");
     console.log("Wallet disconnected.");
   }
 
   return (
-    <Layout userConnected={address.length > 0} disconnectWallet={destroyWallet}>
-      {!(address.length > 0) ? (
+    <Layout disconnectWallet={destroyWallet}>
+      {!(state.user.length > 0) ? (
         <div>
           <div>
             <h3 className="text-2xl font-medium">Welcome, celo holder!</h3>

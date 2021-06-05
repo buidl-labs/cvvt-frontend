@@ -1,20 +1,19 @@
+import React, { useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import useStore from "../../store/store";
 import Nav from "./nav";
 
 interface layoutProps {
   children: React.ReactChild;
-  userConnected: boolean;
   disconnectWallet(): Promise<void>;
 }
 
-export default function layout({
-  children,
-  userConnected = false,
-  disconnectWallet,
-}: layoutProps) {
+export default function layout({ children, disconnectWallet }: layoutProps) {
   const router = useRouter();
+  const user = useStore((state) => state.user);
+  const userConnected = useMemo(() => user.length > 0, [user]);
+
   const navigation = [
     {
       text: "Dashboard",
@@ -48,7 +47,6 @@ export default function layout({
     },
   ];
 
-  console.log(userConnected);
   return (
     <div className="h-screen flex flex-col">
       <Nav />
