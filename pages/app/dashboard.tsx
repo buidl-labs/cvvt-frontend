@@ -4,6 +4,11 @@ import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/dashboard/stat-grid";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
 import useStore from "../../store/store";
+import {
+  getCELOBalance,
+  getNonVotingLockedGold,
+  getVotingCelo,
+} from "../../lib/celo/balances";
 
 export default function dashboard() {
   const {
@@ -25,10 +30,24 @@ export default function dashboard() {
     state.setNetwork(network.name);
   }, []);
 
+  useEffect(() => {
+    Promise.all([
+      getCELOBalance(kit, address),
+      getNonVotingLockedGold(kit, address),
+      getVotingCelo(kit, address),
+    ]).then((res) => {
+      state.setUserBalances(
+        res[0].plus(res[1]).plus(res[2]),
+        res[0],
+        res[1],
+        res[2]
+      );
+    });
+  }, [address]);
+
   async function connectWallet() {
     await connect();
     state.setUser(address);
-    console.log(state);
   }
 
   async function destroyWallet() {
@@ -66,6 +85,7 @@ export default function dashboard() {
           <h3 className="text-2xl font-medium">Dashboard</h3>
           <StatGrid />
           <VotingSummary />
+          <pre>{JSON.stringify(state, null, 2)}</pre>
         </div>
       )}
     </Layout>
