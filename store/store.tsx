@@ -2,12 +2,12 @@ import create from "zustand";
 import BigNumber from "bignumber.js";
 
 type UserBalancesType = {
-  totalCelo: any;
-  unlockedCelo: any;
-  nonVotingLockedCelo: any;
-  votingLockedCelo: any;
-  unlockingCelo: any;
-  withdrawableCelo: any;
+  totalCelo: BigNumber;
+  unlockedCelo: BigNumber;
+  nonVotingLockedCelo: BigNumber;
+  votingLockedCelo: BigNumber;
+  unlockingCelo: BigNumber;
+  withdrawableCelo: BigNumber;
 };
 
 interface StoreState {
@@ -16,20 +16,22 @@ interface StoreState {
   network: string;
   setUser(user: string): void;
   setNetwork(network: string): void;
-  setUserBalances(
-    totalCelo: any,
-    unlockedCelo: any,
-    nonVotingLockedCelo: any,
-    votingLockedCelo: any
-  ): void;
+  setTotalCelo(totalCelo: BigNumber): void;
+  setUnlockedCelo(unlockedCelo: BigNumber): void;
+  setNonVotingLockedCelo(nonVotingLockedCelo: BigNumber): void;
+  setVotingLockedCelo(votingLockedCelo: BigNumber): void;
+  setUnlockingCelo(unlockingCelo: BigNumber): void;
+  setWithdrawableCelo(withdrawableCelo: BigNumber): void;
 }
 
 const useStore = create<StoreState>((set) => ({
   user: "",
   setUser: (user: string) => set((state) => ({ ...state, user: user })),
+
   network: "",
   setNetwork: (network: string) =>
     set((state) => ({ ...state, network: network })),
+
   userBalances: {
     totalCelo: new BigNumber(0),
     unlockedCelo: new BigNumber(0),
@@ -38,21 +40,36 @@ const useStore = create<StoreState>((set) => ({
     unlockingCelo: new BigNumber(0),
     withdrawableCelo: new BigNumber(0),
   },
-  setUserBalances: (
-    totalCelo: any,
-    unlockedCelo: any,
-    nonVotingLockedCelo: any,
-    votingLockedCelo: any
-  ) =>
+
+  setTotalCelo: (totalCelo: BigNumber) =>
     set((state) => ({
       ...state,
-      userBalances: {
-        ...state.userBalances,
-        totalCelo,
-        unlockedCelo,
-        votingLockedCelo,
-        nonVotingLockedCelo,
-      },
+      userBalances: { ...state.userBalances, totalCelo },
+    })),
+  setUnlockedCelo: (unlockedCelo: BigNumber) =>
+    set((state) => ({
+      ...state,
+      userBalances: { ...state.userBalances, unlockedCelo },
+    })),
+  setNonVotingLockedCelo: (nonVotingLockedCelo: BigNumber) =>
+    set((state) => ({
+      ...state,
+      userBalances: { ...state.userBalances, nonVotingLockedCelo },
+    })),
+  setVotingLockedCelo: (votingLockedCelo: BigNumber) =>
+    set((state) => ({
+      ...state,
+      userBalances: { ...state.userBalances, votingLockedCelo },
+    })),
+  setUnlockingCelo: (unlockingCelo: BigNumber) =>
+    set((state) => ({
+      ...state,
+      userBalances: { ...state.userBalances, unlockingCelo },
+    })),
+  setWithdrawableCelo: (withdrawableCelo: BigNumber) =>
+    set((state) => ({
+      ...state,
+      userBalances: { ...state.userBalances, withdrawableCelo },
     })),
 }));
 
