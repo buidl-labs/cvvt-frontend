@@ -1,6 +1,8 @@
 import { ContractKit } from "@celo/contractkit";
 import { BigNumber } from "bignumber.js";
 import { PendingWithdrawal } from "@celo/contractkit/lib/wrappers/LockedGold";
+import { GroupVote } from "@celo/contractkit/lib/wrappers/Election";
+import { ValidatorGroup } from "@celo/contractkit/lib/wrappers/Validators";
 
 export const getCELOBalance = async (kit: ContractKit, address: string) => {
   const goldToken = await kit.contracts.getGoldToken();
@@ -62,3 +64,35 @@ export async function fetchPendingWithdrawals(
 
   return { totalCeloUnlocking, totalCeloWithdrawable, pendingWithdrawals };
 }
+
+export const getVotingSummary = async (
+  kit: ContractKit,
+  address: string
+): Promise<GroupVote[]> => {
+  let groupVotes: GroupVote[] = [];
+  const elections = await kit.contracts.getElection();
+  const groupsVotedByAccount: string[] =
+    await elections.getGroupsVotedForByAccount(address);
+
+  for (let vg of groupsVotedByAccount) {
+    const groupVote: GroupVote = await elections.getVotesForGroupByAccount(
+      address,
+      vg
+    );
+    groupVotes.push(groupVote);
+  }
+
+  return groupVotes;
+};
+
+export const getVGName = async (
+  kit: ContractKit,
+  groupAddress: string
+): Promise<any> => {
+  const validators = await kit.contracts.getValidators();
+  const group: ValidatorGroup = await validators.getValidatorGroup(
+    groupAddress,
+    false
+  );
+  return group.name;
+};

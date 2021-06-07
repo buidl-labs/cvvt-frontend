@@ -1,20 +1,31 @@
 import { useState, useEffect } from "react";
 import { Mainnet, useContractKit } from "@celo-tools/use-contractkit";
+import { BigNumber } from "bignumber.js";
 
 import useStore from "../../store/store";
+
 import {
   getCELOBalance,
   getNonVotingLockedGold,
   getVotingCelo,
   fetchPendingWithdrawals,
-} from "../../lib/celo/balances";
+  getVGName,
+  getVotingSummary,
+} from "../../lib/celo";
 
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/dashboard/stat-grid";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
-import { getVotingSummary } from "../../lib/celo/voting";
 
 export default function dashboard() {
+  type GroupVoting = {
+    name: string;
+    vg: string;
+    active: BigNumber;
+    pending: BigNumber;
+  };
+  const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
+
   const {
     kit,
     address,
@@ -56,9 +67,52 @@ export default function dashboard() {
   }
 
   useEffect(() => {
+    // fetches and sets the data to global store.
     fetchAllAccountData(address);
-    getVotingSummary(kit, address).then(console.log);
+
+    // gets all VGs voted for by the user.
+    getVotingSummary(kit, address)
+      .then((groupVotes) =>
+        Promise.all(
+          groupVotes.map(async (group) => ({
+            vg: group.group,
+            name: await getVGName(kit, group.group),
+            active: group.active,
+            pending: group.pending,
+          }))
+        )
+      )
+      .then((summary) => setVotingSummary(summary));
   }, [address]);
+
+  // Logging data for debugging.
+  useEffect(() => {
+    console.log("--- USER DATA ---");
+    console.log(
+      state.userBalances.totalCelo.div(1e18).toFormat(2),
+      "TOTAL CELO"
+    );
+    console.log(
+      state.userBalances.unlockedCelo.div(1e18).toFormat(2),
+      "UNLOCKED CELO"
+    );
+    console.log(
+      state.userBalances.nonVotingLockedCelo.div(1e18).toFormat(2),
+      "NON-VOTING LOCKED CELO"
+    );
+    console.log(
+      state.userBalances.votingLockedCelo.div(1e18).toFormat(2),
+      "VOTING LOCKED CELO"
+    );
+    console.log(
+      state.userBalances.withdrawableCelo.div(1e18).toFormat(2),
+      "CELO READY FOR WITHDRAWAL"
+    );
+    console.log(
+      state.userBalances.unlockingCelo.div(1e18).toFormat(2),
+      "UNLOCKING CELO"
+    );
+  }, [state.userBalances]);
 
   async function connectWallet() {
     await connect();
@@ -99,7 +153,7 @@ export default function dashboard() {
         <div>
           <h3 className="text-2xl font-medium">Dashboard</h3>
           <StatGrid />
-          <VotingSummary />
+          <VotingSummary votingSummary={votingSummary} />
         </div>
       )}
     </Layout>
