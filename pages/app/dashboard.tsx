@@ -12,6 +12,7 @@ import {
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/dashboard/stat-grid";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
+import { getVotingSummary } from "../../lib/celo/voting";
 
 export default function dashboard() {
   const {
@@ -56,6 +57,7 @@ export default function dashboard() {
 
   useEffect(() => {
     fetchAllAccountData(address);
+    getVotingSummary(kit, address).then(console.log);
   }, [address]);
 
   async function connectWallet() {
