@@ -8,6 +8,7 @@ import {
 } from "@celo-tools/use-contractkit";
 import "tailwindcss/tailwind.css";
 import "@celo-tools/use-contractkit/lib/styles.css";
+import "../style/global.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
