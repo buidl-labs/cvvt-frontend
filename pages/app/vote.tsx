@@ -14,6 +14,7 @@ import {
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 import axios from "axios";
+import VotingSummary from "../../components/app/dashboard/voting-summary";
 
 async function fetchExchangeRate(): Promise<number> {
   const response = await axios.get(
@@ -215,6 +216,7 @@ function vote() {
               </p>
             </li>
           </ul>
+          <VotingSummary votingSummary={votingSummary} />
         </main>
       </>
     </Layout>
