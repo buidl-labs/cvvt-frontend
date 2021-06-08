@@ -6,9 +6,14 @@ import {
   Alfajores,
   Baklava,
 } from "@celo-tools/use-contractkit";
+import { createClient, Provider } from "urql";
 import "tailwindcss/tailwind.css";
 import "@celo-tools/use-contractkit/lib/styles.css";
 import "../style/global.css";
+
+const client = createClient({
+  url: "https://celo-tool-backend.onrender.com/query",
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -29,7 +34,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         dappDescription="Stake your Celo"
         dappUrl="http://localhost:3000/"
       >
-        <Component {...pageProps} />
+        <Provider value={client}>
+          <Component {...pageProps} />
+        </Provider>
       </ContractKitProvider>
     </div>
   );
