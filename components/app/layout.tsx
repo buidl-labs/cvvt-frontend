@@ -32,7 +32,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
     },
     {
       text: "Vote / Revoke",
-      to: "#",
+      to: "/app/vote",
       icon: "/assets/nav/nav-vote.png",
     },
     {
@@ -48,7 +48,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
   ];
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen overflow-hidden flex flex-col">
       <Nav />
       <div className="flex-1 flex">
         <div className="bg-primary-light-light w-64 flex flex-col flex-shrink-0">
