@@ -46,17 +46,23 @@ function vote() {
   );
   const [exchangeRate, setExchangeRate] = useState<number>(0);
 
+  const [validatorGroups, setValidatorGroups] = useState<any[]>([]);
+  const [selectedVG, setSelectedVG] = useState<any | null>();
+
   const { address, network, kit } = useContractKit();
   const state = useStore();
-  const res = useVG();
+  const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true, 5);
 
   useEffect(() => {
     state.setUser(address);
     state.setNetwork(network.name);
   }, []);
   useEffect(() => {
-    console.log(res);
-  }, [res.fetching]);
+    if (fetchingVG == false && errorFetchingVG == undefined) {
+      setValidatorGroups(data["ValidatorGroups"]);
+    }
+  }, [fetchingVG, errorFetchingVG, data]);
+
   function calculateBarWidth(amount: BigNumber): string {
     const percent = amount.div(totalLockedCELO).times(100);
 
@@ -188,7 +194,10 @@ function vote() {
                         </div>
                         <div className="mt-5">
                           <div>
-                            <RadioGroup value={selected} onChange={setSelected}>
+                            <RadioGroup
+                              value={selectedVG}
+                              onChange={setSelectedVG}
+                            >
                               <div className="relative bg-white rounded-md -space-y-px">
                                 <div
                                   className="grid gap-12 p-4 text-sm text-gray"
@@ -198,7 +207,7 @@ function vote() {
                                   }}
                                 >
                                   <div className="text-center">Select</div>
-                                  <div className="text-center">
+                                  <div className="text-left">
                                     Validator Group
                                   </div>
                                   <div className="text-center">Group Score</div>
@@ -212,17 +221,17 @@ function vote() {
                                     Estimated APY
                                   </div>
                                 </div>
-                                {options.map((op, opIdx) => (
+                                {validatorGroups.map((vg, vgIdx) => (
                                   <RadioGroup.Option
-                                    key={op}
-                                    value={op}
+                                    key={vg.Address}
+                                    value={vg.Address}
                                     className={({ checked }) =>
                                       `${
-                                        opIdx === 0
+                                        vgIdx === 0
                                           ? "rounded-tl-md rounded-tr-md"
                                           : ""
                                       } ${
-                                        opIdx === options.length - 1
+                                        vgIdx === validatorGroups.length - 1
                                           ? "rounded-bl-md rounded-br-md"
                                           : ""
                                       } ${
@@ -258,9 +267,11 @@ function vote() {
 
                                           <RadioGroup.Label
                                             as="span"
-                                            className="text-center"
+                                            className="text-left"
                                           >
-                                            {op}
+                                            {vg.Name == ""
+                                              ? `...${vg.Address.slice(-7)}`
+                                              : vg.Name}
                                           </RadioGroup.Label>
                                           <RadioGroup.Description className="text-center">
                                             Description 1
@@ -498,7 +509,10 @@ function vote() {
                     className="bg-gray-light-light relative mt-2.5 w-full border border-gray-light rounded-md shadow-sm px-5 py-2.5 text-left cursor-default focus:outline-none focus:bg-primary-light-light focus:border-primary text-lg text-gray-dark"
                     onClick={() => setVGDialogOpen(true)}
                   >
-                    Select Validator Group
+                    {selectedVG
+                      ? `${selectedVG.slice(0, 5)}...${selectedVG.slice(-5)}`
+                      : "Select Validator Group"}
+
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                       <svg
                         className="w-5 h-5"
