@@ -17,6 +17,7 @@ import InfoIcon from "../../components/icons/info";
 import axios from "axios";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
 import { Dialog, Listbox, RadioGroup, Transition } from "@headlessui/react";
+import { calculateBarWidth } from "../../lib/utils";
 
 async function fetchExchangeRate(): Promise<number> {
   const response = await axios.get(
@@ -62,13 +63,6 @@ function vote() {
       setValidatorGroups(data["ValidatorGroups"]);
     }
   }, [fetchingVG, errorFetchingVG, data]);
-
-  function calculateBarWidth(amount: BigNumber): string {
-    const percent = amount.div(totalLockedCELO).times(100);
-
-    if (percent.isNaN()) return "0";
-    return `${percent.toFormat(0)}%`;
-  }
 
   async function fetchAllAccountData(address: string) {
     const { totalCeloUnlocking, totalCeloWithdrawable } =
@@ -322,17 +316,18 @@ function vote() {
               className="bg-secondary-light h-full"
               style={{
                 width: calculateBarWidth(
-                  state.userBalances.nonVotingLockedCelo
+                  state.userBalances.nonVotingLockedCelo,
+                  totalLockedCELO
                 ),
               }}
             ></div>
             <div
               className="bg-accent-light h-full "
-              style={{ width: calculateBarWidth(pendingCELO) }}
+              style={{ width: calculateBarWidth(pendingCELO, totalLockedCELO) }}
             ></div>
             <div
               className="bg-accent-dark h-full"
-              style={{ width: calculateBarWidth(activeCELO) }}
+              style={{ width: calculateBarWidth(activeCELO, totalLockedCELO) }}
             ></div>
           </div>
           <ul className="mt-5 grid grid-cols-3 gap-10">
