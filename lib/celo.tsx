@@ -96,3 +96,7 @@ export const getVGName = async (
   );
   return group.name;
 };
+
+// export const voteOnVG = (vg: string, amount: number): boolean => {
+//   return true;
+// };
