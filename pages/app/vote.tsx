@@ -11,11 +11,12 @@ import {
   getVotingCelo,
   getVotingSummary,
 } from "../../lib/celo";
+import useVG from "../../hooks/useValidatorGroup";
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 import axios from "axios";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
-import { Listbox, Transition } from "@headlessui/react";
+import { Dialog, Listbox, RadioGroup, Transition } from "@headlessui/react";
 
 async function fetchExchangeRate(): Promise<number> {
   const response = await axios.get(
@@ -32,8 +33,11 @@ function vote() {
     active: BigNumber;
     pending: BigNumber;
   };
+
   const options = ["Vote", "Revoke"];
   const [selected, setSelected] = useState(options[0]);
+  const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
+
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
   const [pendingCELO, setPendingCELO] = useState<BigNumber>(new BigNumber(0));
   const [activeCELO, setActiveCELO] = useState<BigNumber>(new BigNumber(0));
@@ -41,14 +45,18 @@ function vote() {
     new BigNumber(0)
   );
   const [exchangeRate, setExchangeRate] = useState<number>(0);
+
   const { address, network, kit } = useContractKit();
   const state = useStore();
+  const res = useVG();
 
   useEffect(() => {
     state.setUser(address);
     state.setNetwork(network.name);
   }, []);
-
+  useEffect(() => {
+    console.log(res);
+  }, [res.fetching]);
   function calculateBarWidth(amount: BigNumber): string {
     const percent = amount.div(totalLockedCELO).times(100);
 
@@ -123,6 +131,166 @@ function vote() {
       }}
     >
       <>
+        {vgDialogOpen && (
+          <Transition.Root show={vgDialogOpen} as={Fragment}>
+            <Dialog
+              as="div"
+              static
+              className="fixed z-10 inset-0 overflow-y-auto"
+              open={vgDialogOpen}
+              onClose={setVGDialogOpen}
+            >
+              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <Dialog.Overlay className="fixed inset-0 bg-gray-dark bg-opacity-90 transition-opacity" />
+                </Transition.Child>
+
+                {/* This element is to trick the browser into centering the modal contents. */}
+                <span
+                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  aria-hidden="true"
+                >
+                  &#8203;
+                </span>
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enterTo="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                  <div className="inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle px-10 py-7">
+                    <div>
+                      <div className="mt-5">
+                        <div className="flex justify-between items-baseline">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-lg font-medium text-gray-dark"
+                          >
+                            Select Validator Group
+                          </Dialog.Title>
+                          <button
+                            className="px-8 py-2 bg-primary text-white text-lg border border-primary rounded-md shadow focus:outline-none"
+                            onClick={() => setVGDialogOpen(false)}
+                          >
+                            Continue
+                          </button>
+                        </div>
+                        <div className="mt-5">
+                          <div>
+                            <RadioGroup value={selected} onChange={setSelected}>
+                              <div className="relative bg-white rounded-md -space-y-px">
+                                <div
+                                  className="grid gap-12 p-4 text-sm text-gray"
+                                  style={{
+                                    gridTemplateColumns:
+                                      "0.5fr 1fr 1fr 1fr 1fr 1fr",
+                                  }}
+                                >
+                                  <div className="text-center">Select</div>
+                                  <div className="text-center">
+                                    Validator Group
+                                  </div>
+                                  <div className="text-center">Group Score</div>
+                                  <div className="text-center">
+                                    Performance Score
+                                  </div>
+                                  <div className="text-center">
+                                    Transparency Score
+                                  </div>
+                                  <div className="text-center">
+                                    Estimated APY
+                                  </div>
+                                </div>
+                                {options.map((op, opIdx) => (
+                                  <RadioGroup.Option
+                                    key={op}
+                                    value={op}
+                                    className={({ checked }) =>
+                                      `${
+                                        opIdx === 0
+                                          ? "rounded-tl-md rounded-tr-md"
+                                          : ""
+                                      } ${
+                                        opIdx === options.length - 1
+                                          ? "rounded-bl-md rounded-br-md"
+                                          : ""
+                                      } ${
+                                        checked
+                                          ? "bg-primary-light-light border-primary-light z-10"
+                                          : "border-gray-light"
+                                      } relative border p-4 cursor-pointer focus:outline-none`
+                                    }
+                                  >
+                                    {({ active, checked }) => (
+                                      <>
+                                        <div
+                                          className="grid gap-12 text-gray-dark text-lg"
+                                          style={{
+                                            gridTemplateColumns:
+                                              "0.5fr 1fr 1fr 1fr 1fr 1fr",
+                                          }}
+                                        >
+                                          <span
+                                            className={`${
+                                              checked
+                                                ? "bg-primary-dark border-transparent"
+                                                : "bg-white border-gray-dark"
+                                            } ${
+                                              active
+                                                ? "ring-2 ring-offset-2 ring-primary"
+                                                : ""
+                                            } h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0 mx-auto`}
+                                            aria-hidden="true"
+                                          >
+                                            <span className="rounded-full bg-white w-1.5 h-1.5" />
+                                          </span>
+
+                                          <RadioGroup.Label
+                                            as="span"
+                                            className="text-center"
+                                          >
+                                            {op}
+                                          </RadioGroup.Label>
+                                          <RadioGroup.Description className="text-center">
+                                            Description 1
+                                          </RadioGroup.Description>
+                                          <RadioGroup.Description className="text-center">
+                                            Description 2
+                                          </RadioGroup.Description>
+                                          <RadioGroup.Description className="text-center">
+                                            Description 3
+                                          </RadioGroup.Description>
+                                          <RadioGroup.Description className="text-center">
+                                            Description 4
+                                          </RadioGroup.Description>
+                                        </div>
+                                      </>
+                                    )}
+                                  </RadioGroup.Option>
+                                ))}
+                              </div>
+                            </RadioGroup>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Transition.Child>
+              </div>
+            </Dialog>
+          </Transition.Root>
+        )}
         <header className="flex justify-between items-baseline">
           <h3 className="text-gray-dark font-medium text-2xl">
             Vote/Revoke CELO
@@ -328,6 +496,7 @@ function vote() {
                   <button
                     type="button"
                     className="bg-gray-light-light relative mt-2.5 w-full border border-gray-light rounded-md shadow-sm px-5 py-2.5 text-left cursor-default focus:outline-none focus:bg-primary-light-light focus:border-primary text-lg text-gray-dark"
+                    onClick={() => setVGDialogOpen(true)}
                   >
                     Select Validator Group
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
