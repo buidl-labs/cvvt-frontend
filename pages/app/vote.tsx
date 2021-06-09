@@ -17,7 +17,7 @@ import InfoIcon from "../../components/icons/info";
 import axios from "axios";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
 import { Dialog, Listbox, RadioGroup, Transition } from "@headlessui/react";
-import { calculateBarWidth } from "../../lib/utils";
+import { calculateBarWidth, floatToPercentage } from "../../lib/utils";
 
 async function fetchExchangeRate(): Promise<number> {
   const response = await axios.get(
@@ -268,16 +268,22 @@ function vote() {
                                               : vg.Name}
                                           </RadioGroup.Label>
                                           <RadioGroup.Description className="text-center">
-                                            Description 1
+                                            {floatToPercentage(vg.GroupScore)}%
                                           </RadioGroup.Description>
                                           <RadioGroup.Description className="text-center">
-                                            Description 2
+                                            {floatToPercentage(
+                                              vg.PerformanceScore
+                                            )}
+                                            %
                                           </RadioGroup.Description>
                                           <RadioGroup.Description className="text-center">
-                                            Description 3
+                                            {floatToPercentage(
+                                              vg.TransparencyScore
+                                            )}
+                                            %
                                           </RadioGroup.Description>
                                           <RadioGroup.Description className="text-center">
-                                            Description 4
+                                            {vg.EstimatedAPY.toFixed(2)}%
                                           </RadioGroup.Description>
                                         </div>
                                       </>
