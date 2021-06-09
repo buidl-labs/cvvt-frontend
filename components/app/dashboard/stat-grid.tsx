@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 import StatCard from "./stat-card";
 import useStore from "../../../store/store";
-import axios from "axios";
-import { BigNumber } from "bignumber.js";
-
-async function fetchExchangeRate(): Promise<number> {
-  const response = await axios.get(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=celo"
-  );
-  const data = response.data;
-  return data[0]["current_price"];
-}
+import { fetchExchangeRate } from "../../../lib/utils";
 
 export default function StatGrid() {
   const [exchangeRate, setExchangeRate] =

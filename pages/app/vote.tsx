@@ -14,27 +14,16 @@ import {
 import useVG from "../../hooks/useValidatorGroup";
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
-import axios from "axios";
 import VotingSummary from "../../components/app/dashboard/voting-summary";
 import { Dialog, Listbox, RadioGroup, Transition } from "@headlessui/react";
-import { calculateBarWidth, floatToPercentage } from "../../lib/utils";
-
-async function fetchExchangeRate(): Promise<number> {
-  const response = await axios.get(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=celo"
-  );
-  const data = response.data;
-  return data[0]["current_price"];
-}
+import {
+  calculateBarWidth,
+  floatToPercentage,
+  fetchExchangeRate,
+} from "../../lib/utils";
+import { VGSuggestion, GroupVoting } from "../../lib/types";
 
 function vote() {
-  type GroupVoting = {
-    name: string;
-    vg: string;
-    active: BigNumber;
-    pending: BigNumber;
-  };
-
   const options = ["Vote", "Revoke"];
   const [selected, setSelected] = useState(options[0]);
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
@@ -47,8 +36,8 @@ function vote() {
   );
   const [exchangeRate, setExchangeRate] = useState<number>(0);
 
-  const [validatorGroups, setValidatorGroups] = useState<any[]>([]);
-  const [selectedVG, setSelectedVG] = useState<any | null>();
+  const [validatorGroups, setValidatorGroups] = useState<VGSuggestion[]>([]);
+  const [selectedVG, setSelectedVG] = useState<string | null>();
 
   const { address, network, kit } = useContractKit();
   const state = useStore();

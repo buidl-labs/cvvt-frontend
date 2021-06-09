@@ -1,4 +1,5 @@
 import {BigNumber} from "bignumber.js"
+import axios from "axios"
 
 export function calculateBarWidth(amount: BigNumber, total: BigNumber): string {
   const percent = amount.div(total).times(100);
@@ -9,4 +10,12 @@ export function calculateBarWidth(amount: BigNumber, total: BigNumber): string {
 
 export function floatToPercentage(amount: number): string { 
   return new BigNumber(amount).times(100).toFormat(2)
+}
+
+export async function fetchExchangeRate(): Promise<number> {
+  const response = await axios.get(
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=celo"
+  );
+  const data = response.data;
+  return data[0]["current_price"];
 }
