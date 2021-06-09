@@ -6,7 +6,7 @@ export default function VotingSummary({
   votingSummary: any;
 }) {
   return (
-    <div className="mt-10 py-8">
+    <div className="mt-10 pt-8">
       <h3 className="text-xl font-medium">Current Voting Summary</h3>
       <div className="overflow-hidden border border-gray-light rounded-lg shadow-sm mt-5">
         <table className="min-w-full divide-y divide-gray-light">
