@@ -40,28 +40,26 @@ export default function VotingSummary({
           </thead>
           <tbody className="divide-y divide-gray-light">
             {votingSummary.map((group: any) => (
-              <>
-                <tr key={group.vg} className="mt-2.5">
-                  <td className="px-6 py-4 whitespace-nowrap text-left text-gray-dark">
-                    {group.name}
-                  </td>
-                  <td
-                    className={`px-6 py-4 whitespace-nowrap text-center ${
-                      group.pending.gt(0)
-                        ? "text-accent-dark"
-                        : "text-primary-dark"
-                    } `}
-                  >
-                    {group.pending.gt(0) ? "Pending" : "Activated"}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center text-gray-dark">
-                    {group.pending.div(1e18).toFormat(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center text-gray-dark">
-                    {group.active.div(1e18).toFormat(2)}
-                  </td>
-                </tr>
-              </>
+              <tr key={group.vg} className="mt-2.5">
+                <td className="px-6 py-4 whitespace-nowrap text-left text-gray-dark">
+                  {group.name}
+                </td>
+                <td
+                  className={`px-6 py-4 whitespace-nowrap text-center ${
+                    group.pending.gt(0)
+                      ? "text-accent-dark"
+                      : "text-primary-dark"
+                  } `}
+                >
+                  {group.pending.gt(0) ? "Pending" : "Activated"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center text-gray-dark">
+                  {group.pending.div(1e18).toFormat(2)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center text-gray-dark">
+                  {group.active.div(1e18).toFormat(2)}
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
