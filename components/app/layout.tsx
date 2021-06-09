@@ -50,7 +50,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
   return (
     <div className="h-screen overflow-hidden flex flex-col">
       <Nav />
-      <div className="flex-1 flex">
+      <div className="flex-1 flex overflow-hidden">
         <div className="bg-primary-light-light w-64 flex flex-col flex-shrink-0">
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <nav className="mt-7 flex-1 px-2.5 space-y-4">
@@ -86,7 +86,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
             </div>
           </div>
         </div>
-        <main className="flex-1 p-16">{children}</main>
+        <main className="flex-1 p-16 overflow-y-auto">{children}</main>
       </div>
     </div>
   );
