@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import CeloCoin from "../../icons/celo-coin";
-import InfoIcon from "../../icons/info";
+import CeloCoin from "../icons/celo-coin";
+import InfoIcon from "../icons/info";
 
 function weiToCelo(wei: any): string {
   return wei.div(1e18).toFormat(2);

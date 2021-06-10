@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import StatCard from "./stat-card";
-import useStore from "../../../store/store";
-import { fetchExchangeRate } from "../../../lib/utils";
+import useStore from "../../store/store";
+import { fetchExchangeRate } from "../../lib/utils";
 
 export default function StatGrid() {
   const [exchangeRate, setExchangeRate] =

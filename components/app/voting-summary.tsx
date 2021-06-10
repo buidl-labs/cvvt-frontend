@@ -1,4 +1,4 @@
-import CeloCoin from "../../icons/celo-coin";
+import CeloCoin from "../icons/celo-coin";
 
 export default function VotingSummary({
   votingSummary,

@@ -15,8 +15,8 @@ import {
 import { GroupVoting } from "../../lib/types";
 
 import Layout from "../../components/app/layout";
-import StatGrid from "../../components/app/dashboard/stat-grid";
-import VotingSummary from "../../components/app/dashboard/voting-summary";
+import StatGrid from "../../components/app/stat-grid";
+import VotingSummary from "../../components/app/voting-summary";
 
 export default function dashboard() {
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
