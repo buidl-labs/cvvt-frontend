@@ -73,6 +73,7 @@ function vote() {
   useEffect(() => {
     // validatorGroupsForDialog
     if (validatorGroups.length == 0) return;
+    setSelectedVG("");
 
     console.log("validatorGroups", validatorGroups.length);
 
@@ -194,6 +195,14 @@ function vote() {
     } catch (e) {
       console.log("unable to vote", e.message);
     }
+  };
+
+  const revokeVG = async () => {
+    console.log("revoke vg", selectedVG, celoAmountToInvest);
+  };
+
+  const activateVG = async () => {
+    console.log("activate vg", selectedVG, celoAmountToInvest);
   };
 
   return (
@@ -376,7 +385,9 @@ function vote() {
               className="bg-primary mt-5 w-full text-white text-xl py-3 rounded-md"
               onClick={() => {
                 if (selectedVG == undefined) return;
-                voteOnVG();
+                if (selected === options[0]) voteOnVG();
+                if (selected === options[1]) revokeVG();
+                if (selected === options[2]) activateVG();
               }}
             >
               {selected}
