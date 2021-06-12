@@ -198,7 +198,27 @@ function vote() {
   };
 
   const revokeVG = async () => {
-    console.log("revoke vg", selectedVG, celoAmountToInvest);
+    try {
+      await performActions(async (k) => {
+        console.log(k.defaultAccount);
+
+        const election = await k.contracts.getElection();
+        if (!selectedVG) return;
+        console.log(selectedVG);
+        await Promise.all(
+          (
+            await election.revoke(
+              address,
+              selectedVG,
+              new BigNumber(parseFloat(celoAmountToInvest)).times(1e18)
+            )
+          ).map((tx) => tx.sendAndWaitForReceipt({ from: k.defaultAccount }))
+        );
+      });
+      console.log("Vote cast");
+    } catch (e) {
+      console.log(`Unable to vote ${e.message}`);
+    }
   };
 
   const activateVG = async () => {
