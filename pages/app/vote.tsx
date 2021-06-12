@@ -10,6 +10,7 @@ import Select from "../../components/app/select";
 import CeloInput from "../../components/app/celo-input";
 import VoteVGDialog from "../../components/app/dialogs/vote-vg";
 import RevokeVGDialog from "../../components/app/dialogs/revoke-vg";
+import ActivateVGDialog from "../../components/app/dialogs/activate-vg";
 
 import {
   fetchPendingWithdrawals,
@@ -18,22 +19,19 @@ import {
   getVGName,
   getVotingCelo,
   getVotingSummary,
+  hasActivatablePendingVotes,
 } from "../../lib/celo";
 
 import useVG from "../../hooks/useValidatorGroup";
 
-import {
-  calculateBarWidth,
-  floatToPercentage,
-  fetchExchangeRate,
-} from "../../lib/utils";
+import { calculateBarWidth, fetchExchangeRate } from "../../lib/utils";
 
 import { VGSuggestion, GroupVoting } from "../../lib/types";
 
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 
-const options = ["Vote", "Revoke", "Activate"];
+const options = ["Vote", "Revoke"];
 function vote() {
   const [selected, setSelected] = useState<string>(options[0]);
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
@@ -55,6 +53,8 @@ function vote() {
   >([]);
   const [selectedVG, setSelectedVG] = useState<string | null>();
   const [celoAmountToInvest, setCeloAmountToInvest] = useState<string>("");
+  const [hasActivatableVotes, setHasActivatableVotes] =
+    useState<boolean>(false);
 
   const { address, network, kit, performActions } = useContractKit();
   const state = useStore();
@@ -63,6 +63,9 @@ function vote() {
   useEffect(() => {
     state.setUser(address);
     state.setNetwork(network.name);
+    hasActivatablePendingVotes(kit, address).then((hasActivatable) =>
+      setHasActivatableVotes(hasActivatable)
+    );
   }, []);
   useEffect(() => {
     if (fetchingVG == false && errorFetchingVG == undefined) {
@@ -90,25 +93,6 @@ function vote() {
             address: vg.vg,
             name: vg.name,
             active: vg.active,
-            performanceScore: vgData?.PerformanceScore,
-            transparencyScore: vgData?.TransparencyScore,
-            estimatedAPY: vgData?.EstimatedAPY,
-          };
-        })
-      );
-    } else if (selected === options[2]) {
-      const validatorsToActivate = votingSummary.filter((vs) =>
-        vs.pending.gt(0)
-      );
-      setValidatorGroupsForDialog(
-        validatorsToActivate.map((vg) => {
-          const vgData = validatorGroups.find(
-            (group) => group.Address === vg.vg.toLowerCase()
-          );
-          return {
-            address: vg.vg,
-            name: vg.name,
-            pending: vg.pending,
             performanceScore: vgData?.PerformanceScore,
             transparencyScore: vgData?.TransparencyScore,
             estimatedAPY: vgData?.EstimatedAPY,
@@ -222,7 +206,20 @@ function vote() {
   };
 
   const activateVG = async () => {
-    console.log("activate vg", selectedVG, celoAmountToInvest);
+    try {
+      await performActions(async (k) => {
+        const election = await k.contracts.getElection();
+        await Promise.all(
+          (
+            await election.activate(address)
+          ).map((tx) => tx.sendAndWaitForReceipt({ from: k.defaultAccount }))
+        );
+      });
+
+      console.log("Votes activated");
+    } catch (e) {
+      console.log(`Unable to activate votes ${e.message}`);
+    }
   };
 
   return (
@@ -233,6 +230,7 @@ function vote() {
       }}
     >
       <>
+        <ActivateVGDialog open={hasActivatableVotes} activate={activateVG} />
         {vgDialogOpen ? (
           selected === options[0] ? (
             <VoteVGDialog
@@ -242,7 +240,7 @@ function vote() {
               setSelectedVG={setSelectedVG}
               validatorGroups={validatorGroupsForDialog}
             />
-          ) : selected === options[1] ? (
+          ) : (
             <RevokeVGDialog
               open={vgDialogOpen}
               setOpen={setVGDialogOpen}
@@ -250,8 +248,6 @@ function vote() {
               setSelectedVG={setSelectedVG}
               validatorGroups={validatorGroupsForDialog}
             />
-          ) : (
-            console.log(validatorGroupsForDialog)
           )
         ) : null}
         <header className="flex justify-between items-baseline">
@@ -407,7 +403,6 @@ function vote() {
                 if (selectedVG == undefined) return;
                 if (selected === options[0]) voteOnVG();
                 if (selected === options[1]) revokeVG();
-                if (selected === options[2]) activateVG();
               }}
             >
               {selected}

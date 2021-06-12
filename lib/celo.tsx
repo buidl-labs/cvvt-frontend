@@ -88,7 +88,7 @@ export const getVotingSummary = async (
 export const getVGName = async (
   kit: ContractKit,
   groupAddress: string
-): Promise<any> => {
+): Promise<string> => {
   const validators = await kit.contracts.getValidators();
   const group: ValidatorGroup = await validators.getValidatorGroup(
     groupAddress,
@@ -97,6 +97,10 @@ export const getVGName = async (
   return group.name;
 };
 
-// export const voteOnVG = (vg: string, amount: number): boolean => {
-//   return true;
-// };
+export const hasActivatablePendingVotes = async (
+  kit: ContractKit,
+  address: string
+): Promise<boolean> => {
+  const elections = await kit.contracts.getElection();
+  return await elections.hasActivatablePendingVotes(address);
+};
