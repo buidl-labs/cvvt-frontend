@@ -394,7 +394,7 @@ function vote() {
                 celoAmountToInvest={celoAmountToInvest}
                 setCeloAmountToInvest={setCeloAmountToInvest}
                 exchangeRate={exchangeRate}
-                nonVotingLockedCelo={state.userBalances.nonVotingLockedCelo}
+                maxAmount={state.userBalances.nonVotingLockedCelo}
               />
             </div>
             <button

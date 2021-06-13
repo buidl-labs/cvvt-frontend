@@ -27,7 +27,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
     },
     {
       text: "Lock / Unlock",
-      to: "#",
+      to: "/app/lock",
       icon: "/assets/nav/nav-lock.png",
     },
     {

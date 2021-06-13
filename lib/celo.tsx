@@ -48,7 +48,7 @@ export async function fetchPendingWithdrawals(
 
   let totalCeloUnlocking = new BigNumber(0);
   let totalCeloWithdrawable = new BigNumber(0);
-  // let resultArray = [];
+
   const currentTime = Math.round(new Date().getTime() / 1000);
   for (let i = 0; i < pendingWithdrawals.length; i++) {
     const currentWithdrawal = pendingWithdrawals[i];

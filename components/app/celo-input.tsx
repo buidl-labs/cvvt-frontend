@@ -5,12 +5,12 @@ const CeloInput = ({
   celoAmountToInvest,
   setCeloAmountToInvest,
   exchangeRate,
-  nonVotingLockedCelo,
+  maxAmount,
 }: {
   celoAmountToInvest: string;
   setCeloAmountToInvest: React.Dispatch<React.SetStateAction<string>>;
   exchangeRate: number;
-  nonVotingLockedCelo: BigNumber;
+  maxAmount: BigNumber;
 }) => {
   const celoToInvestInUSD = useMemo((): number => {
     if (celoAmountToInvest === "") return 0;
@@ -29,11 +29,7 @@ const CeloInput = ({
         </label>
         <button
           className="text-primary-dark focus:ring-0 focus:outline-none text-xs focus:underline"
-          onClick={() =>
-            setCeloAmountToInvest(
-              nonVotingLockedCelo.div(1e18).minus(0.5).toFormat(2)
-            )
-          }
+          onClick={() => setCeloAmountToInvest(maxAmount.div(1e18).toFormat(2))}
         >
           Max Amount
         </button>
