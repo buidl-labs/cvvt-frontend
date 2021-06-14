@@ -22,7 +22,9 @@ const Select = ({
           <div className="mt-2.5 relative">
             <Listbox.Button className="bg-gray-light-light relative w-full border border-gray-light rounded-md shadow-sm px-5 py-2.5 text-left cursor-default focus:outline-none focus:bg-primary-light-light focus:border-primary text-lg">
               <span className="block truncate">
-                {`${options[selected].value.div(1e18).toFormat(2)} CELO`}
+                {options.length > 0
+                  ? `${options[selected].value.div(1e18).toFormat(2)} CELO`
+                  : "No withdrawals available"}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <svg
