@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useContractKit } from "@celo-tools/use-contractkit";
+import { PendingWithdrawal } from "@celo/contractkit/lib/wrappers/LockedGold";
 import { BigNumber } from "bignumber.js";
 
 import useStore from "../../store/store";
@@ -7,6 +8,7 @@ import useStore from "../../store/store";
 import Layout from "../../components/app/layout";
 
 import Select from "../../components/app/select";
+import WithdrawalSelect from "../../components/app/withdrawal-select";
 import CeloInput from "../../components/app/celo-input";
 
 import {
@@ -21,10 +23,12 @@ import { calculateBarWidth, fetchExchangeRate } from "../../lib/utils";
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 
-const options = ["Lock", "Unlock"];
+const options = ["Lock", "Unlock", "Withdraw"];
 function vote() {
   const [selected, setSelected] = useState<string>(options[0]);
+  const [selectedWithdrawal, setSelectedWithdrawal] = useState<number>(0);
 
+  const [withdrawals, setWithdrawals] = useState<PendingWithdrawal[]>([]);
   const [exchangeRate, setExchangeRate] = useState<number>(0);
   const [maxCELOAmount, setMaxCELOAmount] = useState<BigNumber>(
     new BigNumber(0)
@@ -49,8 +53,12 @@ function vote() {
   }, [selected]);
 
   async function fetchAllAccountData(address: string) {
-    const { totalCeloUnlocking, totalCeloWithdrawable } =
+    const { totalCeloUnlocking, totalCeloWithdrawable, pendingWithdrawals } =
       await fetchPendingWithdrawals(kit, address);
+    const currentTime = Math.round(new Date().getTime() / 1000);
+    setWithdrawals(
+      pendingWithdrawals.filter((w) => w.time.isLessThan(currentTime))
+    );
     const celoBalance = await getCELOBalance(kit, address);
     const nonVotingLockedGold = await getNonVotingLockedGold(kit, address);
     const votingLockedCelo = await getVotingCelo(kit, address);
@@ -104,6 +112,20 @@ function vote() {
       console.log("CELO unlocked");
     } catch (e) {
       console.error(e.message);
+    }
+  };
+
+  const withdrawCELO = async () => {
+    console.log("Withdraw CELO", withdrawals[selectedWithdrawal]);
+    try {
+      await performActions(async (k) => {
+        const locked = await k.contracts.getLockedGold();
+        await locked
+          .withdraw(selectedWithdrawal)
+          .sendAndWaitForReceipt({ from: k.defaultAccount });
+      });
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
@@ -279,13 +301,22 @@ function vote() {
                   setSelected={setSelected}
                 />
               </div>
-
-              <CeloInput
-                celoAmountToInvest={celoAmount}
-                setCeloAmountToInvest={setCeloAmount}
-                exchangeRate={exchangeRate}
-                maxAmount={maxCELOAmount}
-              />
+              {selected === options[2] ? (
+                <div>
+                  <WithdrawalSelect
+                    options={withdrawals.map((w, i) => ({ ...w, index: i }))}
+                    selected={selectedWithdrawal}
+                    setSelected={setSelectedWithdrawal}
+                  />
+                </div>
+              ) : (
+                <CeloInput
+                  celoAmountToInvest={celoAmount}
+                  setCeloAmountToInvest={setCeloAmount}
+                  exchangeRate={exchangeRate}
+                  maxAmount={maxCELOAmount}
+                />
+              )}
             </div>
             <button
               className="bg-primary mt-5 w-full text-white text-xl py-3 rounded-md"
@@ -294,6 +325,8 @@ function vote() {
                   lockCELO();
                 } else if (selected === options[1]) {
                   unlockCELO();
+                } else if (selected === options[2]) {
+                  withdrawCELO();
                 }
               }}
             >
