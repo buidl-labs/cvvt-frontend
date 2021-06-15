@@ -22,7 +22,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
     },
     {
       text: "Invest CELO",
-      to: "#",
+      to: "/app/invest",
       icon: "/assets/nav/nav-invest.png",
     },
     {
