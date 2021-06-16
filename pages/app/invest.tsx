@@ -1,11 +1,140 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+
+import { useContractKit } from "@celo-tools/use-contractkit";
+
+import { createMachine } from "xstate";
+import { useMachine } from "@xstate/react";
+
+import { BigNumber } from "bignumber.js";
+import axios from "axios";
+
+import useStore from "../../store/store";
+
 import Layout from "../../components/app/layout";
 import CeloInput from "../../components/app/celo-input";
-import { BigNumber } from "bignumber.js";
+import { fetchExchangeRate } from "../../lib/utils";
+import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
+
+const InvestMachine = createMachine({
+  id: "InvestFlow",
+  initial: "idle",
+  states: {
+    idle: {
+      on: { LOCKING: "locking", VOTING: "voting" },
+    },
+    locking: {
+      on: { LOCKED: "voting", ERROR: "idle" },
+    },
+    voting: {
+      on: { SELECTING: "selectingVG", VOTED: "activating" },
+    },
+    selectingVG: {
+      on: { SELECTED: "voting", CLOSED: "voting" },
+    },
+    activating: {
+      on: { ACTIVATED: "completed" },
+    },
+    completed: {
+      on: { CLOSE: "idle" },
+    },
+  },
+});
+
+async function fetchTargetAPY() {
+  const resp = await axios.get(
+    "https://celo-on-chain-data-service.onrender.com/target-apy"
+  );
+  return resp.data;
+}
 
 function Invest() {
+  const { address, network, kit, performActions } = useContractKit();
+
+  const [current, send] = useMachine(InvestMachine);
+
   const [celoToInvest, setCeloToInvest] = useState("");
-  const [exchangeRate, setExchangeRate] = useState(2.5);
+  const [monthlyEarning, setMonthlyEarning] = useState<BigNumber>(
+    new BigNumber(0)
+  );
+  const [yearlyEarning, setYearlyEarning] = useState<BigNumber>(
+    new BigNumber(0)
+  );
+  const [maxCeloToInvest, setMaxCeloToInvest] = useState(new BigNumber(0));
+  const [unlockedCelo, setUnlockedCelo] = useState<BigNumber>();
+  const [nonVotingLockedCelo, setNonVotingLockedCelo] = useState<BigNumber>();
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [estimatedAPY, setEstimatedAPY] = useState<BigNumber>(new BigNumber(0));
+
+  const state = useStore();
+
+  useEffect(() => {
+    state.setUser(address);
+    state.setNetwork(network.name);
+    fetchExchangeRate().then((rate) => setExchangeRate(rate));
+    fetchTargetAPY().then((resp) =>
+      setEstimatedAPY(new BigNumber(parseFloat(resp.target_apy)))
+    );
+  }, []);
+
+  const fetchAccountData = useCallback(
+    async (address: string) => {
+      const [unlockedCelo, nonVotingLockedCelo] = await Promise.all([
+        getNonVotingLockedGold(kit, address),
+        getCELOBalance(kit, address),
+      ]);
+
+      return { unlockedCelo, nonVotingLockedCelo };
+    },
+    [address]
+  );
+
+  useEffect(() => {
+    if (address.length < 1) return;
+
+    fetchAccountData(address).then(({ unlockedCelo, nonVotingLockedCelo }) => {
+      setUnlockedCelo(unlockedCelo);
+      setNonVotingLockedCelo(nonVotingLockedCelo);
+      setMaxCeloToInvest(unlockedCelo.minus(0.5).plus(nonVotingLockedCelo));
+    });
+  }, [address]);
+
+  useEffect(() => {
+    if (celoToInvest === "") {
+      setMonthlyEarning(new BigNumber(0));
+      setYearlyEarning(new BigNumber(0));
+    }
+    const celoToInvestBN = new BigNumber(celoToInvest);
+    const yearly = celoToInvestBN.times(estimatedAPY).div(100);
+    const monthly = yearly.div(12);
+    setMonthlyEarning(monthly);
+    setYearlyEarning(yearly);
+  }, [celoToInvest]);
+
+  useEffect(() => {
+    console.log(current.value);
+  }, [current.value]);
+
+  const lockCELO = async (amount: BigNumber) => {
+    send("LOCKING");
+
+    try {
+      await performActions(async (k) => {
+        // await ensureAccount(k, k.defaultAccount);
+        const lockedCelo = await k.contracts.getLockedGold();
+        return lockedCelo.lock().sendAndWaitForReceipt({
+          value: amount.toString(),
+          from: k.defaultAccount,
+        });
+      });
+
+      console.log("CELO locked");
+      send("LOCKED");
+    } catch (e) {
+      console.error(e.message);
+      send("ERROR");
+    }
+  };
+
   return (
     <Layout
       // TODO: Fix the state structure so you don't have to pass disconnectWallet to layout everytime.
@@ -28,34 +157,80 @@ function Invest() {
                   celoAmountToInvest={celoToInvest}
                   setCeloAmountToInvest={setCeloToInvest}
                   exchangeRate={exchangeRate}
-                  maxAmount={new BigNumber(0)}
+                  maxAmount={maxCeloToInvest}
                 />
               </div>
               <div className="ml-5 mb-3 text-gray">
-                / out of 1000.00 Total CELO ($ 5142.00) in your Wallet
+                / out of {maxCeloToInvest.div(1e18).toFormat(2)} Total CELO ($
+                {maxCeloToInvest.div(1e18).times(exchangeRate).toFormat(2)}) in
+                your Wallet
               </div>
             </div>
             <div className="mt-5 flex space-x-32">
               <div className="text-gray-dark">
                 <p className="text-sm">You could be earning</p>
-                <p className="mt-2 text-lg font-medium">0.00% APY</p>
+                <p className="mt-2 text-lg font-medium">
+                  {estimatedAPY.toFormat(2)}% APY
+                </p>
               </div>
               <div>
                 <p className="text-sm text-gray">Yearly Earnings</p>
                 <div className="mt-2 space-x-5 flex items-baseline">
-                  <p className="text-lg text-gray-dark">0.00 CELO</p>
-                  <p className="text-gray">$ 0.00</p>
+                  <p className="text-lg text-gray-dark">
+                    {yearlyEarning.toFormat(2)} CELO
+                  </p>
+                  <p className="text-gray">
+                    $ {yearlyEarning.times(exchangeRate).toFormat(2)}
+                  </p>
                 </div>
               </div>
               <div>
                 <p className="text-sm text-gray">Monthly Earnings</p>
                 <div className="mt-2 space-x-5 flex items-baseline">
-                  <p className="text-lg text-gray-dark">0.00 CELO</p>
-                  <p className="text-gray">$ 0.00</p>
+                  <p className="text-lg text-gray-dark">
+                    {monthlyEarning.toFormat(2)} CELO
+                  </p>
+                  <p className="text-gray">
+                    $ {monthlyEarning.times(exchangeRate).toFormat(2)}
+                  </p>
                 </div>
               </div>
             </div>
-            <button className="bg-primary text-white text-lg block w-full rounded-md mt-5 py-3">
+            <button
+              className="bg-primary text-white text-lg block w-full rounded-md mt-5 py-3"
+              onClick={() => {
+                if (
+                  unlockedCelo === undefined ||
+                  nonVotingLockedCelo === undefined
+                )
+                  return;
+                /* 
+                - If celoToInvest is lesser than nonVotingLocked
+                  - continue to next step 
+                - If celoToInvest is higher than nonVotingLockedCelo and lesser than the sum of unlockedCelo and nonVotingLockedCelo
+                  - Lock the required CELO
+                - If celoToInvest is higher than the sum of nonVotingLockedCelo and unlockedCelo
+                  - Error state.
+                */
+                const celoToInvestBN = new BigNumber(
+                  parseFloat(celoToInvest)
+                ).times(1e18);
+                if (nonVotingLockedCelo.gte(celoToInvestBN)) {
+                  // continue to the next step.
+                  console.log("continue to the next step.");
+                } else if (
+                  nonVotingLockedCelo.plus(unlockedCelo).gt(celoToInvestBN)
+                ) {
+                  console.log("need to lock CELO");
+                  lockCELO(celoToInvestBN.minus(nonVotingLockedCelo));
+                } else if (
+                  nonVotingLockedCelo.plus(unlockedCelo).lte(celoToInvestBN)
+                ) {
+                  // can't move forward, error.
+                  console.log("can't move forward, error.");
+                }
+              }}
+            >
               Confirm &amp; Continue
             </button>
           </div>
