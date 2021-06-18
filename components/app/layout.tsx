@@ -26,6 +26,11 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
       icon: "/assets/nav/nav-invest.png",
     },
     {
+      text: "Withdraw CELO",
+      to: "/app/withdraw",
+      icon: "/assets/nav/nav-invest.png",
+    },
+    {
       text: "Lock / Unlock",
       to: "/app/lock",
       icon: "/assets/nav/nav-lock.png",
