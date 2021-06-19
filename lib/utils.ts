@@ -19,3 +19,4 @@ export async function fetchExchangeRate(): Promise<number> {
   const data = response.data;
   return data[0]["current_price"];
 }
+

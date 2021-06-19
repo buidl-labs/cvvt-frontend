@@ -1,4 +1,5 @@
 import {BigNumber} from "bignumber.js"
+
 export type VGSuggestion = {
   Address: string
   Name: string
@@ -14,3 +15,14 @@ export type GroupVoting = {
   active: BigNumber;
   pending: BigNumber;
 };
+
+export type ProcessedWithdrawals = {
+  value: BigNumber;
+  time: Date;
+  status: WithdrawalStatus
+};
+
+export enum WithdrawalStatus {
+  PENDING = "Pending",
+  AVAILABLE = "Available"
+}

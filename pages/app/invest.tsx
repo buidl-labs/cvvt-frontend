@@ -12,7 +12,7 @@ import useStore from "../../store/store";
 
 import Layout from "../../components/app/layout";
 import CeloInput from "../../components/app/celo-input";
-import { fetchExchangeRate, floatToPercentage } from "../../lib/utils";
+import { fetchExchangeRate } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
 import useVG from "../../hooks/useValidatorGroup";
 import { VGSuggestion } from "../../lib/types";
