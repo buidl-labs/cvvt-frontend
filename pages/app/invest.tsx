@@ -78,15 +78,14 @@ function Invest() {
   useEffect(() => {
     if (fetchingVG == false && errorFetchingVG == undefined) {
       setSelectedVG(data["ValidatorGroups"][0]);
-      console.log(data["ValidatorGroups"]);
     }
   }, [fetchingVG, errorFetchingVG, data]);
 
   const fetchAccountData = useCallback(
     async (address: string) => {
       const [unlockedCelo, nonVotingLockedCelo] = await Promise.all([
-        getNonVotingLockedGold(kit, address),
         getCELOBalance(kit, address),
+        getNonVotingLockedGold(kit, address),
       ]);
 
       return { unlockedCelo, nonVotingLockedCelo };
@@ -100,7 +99,7 @@ function Invest() {
     fetchAccountData(address).then(({ unlockedCelo, nonVotingLockedCelo }) => {
       setUnlockedCelo(unlockedCelo);
       setNonVotingLockedCelo(nonVotingLockedCelo);
-      setMaxCeloToInvest(unlockedCelo.minus(0.5).plus(nonVotingLockedCelo));
+      setMaxCeloToInvest(unlockedCelo.minus(1e18).plus(nonVotingLockedCelo));
     });
   }, [address]);
 
@@ -108,7 +107,9 @@ function Invest() {
     if (celoToInvest === "") {
       setMonthlyEarning(new BigNumber(0));
       setYearlyEarning(new BigNumber(0));
+      return;
     }
+
     const celoToInvestBN = new BigNumber(celoToInvest);
     const yearly = celoToInvestBN.times(estimatedAPY).div(100);
     const monthly = yearly.div(12);
@@ -121,6 +122,9 @@ function Invest() {
   }, [current.value]);
 
   const lockCELO = async (amount: BigNumber) => {
+    if (!unlockedCelo) return;
+    console.log("Locking CELO");
+    console.log(amount.lt(unlockedCelo));
     try {
       await performActions(async (k) => {
         // await ensureAccount(k, k.defaultAccount);
@@ -134,6 +138,7 @@ function Invest() {
       console.log("CELO locked");
       send("NEXT");
     } catch (e) {
+      console.log("Couldn't lock");
       console.error(e.message);
     }
   };
@@ -167,10 +172,8 @@ function Invest() {
       }}
     >
       <>
-        <h1 className="text-2xl font-medium mb-10 text-gray-dark">
-          Invest CELO
-        </h1>
-        <main className="space-y-10">
+        <h1 className="text-2xl font-medium text-gray-dark">Invest CELO</h1>
+        <main className="space-y-10 mt-10">
           {/* Amount Panel */}
           <div
             className={`border ${
@@ -251,17 +254,20 @@ function Invest() {
                   const celoToInvestBN = new BigNumber(
                     parseFloat(celoToInvest)
                   ).times(1e18);
+
                   if (nonVotingLockedCelo.gte(celoToInvestBN)) {
-                    // continue to the next step.
-                    console.log("continue to the next step.");
+                    // if available locked celo is more than celoToInvest
+                    console.log("Continue.");
                     send("NEXT");
                   } else if (
                     nonVotingLockedCelo.plus(unlockedCelo).gt(celoToInvestBN)
                   ) {
+                    // if the total of nonVotingLockedCelo and unlocked Celo is greater than celoToInvesdt
                     console.log("need to lock CELO");
+
                     lockCELO(celoToInvestBN.minus(nonVotingLockedCelo));
                   } else if (
-                    nonVotingLockedCelo.plus(unlockedCelo).lte(celoToInvestBN)
+                    nonVotingLockedCelo.plus(unlockedCelo).lt(celoToInvestBN)
                   ) {
                     // can't move forward, error.
                     console.log("can't move forward, error.");
@@ -331,25 +337,37 @@ function Invest() {
                   <div className="grid grid-rows-2 gap-2">
                     <span className="text-gray">Group Score</span>
                     <span className="text-gray-dark text-base">
-                      {selectedVG?.GroupScore}
+                      {selectedVG?.GroupScore
+                        ? (selectedVG.GroupScore * 100).toFixed(2)
+                        : "-"}{" "}
+                      %
                     </span>
                   </div>
                   <div className="grid grid-rows-2 gap-2">
                     <span className="text-gray">Performance Score</span>
                     <span className="text-gray-dark text-base">
-                      {selectedVG?.PerformanceScore}%
+                      {selectedVG?.PerformanceScore
+                        ? (selectedVG.PerformanceScore * 100).toFixed(2)
+                        : "-"}{" "}
+                      %
                     </span>
                   </div>
                   <div className="grid grid-rows-2 gap-2">
                     <span className="text-gray">Transparency Score</span>
                     <span className="text-gray-dark text-base">
-                      {selectedVG?.TransparencyScore}%
+                      {selectedVG?.TransparencyScore
+                        ? (selectedVG.TransparencyScore * 100).toFixed(2)
+                        : "-"}{" "}
+                      %
                     </span>
                   </div>
                   <div className="grid grid-rows-2 gap-2">
                     <span className="text-gray">Estimated APY</span>
                     <span className="text-gray-dark text-base">
-                      {selectedVG?.EstimatedAPY}%
+                      {selectedVG?.EstimatedAPY
+                        ? selectedVG.EstimatedAPY.toFixed(2)
+                        : "-"}{" "}
+                      %
                     </span>
                   </div>
                 </div>
@@ -376,9 +394,6 @@ function Invest() {
                 To finish your investment & start earning profits - please
                 return back in a day.
               </p>
-              <button className="bg-primary text-white text-lg block w-full rounded-md mt-5 py-3">
-                Activate
-              </button>
             </div>
           </div>
         </main>
