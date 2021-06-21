@@ -14,6 +14,8 @@ interface StoreState {
   user: string;
   userBalances: UserBalancesType;
   network: string;
+  hasActivatableVotes: boolean;
+  setHasActivatableVotes(has: boolean): void;
   setUser(user: string): void;
   setNetwork(network: string): void;
   setTotalCelo(totalCelo: BigNumber): void;
@@ -31,7 +33,9 @@ const useStore = create<StoreState>((set) => ({
   network: "",
   setNetwork: (network: string) =>
     set((state) => ({ ...state, network: network })),
-
+  hasActivatableVotes: false,
+  setHasActivatableVotes: (has: boolean) =>
+    set((state) => ({ ...state, hasActivatableVotes: has })),
   userBalances: {
     totalCelo: new BigNumber(0),
     unlockedCelo: new BigNumber(0),

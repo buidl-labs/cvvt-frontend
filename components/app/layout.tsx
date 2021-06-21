@@ -4,6 +4,7 @@ import { useContractKit } from "@celo-tools/use-contractkit";
 import { useRouter } from "next/router";
 import Nav from "./nav";
 import useStore from "../../store/store";
+import { hasActivatablePendingVotes } from "../../lib/celo";
 
 interface layoutProps {
   children: React.ReactChild;
@@ -47,10 +48,13 @@ export default function layout({ children }: layoutProps) {
       icon: "/assets/nav/nav-how-it-works.png",
     },
   ];
-  const { destroy } = useContractKit();
+  const { destroy, kit } = useContractKit();
   const router = useRouter();
   const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
+  const setHasActivatableVotes = useStore(
+    (state) => state.setHasActivatableVotes
+  );
 
   const userConnected = useMemo(() => user.length > 0, [user]);
 
@@ -63,6 +67,12 @@ export default function layout({ children }: layoutProps) {
     console.log("userConnected", userConnected);
     if (!userConnected) {
       router.push(navigation[0].to);
+    } else {
+      hasActivatablePendingVotes(kit, user).then((res) => {
+        if (res) {
+          setHasActivatableVotes(res);
+        }
+      });
     }
   }, [userConnected]);
 
