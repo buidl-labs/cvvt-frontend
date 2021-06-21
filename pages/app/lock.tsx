@@ -97,6 +97,8 @@ function vote() {
       console.log("CELO locked");
     } catch (e) {
       console.error(e.message);
+    } finally {
+      fetchAllAccountData(address);
     }
   };
 
@@ -112,6 +114,8 @@ function vote() {
       console.log("CELO unlocked");
     } catch (e) {
       console.error(e.message);
+    } finally {
+      fetchAllAccountData(address);
     }
   };
 
@@ -126,6 +130,8 @@ function vote() {
       });
     } catch (e) {
       console.log(e.message);
+    } finally {
+      fetchAllAccountData(address);
     }
   };
 
