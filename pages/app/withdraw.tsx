@@ -38,10 +38,24 @@ const StateMachine = createMachine({
   },
 });
 
+const months = [
+  "Jan",
+  "Feb",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 function formatDate(date: Date): string {
-  return `${date
+  return `${date.getDate()} ${months[date.getMonth()]} - ${date
     .toLocaleTimeString()
-    .slice(0, -3)} - ${date.toLocaleDateString()}`;
+    .slice(0, -3)}`;
 }
 
 function Withdraw() {
