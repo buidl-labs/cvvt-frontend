@@ -1,6 +1,6 @@
 import Layout from "../../components/app/layout";
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 
 import {
   fetchPendingWithdrawals,
@@ -61,9 +61,7 @@ function Withdraw() {
   const { address, network, kit, performActions } = useContractKit();
   const state = useStore();
 
-  useEffect(() => {
-    state.setUser(address);
-    state.setNetwork(network.name);
+  const fetchVotingSummary = useCallback(() => {
     getVotingSummary(kit, address)
       .then((groupVotes) =>
         Promise.all(
@@ -76,6 +74,9 @@ function Withdraw() {
         )
       )
       .then((summary) => setVotingSummary(summary));
+  }, []);
+
+  const getPendingWithdrawals = useCallback(() => {
     const now = new Date();
     fetchPendingWithdrawals(kit, address).then(({ pendingWithdrawals }) =>
       setPendingWithdrawals(
@@ -94,6 +95,14 @@ function Withdraw() {
     );
   }, []);
 
+  useEffect(() => {
+    state.setUser(address);
+    state.setNetwork(network.name);
+
+    fetchVotingSummary();
+    getPendingWithdrawals();
+  }, []);
+
   const withdrawCELO = async (idx: number) => {
     console.log("Withdraw CELO", pendingWithdrawals[idx]);
     try {
@@ -106,6 +115,8 @@ function Withdraw() {
       send("WITHDRAW");
     } catch (e) {
       console.log(e.message);
+    } finally {
+      getPendingWithdrawals();
     }
   };
 
@@ -131,6 +142,8 @@ function Withdraw() {
       send("UNVOTE");
     } catch (e) {
       console.log(`Unable to vote ${e.message}`);
+    } finally {
+      fetchVotingSummary();
     }
   };
 
