@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { BigNumber } from "bignumber.js";
 
@@ -60,47 +60,44 @@ function vote() {
   const state = useStore();
   const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true);
 
-  useEffect(() => {
-    state.setUser(address);
-    state.setNetwork(network.name);
+  const fetchVotingSummary = useCallback(() => {
+    getVotingSummary(kit, address)
+      .then((groupVotes) =>
+        Promise.all(
+          groupVotes.map(async (group) => ({
+            vg: group.group,
+            name: await getVGName(kit, group.group),
+            active: group.active,
+            pending: group.pending,
+          }))
+        )
+      )
+      .then((summary) => setVotingSummary(summary));
+  }, []);
+
+  const fetchActivatablePendingVotes = useCallback(() => {
     hasActivatablePendingVotes(kit, address).then((hasActivatable) =>
       setHasActivatableVotes(hasActivatable)
     );
   }, []);
-  useEffect(() => {
-    if (fetchingVG == false && errorFetchingVG == undefined) {
-      setValidatorGroups(data["ValidatorGroups"]);
+
+  const calculateActiveAndPendingCelo = useCallback(() => {
+    let pendingCelo = new BigNumber(0);
+    let activeCelo = new BigNumber(0);
+
+    for (let v of votingSummary) {
+      pendingCelo = pendingCelo.plus(v.pending);
+      activeCelo = activeCelo.plus(v.active);
     }
-  }, [fetchingVG, errorFetchingVG, data]);
 
-  useEffect(() => {
-    // validatorGroupsForDialog
-    if (validatorGroups.length == 0) return;
-    setSelectedVG("");
-
-    console.log("validatorGroups", validatorGroups.length);
-
-    if (selected === options[0]) {
-      setValidatorGroupsForDialog(validatorGroups.slice(0, 5));
-    } else if (selected === options[1]) {
-      const validatorsToRevoke = votingSummary.filter((vs) => vs.active.gt(0));
-      setValidatorGroupsForDialog(
-        validatorsToRevoke.map((vg) => {
-          const vgData = validatorGroups.find(
-            (group) => group.Address === vg.vg.toLowerCase()
-          );
-          return {
-            address: vg.vg,
-            name: vg.name,
-            active: vg.active,
-            performanceScore: vgData?.PerformanceScore,
-            transparencyScore: vgData?.TransparencyScore,
-            estimatedAPY: vgData?.EstimatedAPY,
-          };
-        })
-      );
-    }
-  }, [selected, validatorGroups]);
+    setPendingCELO(pendingCelo);
+    setActiveCELO(activeCelo);
+    setTotalLockedCELO(
+      state.userBalances.nonVotingLockedCelo.plus(
+        state.userBalances.votingLockedCelo
+      )
+    );
+  }, [votingSummary]);
 
   async function fetchAllAccountData(address: string) {
     const { totalCeloUnlocking, totalCeloWithdrawable } =
@@ -124,41 +121,58 @@ function vote() {
   }
 
   useEffect(() => {
+    state.setUser(address);
+    state.setNetwork(network.name);
+
+    fetchActivatablePendingVotes();
+  }, []);
+
+  useEffect(() => {
+    if (fetchingVG == false && errorFetchingVG == undefined) {
+      setValidatorGroups(data["ValidatorGroups"]);
+    }
+  }, [fetchingVG, errorFetchingVG, data]);
+
+  useEffect(() => {
+    // validatorGroupsForDialog
+    if (validatorGroups.length == 0) return;
+    setSelectedVG("");
+
+    if (selected === options[0]) {
+      setValidatorGroupsForDialog(validatorGroups.slice(0, 5));
+    } else if (selected === options[1]) {
+      const validatorsToRevoke = votingSummary.filter((vs) => vs.active.gt(0));
+      setValidatorGroupsForDialog(
+        validatorsToRevoke.map((vg) => {
+          const vgData = validatorGroups.find(
+            (group) => group.Address === vg.vg.toLowerCase()
+          );
+          return {
+            address: vg.vg,
+            name: vg.name,
+            active: vg.active,
+            performanceScore: vgData?.PerformanceScore,
+            transparencyScore: vgData?.TransparencyScore,
+            estimatedAPY: vgData?.EstimatedAPY,
+          };
+        })
+      );
+    }
+  }, [selected, validatorGroups]);
+
+  useEffect(() => {
     if (address.length < 1) return;
     fetchAllAccountData(address);
-    getVotingSummary(kit, address)
-      .then((groupVotes) =>
-        Promise.all(
-          groupVotes.map(async (group) => ({
-            vg: group.group,
-            name: await getVGName(kit, group.group),
-            active: group.active,
-            pending: group.pending,
-          }))
-        )
-      )
-      .then((summary) => setVotingSummary(summary));
+    fetchVotingSummary();
+    fetchActivatablePendingVotes();
+
     fetchExchangeRate().then((rate) => setExchangeRate(rate));
   }, [address]);
 
   useEffect(() => {
     if (votingSummary.length == 0) return;
 
-    let pendingCelo = new BigNumber(0);
-    let activeCelo = new BigNumber(0);
-
-    for (let v of votingSummary) {
-      pendingCelo = pendingCelo.plus(v.pending);
-      activeCelo = activeCelo.plus(v.active);
-    }
-
-    setPendingCELO(pendingCelo);
-    setActiveCELO(activeCelo);
-    setTotalLockedCELO(
-      state.userBalances.nonVotingLockedCelo.plus(
-        state.userBalances.votingLockedCelo
-      )
-    );
+    calculateActiveAndPendingCelo();
   }, [votingSummary]);
 
   const voteOnVG = async () => {
@@ -178,6 +192,11 @@ function vote() {
       });
     } catch (e) {
       console.log("unable to vote", e.message);
+    } finally {
+      fetchAllAccountData(address);
+      fetchVotingSummary();
+      fetchActivatablePendingVotes();
+      calculateActiveAndPendingCelo();
     }
   };
 
@@ -202,6 +221,11 @@ function vote() {
       console.log("Vote cast");
     } catch (e) {
       console.log(`Unable to vote ${e.message}`);
+    } finally {
+      fetchAllAccountData(address);
+      fetchVotingSummary();
+      fetchActivatablePendingVotes();
+      calculateActiveAndPendingCelo();
     }
   };
 
@@ -219,6 +243,11 @@ function vote() {
       console.log("Votes activated");
     } catch (e) {
       console.log(`Unable to activate votes ${e.message}`);
+    } finally {
+      fetchAllAccountData(address);
+      fetchVotingSummary();
+      fetchActivatablePendingVotes();
+      calculateActiveAndPendingCelo();
     }
   };
 
