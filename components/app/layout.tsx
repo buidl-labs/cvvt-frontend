@@ -50,10 +50,13 @@ export default function layout({ children }: layoutProps) {
   const { destroy } = useContractKit();
   const router = useRouter();
   const user = useStore((state) => state.user);
+  const setUser = useStore((state) => state.setUser);
+
   const userConnected = useMemo(() => user.length > 0, [user]);
 
   const disconnectWallet = useCallback(() => {
     destroy();
+    setUser("");
   }, []);
 
   useEffect(() => {
