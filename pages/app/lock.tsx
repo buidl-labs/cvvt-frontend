@@ -136,12 +136,7 @@ function vote() {
   };
 
   return (
-    <Layout
-      // TODO: Fix the state structure so you don't have to pass disconnectWallet to layout everytime.
-      disconnectWallet={async () => {
-        console.log("destroy wallet function");
-      }}
-    >
+    <Layout>
       <>
         <header className="flex justify-between items-baseline">
           <h3 className="text-gray-dark font-medium text-2xl">

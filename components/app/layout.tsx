@@ -1,19 +1,15 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useContractKit } from "@celo-tools/use-contractkit";
 import { useRouter } from "next/router";
-import useStore from "../../store/store";
 import Nav from "./nav";
+import useStore from "../../store/store";
 
 interface layoutProps {
   children: React.ReactChild;
-  disconnectWallet(): Promise<void>;
 }
 
-export default function layout({ children, disconnectWallet }: layoutProps) {
-  const router = useRouter();
-  const user = useStore((state) => state.user);
-  const userConnected = useMemo(() => user.length > 0, [user]);
-
+export default function layout({ children }: layoutProps) {
   const navigation = [
     {
       text: "Dashboard",
@@ -51,6 +47,21 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
       icon: "/assets/nav/nav-how-it-works.png",
     },
   ];
+  const { destroy } = useContractKit();
+  const router = useRouter();
+  const user = useStore((state) => state.user);
+  const userConnected = useMemo(() => user.length > 0, [user]);
+
+  const disconnectWallet = useCallback(() => {
+    destroy();
+  }, []);
+
+  useEffect(() => {
+    console.log("userConnected", userConnected);
+    if (!userConnected) {
+      router.push(navigation[0].to);
+    }
+  }, [userConnected]);
 
   return (
     <div className="h-screen overflow-hidden flex flex-col">
@@ -66,6 +77,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
                 if (router.asPath.charAt(router.asPath.length - 1) == "#")
                   path = router.asPath.slice(0, -1);
                 if (item.to.includes("dashboard")) disabled = false;
+
                 return (
                   <MenuLink
                     text={item.text}
@@ -73,7 +85,7 @@ export default function layout({ children, disconnectWallet }: layoutProps) {
                     icon={item.icon}
                     isActive={path == item.to}
                     disabled={disabled}
-                    key={item.text}
+                    key={item.to}
                   />
                 );
               })}

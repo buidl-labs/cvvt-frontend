@@ -162,11 +162,7 @@ function Withdraw() {
   };
 
   return (
-    <Layout
-      disconnectWallet={async () => {
-        console.log("Disconnect wallet");
-      }}
-    >
+    <Layout>
       <div>
         <Transition.Root show={current.value === "withdraw"} as={Fragment}>
           <Dialog

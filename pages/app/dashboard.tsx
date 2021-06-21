@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Mainnet, useContractKit } from "@celo-tools/use-contractkit";
 import { BigNumber } from "bignumber.js";
 
@@ -32,6 +32,7 @@ export default function dashboard() {
     walletType,
   } = useContractKit();
 
+  const userConnected = useMemo(() => address.length > 0, [address]);
   const state = useStore();
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function dashboard() {
   }
 
   useEffect(() => {
+    state.setUser(address);
     // fetches and sets the data to global store.
     fetchAllAccountData(address);
 
@@ -80,49 +82,17 @@ export default function dashboard() {
       .then((summary) => setVotingSummary(summary));
   }, [address]);
 
-  // Logging data for debugging.
-  useEffect(() => {
-    console.log("--- USER DATA ---");
-    console.log(
-      state.userBalances.totalCelo.div(1e18).toFormat(2),
-      "TOTAL CELO"
-    );
-    console.log(
-      state.userBalances.unlockedCelo.div(1e18).toFormat(2),
-      "UNLOCKED CELO"
-    );
-    console.log(
-      state.userBalances.nonVotingLockedCelo.div(1e18).toFormat(2),
-      "NON-VOTING LOCKED CELO"
-    );
-    console.log(
-      state.userBalances.votingLockedCelo.div(1e18).toFormat(2),
-      "VOTING LOCKED CELO"
-    );
-    console.log(
-      state.userBalances.withdrawableCelo.div(1e18).toFormat(2),
-      "CELO READY FOR WITHDRAWAL"
-    );
-    console.log(
-      state.userBalances.unlockingCelo.div(1e18).toFormat(2),
-      "UNLOCKING CELO"
-    );
-  }, [state.userBalances]);
-
   async function connectWallet() {
     await connect();
-    state.setUser(address);
   }
 
   async function destroyWallet() {
     await destroy();
-    state.setUser("");
-    console.log("Wallet disconnected.");
   }
 
   return (
-    <Layout disconnectWallet={destroyWallet}>
-      {!(state.user.length > 0) ? (
+    <Layout>
+      {!userConnected ? (
         <div>
           <div>
             <h3 className="text-2xl font-medium">Welcome, celo holder!</h3>

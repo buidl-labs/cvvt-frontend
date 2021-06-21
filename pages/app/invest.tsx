@@ -165,12 +165,7 @@ function Invest() {
   };
 
   return (
-    <Layout
-      // TODO: Fix the state structure so you don't have to pass disconnectWallet to layout everytime.
-      disconnectWallet={async () => {
-        console.log("destroy wallet function");
-      }}
-    >
+    <Layout>
       <>
         <h1 className="text-2xl font-medium text-gray-dark">Invest CELO</h1>
         <main className="space-y-10 mt-10">
