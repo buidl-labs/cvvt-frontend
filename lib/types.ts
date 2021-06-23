@@ -43,7 +43,7 @@ export interface ValidatorGroup {
   Validators: Validator[];
 }
 
-interface Validator {
+export interface Validator {
   address: string;
   name: string;
   currently_elected: boolean;
