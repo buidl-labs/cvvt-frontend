@@ -23,12 +23,19 @@ function Dashboard() {
   }, [address]);
 
   useEffect(() => {
+    console.log(validatorGroups, vgListLoading);
+    const CHAINLAYER = "0x7194dfe766a92308880a943fd70f31c8e7c50e66";
+    const TESTING_ADDRESS = "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5";
     if (address === "" || vgListLoading) return;
-
-    setIsVG(
-      validatorGroups.includes(address) ||
-        address == "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5"
-    );
+    if (address == TESTING_ADDRESS) {
+      setIsVG(true);
+      state.setUser(CHAINLAYER);
+    } else {
+      if (validatorGroups.includes(address)) {
+        setIsVG(true);
+        state.setUser(address);
+      }
+    }
   }, [address, vgListLoading]);
 
   return (
