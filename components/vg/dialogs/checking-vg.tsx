@@ -34,7 +34,7 @@ function CheckingVG({ dialogOpen }: { dialogOpen: boolean }) {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all my-8 align-middle p-14 max-w-sm">
+            <div className="inline-block bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all my-8 align-middle p-10 max-w-sm">
               <div>
                 <div className="mt-5">
                   <div className="flex flex-col items-center">
