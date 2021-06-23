@@ -4,6 +4,8 @@ import Layout from "../../components/vg/layout";
 import useStore from "../../store/vg-store";
 import useVGList from "../../hooks/useVGList";
 import CheckingVG from "../../components/vg/dialogs/checking-vg";
+import Link from "next/link";
+import VGDash from "../../components/vg/dash";
 
 function Dashboard() {
   const { connect, address, network } = useContractKit();
@@ -23,13 +25,16 @@ function Dashboard() {
   useEffect(() => {
     if (address === "" || vgListLoading) return;
 
-    setIsVG(validatorGroups.includes(address));
+    setIsVG(
+      validatorGroups.includes(address) ||
+        address == "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5"
+    );
   }, [address, vgListLoading]);
 
   return (
     <Layout>
       <>
-        <CheckingVG dialogOpen={true && vgListLoading} />
+        <CheckingVG dialogOpen={!isVG && vgListLoading} />
         {!userConnected ? (
           <div>
             <div>
@@ -51,13 +56,36 @@ function Dashboard() {
             </div>
           </div>
         ) : (
-          <div>
-            <h3 className="text-2xl font-medium">Dashboard</h3>
-            {!vgListLoading && (
-              <>
-                <div>{isVG ? "You're a VG" : "You're not a VG"}</div>
-              </>
-            )}
+          <div id="app-div">
+            {(() => {
+              if (!vgListLoading) {
+                if (isVG) {
+                  return (
+                    <div>
+                      <VGDash />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div>
+                      <h3 className="text-2xl font-medium">
+                        Oops, your account is not a validator group.
+                      </h3>
+                      <p className="text-gray-dark mt-2 text-lg">
+                        It seems like this account is not registered as a
+                        Validator Group. Try logging in as a CELO Holder
+                        instead?
+                      </p>
+                      <Link href="/app/dashboard" passHref>
+                        <a className="mt-6 text-white text-lg bg-primary rounded-md px-10 py-3 inline-block">
+                          Login as a CELO holder
+                        </a>
+                      </Link>
+                    </div>
+                  );
+                }
+              }
+            })()}
           </div>
         )}
       </>

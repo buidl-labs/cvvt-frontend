@@ -12,7 +12,7 @@ export default function Nav() {
         <NavLink isButton={false} to="#">
           How it works?
         </NavLink>
-        <NavLink isButton={false} to="#">
+        <NavLink isButton={false} to="/vg/dashboard">
           For Validator Groups
         </NavLink>
         <NavLink isButton={true} to="/app/dashboard">
