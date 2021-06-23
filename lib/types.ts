@@ -1,13 +1,13 @@
-import {BigNumber} from "bignumber.js"
+import { BigNumber } from "bignumber.js";
 
 export type VGSuggestion = {
-  Address: string
-  Name: string
-  GroupScore: number
-  TransparencyScore: number
-  PerformanceScore: number
-  EstimatedAPY: number
-}
+  Address: string;
+  Name: string;
+  GroupScore: number;
+  TransparencyScore: number;
+  PerformanceScore: number;
+  EstimatedAPY: number;
+};
 
 export type GroupVoting = {
   name: string;
@@ -19,10 +19,32 @@ export type GroupVoting = {
 export type ProcessedWithdrawals = {
   value: BigNumber;
   time: Date;
-  status: WithdrawalStatus
+  status: WithdrawalStatus;
 };
 
 export enum WithdrawalStatus {
   PENDING = "Pending",
-  AVAILABLE = "Available"
+  AVAILABLE = "Available",
+}
+
+export interface ValidatorGroup {
+  Address: string;
+  Name: string;
+  TransparencyScore: number;
+  PerformanceScore: number;
+  EstimatedAPY: number;
+  RecievedVotes: number;
+  AvailableVotes: number;
+  EpochsServed: number;
+  LockedCelo: number;
+  SlashingPenaltyScore: number;
+  GroupScore: number;
+  GroupShare: number;
+  Validators: Validator[];
+}
+
+interface Validator {
+  address: string;
+  name: string;
+  currently_elected: boolean;
 }
