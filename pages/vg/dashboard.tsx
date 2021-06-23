@@ -1,26 +1,35 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import Layout from "../../components/vg/layout";
 import useStore from "../../store/vg-store";
 import useVGList from "../../hooks/useVGList";
+import CheckingVG from "../../components/vg/dialogs/checking-vg";
 
 function Dashboard() {
   const { connect, address, network } = useContractKit();
   const state = useStore();
-  const userConnected = useMemo(() => address.length > 0, [address]);
-  const validatorGroups: string[] = useVGList();
+  const userConnected: boolean = useMemo(() => address.length > 0, [address]);
+  const {
+    validatorGroups,
+    loading: vgListLoading,
+  }: { validatorGroups: string[]; loading: boolean } = useVGList();
 
+  const [isVG, setIsVG] = useState(false);
   useEffect(() => {
     state.setUser(address);
     state.setNetwork(network.name);
   }, [address]);
 
   useEffect(() => {
-    console.log(validatorGroups);
-  }, [validatorGroups]);
+    if (address === "" || vgListLoading) return;
+
+    setIsVG(validatorGroups.includes(address));
+  }, [address, vgListLoading]);
+
   return (
     <Layout>
       <>
+        <CheckingVG dialogOpen={true && vgListLoading} />
         {!userConnected ? (
           <div>
             <div>
@@ -44,13 +53,11 @@ function Dashboard() {
         ) : (
           <div>
             <h3 className="text-2xl font-medium">Dashboard</h3>
-            <pre>
-              {JSON.stringify(
-                { isVG: validatorGroups.includes(address), validatorGroups },
-                null,
-                2
-              )}
-            </pre>
+            {!vgListLoading && (
+              <>
+                <div>{isVG ? "You're a VG" : "You're not a VG"}</div>
+              </>
+            )}
           </div>
         )}
       </>
