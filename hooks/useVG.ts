@@ -6,10 +6,21 @@ const VG_Query = gql`
     ValidatorGroup(address: $address) {
       Address
       Name
-      GroupScore
       TransparencyScore
       PerformanceScore
       EstimatedAPY
+      RecievedVotes
+      AvailableVotes
+      EpochsServed
+      LockedCelo
+      SlashingPenaltyScore
+      GroupScore
+      GroupShare
+      Validators {
+        address
+        name
+        currently_elected
+      }
     }
   }
 `;
