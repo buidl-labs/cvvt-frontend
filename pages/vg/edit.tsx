@@ -44,7 +44,7 @@ export default function Edit() {
           <div>
             <WelcomeHeading name={VG.Name} address={VG.Address} />
             <TransparencyScoreBar score={Number(VG.TransparencyScore)} />
-            <VGEditForm VG={VG} />
+            <VGEditForm VG={VG} setVG={setVG} />
           </div>
         ) : (
           "loading"

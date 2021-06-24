@@ -28,6 +28,7 @@ export enum WithdrawalStatus {
 }
 
 export interface ValidatorGroup {
+  ID: string;
   Address: string;
   Name: string;
   Email: string;
