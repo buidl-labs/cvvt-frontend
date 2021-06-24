@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 const VG_Query = gql`
   query ($address: String!) {
     ValidatorGroup(address: $address) {
+      ID
       Address
       Name
       Email
