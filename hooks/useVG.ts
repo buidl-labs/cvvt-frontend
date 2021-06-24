@@ -29,6 +29,7 @@ export default function useVG(address: string) {
   const [result, _] = useQuery({
     query: VG_Query,
     variables: { address },
+    pause: !address,
   });
   return result;
 }
