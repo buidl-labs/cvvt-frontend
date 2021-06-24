@@ -6,6 +6,12 @@ const VG_Query = gql`
     ValidatorGroup(address: $address) {
       Address
       Name
+      Email
+      WebsiteUrl
+      DiscordTag
+      TwitterUsername
+      GeographicLocation
+      VerifiedDns
       TransparencyScore
       PerformanceScore
       EstimatedAPY

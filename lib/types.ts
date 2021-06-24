@@ -30,6 +30,12 @@ export enum WithdrawalStatus {
 export interface ValidatorGroup {
   Address: string;
   Name: string;
+  Email: string;
+  WebsiteUrl: string;
+  DiscordTag: string;
+  TwitterUsername: string;
+  GeographicLocation: string;
+  VerifiedDns: boolean;
   TransparencyScore: number;
   PerformanceScore: number;
   EstimatedAPY: number;
