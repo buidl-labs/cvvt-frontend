@@ -4,6 +4,7 @@ import useVG from "../../hooks/useVG";
 import { Validator, ValidatorGroup } from "../../lib/types";
 import useStore from "../../store/vg-store";
 
+const formatter = new Intl.NumberFormat("en-US");
 export default function VGDash() {
   const [VG, setVG] = useState<ValidatorGroup>();
   const user = useStore((state) => state.user);
@@ -128,19 +129,27 @@ function PerformanceMetricsPanel({ VG }: { VG: ValidatorGroup }) {
       <div className="grid grid-cols-6 mt-10 gap-20">
         <div className="grid grid-rows-2 gap-1 text-center">
           <p className="text-sm text-gray">Recieved Votes</p>
-          <p className="text-base font-medium">{VG.RecievedVotes}</p>
+          <p className="text-base font-medium">
+            {formatter.format(VG.RecievedVotes)} CELO
+          </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
           <p className="text-sm text-gray">Available Votes</p>
-          <p className="text-base font-medium">{VG.AvailableVotes}</p>
+          <p className="text-base font-medium">
+            {formatter.format(VG.AvailableVotes)} CELO
+          </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
           <p className="text-sm text-gray">Epochs Served</p>
-          <p className="text-base font-medium">{VG.EpochsServed}</p>
+          <p className="text-base font-medium">
+            {formatter.format(VG.EpochsServed)}
+          </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
           <p className="text-sm text-gray">Locked CELO</p>
-          <p className="text-base font-medium">{VG.LockedCelo} CELO</p>
+          <p className="text-base font-medium">
+            {formatter.format(VG.LockedCelo)} CELO
+          </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
           <p className="text-sm text-gray">Slashing Score</p>

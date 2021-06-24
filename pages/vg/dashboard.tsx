@@ -23,7 +23,6 @@ function Dashboard() {
   }, [address]);
 
   useEffect(() => {
-    console.log(validatorGroups, vgListLoading);
     const GROUP = "0xb36b0747312e444b6258120a7d3ba7b170e83476";
     const TESTING_ADDRESS = "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5";
     if (address === "" || vgListLoading) return;
