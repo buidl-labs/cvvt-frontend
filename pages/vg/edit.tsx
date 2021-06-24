@@ -6,6 +6,7 @@ import { ValidatorGroup } from "../../lib/types";
 import useVG from "../../hooks/useVG";
 import WelcomeHeading from "../../components/vg/welcome-heading";
 import TransparencyScoreBar from "../../components/vg/transparency-score-bar";
+import VGEditForm from "../../components/vg/vg-edit-form";
 
 export default function Edit() {
   const { connect, address, network } = useContractKit();
@@ -43,6 +44,7 @@ export default function Edit() {
           <div>
             <WelcomeHeading name={VG.Name} address={VG.Address} />
             <TransparencyScoreBar score={Number(VG.TransparencyScore)} />
+            <VGEditForm VG={VG} />
           </div>
         ) : (
           "loading"
