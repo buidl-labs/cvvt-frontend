@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useContractKit } from "@celo-tools/use-contractkit";
 
@@ -11,6 +11,7 @@ import axios from "axios";
 import useStore from "../../store/store";
 
 import Layout from "../../components/app/layout";
+import VoteVGDialog from "../../components/app/dialogs/vote-vg";
 import CeloInput from "../../components/app/celo-input";
 import { fetchExchangeRate } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
@@ -60,7 +61,13 @@ function Invest() {
   const [nonVotingLockedCelo, setNonVotingLockedCelo] = useState<BigNumber>();
   const [exchangeRate, setExchangeRate] = useState(0);
   const [estimatedAPY, setEstimatedAPY] = useState<BigNumber>(new BigNumber(0));
-  const [selectedVG, setSelectedVG] = useState<VGSuggestion>();
+  const [validatorGroups, setValidatorGroups] = useState<VGSuggestion[]>([]);
+  const [selectedVGAddress, setSelectedVGAddress] = useState<string>("");
+  const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
+
+  const selectedVG = useMemo<VGSuggestion | undefined>(() => {
+    return validatorGroups.find((vg) => vg.Address === selectedVGAddress);
+  }, [selectedVGAddress]);
 
   const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true, 5);
 
@@ -77,7 +84,8 @@ function Invest() {
 
   useEffect(() => {
     if (fetchingVG == false && errorFetchingVG == undefined) {
-      setSelectedVG(data["ValidatorGroups"][0]);
+      setValidatorGroups(data["ValidatorGroups"]);
+      setSelectedVGAddress(data["ValidatorGroups"][0].Address);
     }
   }, [fetchingVG, errorFetchingVG, data]);
 
@@ -144,7 +152,7 @@ function Invest() {
   };
 
   const voteOnVG = async () => {
-    if (selectedVG == undefined || selectedVG == null) return;
+    if (selectedVGAddress == undefined || selectedVGAddress == null) return;
 
     if (!celoToInvest) return;
 
@@ -153,7 +161,7 @@ function Invest() {
         const election = await k.contracts.getElection();
         await (
           await election.vote(
-            selectedVG.Address,
+            selectedVGAddress,
             new BigNumber(parseFloat(celoToInvest)).times(1e18)
           )
         ).sendAndWaitForReceipt({ from: k.defaultAccount });
@@ -167,6 +175,13 @@ function Invest() {
   return (
     <Layout>
       <>
+        <VoteVGDialog
+          open={vgDialogOpen}
+          setOpen={setVGDialogOpen}
+          selectedVG={selectedVGAddress}
+          setSelectedVG={setSelectedVGAddress}
+          validatorGroups={validatorGroups}
+        />
         <h1 className="text-2xl font-medium text-gray-dark">Invest CELO</h1>
         <main className="space-y-10 mt-10">
           {/* Amount Panel */}
@@ -318,7 +333,10 @@ function Invest() {
                   <span className="text-gray-dark">
                     Recommended Validator Group to vote for:
                   </span>
-                  <button className="text-primary">
+                  <button
+                    className="text-primary"
+                    onClick={() => setVGDialogOpen(true)}
+                  >
                     Edit Validator Group preference
                   </button>
                 </div>

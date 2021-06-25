@@ -13,9 +13,7 @@ function VoteVg({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedVG: string | null | undefined;
-  setSelectedVG: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >;
+  setSelectedVG: React.Dispatch<React.SetStateAction<string | any>>;
   validatorGroups: VGSuggestion[];
 }) {
   return (
