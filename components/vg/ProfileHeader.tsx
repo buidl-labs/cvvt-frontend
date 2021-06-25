@@ -8,7 +8,7 @@ import CopyIcon from "../icons/copy";
 
 export default function ProfileHeader({ VG }: { VG: ValidatorGroup }) {
   return (
-    <div className="mt-10">
+    <div>
       <div className="flex items-center justify-between">
         <h3 className="text-2xl font-medium">
           {VG.Name ? VG.Name : "Unknown Group"}

@@ -39,7 +39,7 @@ export default function layout({ children }: layoutProps) {
     },
     {
       text: "Validator Groups",
-      to: "#",
+      to: "/app/validators",
       icon: "/assets/nav/nav-validator-groups.png",
     },
     {
@@ -96,7 +96,7 @@ export default function layout({ children }: layoutProps) {
                     text={item.text}
                     to={item.to}
                     icon={item.icon}
-                    isActive={path == item.to}
+                    isActive={path.includes(item.to)}
                     disabled={disabled}
                     key={item.to}
                   />
