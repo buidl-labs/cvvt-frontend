@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import Layout from "../../components/vg/layout";
 import useStore from "../../store/vg-store";
-import useVGList from "../../hooks/useVGList";
+import useVGList from "../../hooks/useVGAddressList";
 import CheckingVG from "../../components/vg/dialogs/checking-vg";
 import Link from "next/link";
 import VGDash from "../../components/vg/dash";
