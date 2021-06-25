@@ -55,3 +55,10 @@ export interface Validator {
   name: string;
   currently_elected: boolean;
 }
+
+export type VGEditFormType = {
+  email: string;
+  geoURL: string;
+  twitter: string;
+  discord: string;
+};

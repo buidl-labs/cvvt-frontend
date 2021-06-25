@@ -1,5 +1,5 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { Transition } from "@headlessui/react";
 
 function CheckingVG({ dialogOpen }: { dialogOpen: boolean }) {
   return (

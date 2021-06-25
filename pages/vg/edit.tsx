@@ -1,5 +1,6 @@
 import { useContractKit } from "@celo-tools/use-contractkit";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
 import useStore from "../../store/vg-store";
 import Layout from "../../components/vg/layout";
 import { ValidatorGroup } from "../../lib/types";
@@ -8,19 +9,50 @@ import WelcomeHeading from "../../components/vg/welcome-heading";
 import TransparencyScoreBar from "../../components/vg/transparency-score-bar";
 import VGEditForm from "../../components/vg/vg-edit-form";
 
-export default function Edit() {
-  const { connect, address, network } = useContractKit();
-  const state = useStore();
-  const userConnected: boolean = useMemo(
-    () => state.user.length > 0,
-    [state.user]
-  );
-  const [VG, setVG] = useState<ValidatorGroup>();
+import { createMachine } from "xstate";
+import { useMachine } from "@xstate/react";
+import Loading from "../../components/Loading";
 
+const EditMachine = createMachine({
+  id: "EditMachine",
+  initial: "loading",
+  states: {
+    loading: {
+      on: { NEXT: "idle", ERROR: "error" },
+    },
+    idle: {
+      on: { NEXT: "updating" },
+    },
+    updating: {
+      on: { NEXT: "idle", ERROR: "error" },
+    },
+    error: {
+      on: { NEXT: "idle" },
+    },
+  },
+});
+
+export default function Edit() {
+  const [current, send] = useMachine(EditMachine);
+  console.log(current.value);
+  const { address, network } = useContractKit();
+  const state = useStore();
+  const [VG, setVG] = useState<ValidatorGroup>();
+  // const userConnected: boolean = useMemo(
+  //   () => state.user.length > 0,
+  //   [state.user]
+  // );
   const { fetching, error, data: validatorGroup } = useVG(state.user);
+  const effectRunCount = useRef(0);
 
   useEffect(() => {
     if (!fetching && !error && validatorGroup) {
+      effectRunCount.current++;
+      if (effectRunCount.current === 1) {
+        console.log("loading complete.");
+        send("NEXT");
+      }
+
       setVG(validatorGroup["ValidatorGroup"]);
     }
   }, [fetching, validatorGroup]);
@@ -37,17 +69,23 @@ export default function Edit() {
     }
   }, [address]);
 
+  useEffect(() => {
+    console.log(current.value);
+  }, [current.value]);
+
   return (
     <Layout>
       <>
-        {VG ? (
+        <Loading
+          open={current.matches("updating") || current.matches("loading")}
+        />
+
+        {VG && (
           <div>
             <WelcomeHeading name={VG.Name} address={VG.Address} />
             <TransparencyScoreBar score={Number(VG.TransparencyScore)} />
-            <VGEditForm VG={VG} setVG={setVG} />
+            <VGEditForm VG={VG} setVG={setVG} send={send} />
           </div>
-        ) : (
-          "loading"
         )}
       </>
     </Layout>

@@ -1,35 +1,37 @@
 import React from "react";
-import { ValidatorGroup } from "../../lib/types";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
+import { ValidatorGroup, VGEditFormType } from "../../lib/types";
 import useVGMutation from "../../hooks/useVGMutation";
 
-type FormType = {
-  email: string;
-  geoURL: string;
-  twitter: string;
-  discord: string;
-};
 const FormSchema = yup.object().shape({
   email: yup.string().email(),
-  geoLocation: yup.string().url(),
+  geoURL: yup.string().url(),
   twitter: yup.string(),
   discord: yup.string(),
 });
+
 export default function VGEditForm({
   VG,
   setVG,
+  send,
 }: {
   VG: ValidatorGroup;
   setVG: React.Dispatch<React.SetStateAction<ValidatorGroup | undefined>>;
+  send: any;
 }) {
-  const { updateVG, updateVGResult } = useVGMutation();
+  // GraphQL Mutation
+  const { updateVG } = useVGMutation();
+
+  // Form handling
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormType>({
+  } = useForm<VGEditFormType>({
     resolver: yupResolver(FormSchema),
     defaultValues: {
       email: VG.Email,
@@ -39,13 +41,17 @@ export default function VGEditForm({
     },
   });
 
-  const onFormSubmit = (data: FormType) => {
+  const onFormSubmit = (data: VGEditFormType) => {
     const formData = Object.fromEntries(
       Object.entries(data).filter((entry) => entry[1].length > 0)
     );
 
     const variables = { id: VG.ID, ...formData };
     console.log(variables);
+
+    console.log("starting update");
+    send("NEXT");
+
     updateVG(variables).then(async (res) => {
       if (res.error) {
         console.log(res.error);
@@ -60,7 +66,11 @@ export default function VGEditForm({
         TwitterUsername: vgData.TwitterUsername,
         GeographicLocation: vgData.GeographicLocation,
       });
+
       console.log("VG UPDATED");
+
+      console.log("update complete");
+      send("NEXT");
     });
   };
 
@@ -173,39 +183,3 @@ export default function VGEditForm({
     </div>
   );
 }
-
-// function Input({
-//   label,
-//   type,
-//   name,
-//   placeholder,
-//   register,
-// }: {
-//   label: string;
-//   type: string;
-//   name: string;
-//   placeholder: string;
-//   register: UseFormRegister<FormType>;
-// }) {
-//   const possibleNames = ["email", "geoLocation", "twitter", "discord"];
-//   if (!possibleNames.includes(name)) return;
-//   return (
-//     <div>
-//       <label
-//         htmlFor={name}
-//         className="block text-sm font-medium text-gray-dark"
-//       >
-//         {label}
-//       </label>
-//       <div className="mt-2">
-//         <input
-//           {...register(name)}
-//           type={type}
-//           id={name}
-//           className="border-2 border-gray bg-gray-light-light rounded-md shadow-sm text-lg block w-full"
-//           placeholder={placeholder}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
