@@ -14,7 +14,7 @@ import Layout from "../../components/app/layout";
 import CeloInput from "../../components/app/celo-input";
 import { fetchExchangeRate } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
-import useVG from "../../hooks/useValidatorGroup";
+import useVG from "../../hooks/useValidatorGroupSuggestion";
 import { VGSuggestion } from "../../lib/types";
 
 const InvestMachine = createMachine({

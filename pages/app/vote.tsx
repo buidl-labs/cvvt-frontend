@@ -22,7 +22,7 @@ import {
   hasActivatablePendingVotes,
 } from "../../lib/celo";
 
-import useVG from "../../hooks/useValidatorGroup";
+import useVG from "../../hooks/useValidatorGroupSuggestion";
 
 import { calculateBarWidth, fetchExchangeRate } from "../../lib/utils";
 
