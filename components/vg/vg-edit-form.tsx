@@ -33,14 +33,13 @@ export default function VGEditForm({
     formState: { errors },
   } = useForm<VGEditFormType>({
     resolver: yupResolver(FormSchema),
-    // defaultValues: {
-    //   email: VG.Email,
-    //   geoURL: VG.GeographicLocation,
-    //   discord: VG.DiscordTag,
-    //   twitter: VG.TwitterUsername,
-    // },
+    defaultValues: {
+      email: VG.Email,
+      geoURL: VG.GeographicLocation,
+      discord: VG.DiscordTag,
+      twitter: VG.TwitterUsername,
+    },
   });
-  console.log(errors);
 
   const onFormSubmit = (data: VGEditFormType) => {
     const formData = Object.fromEntries(

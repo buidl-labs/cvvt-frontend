@@ -10,6 +10,7 @@ import VGEditForm from "../../components/vg/vg-edit-form";
 
 import { createMachine } from "xstate";
 import { useMachine } from "@xstate/react";
+import Loading from "../../components/Loading";
 
 const EditMachine = createMachine({
   id: "EditMachine",
@@ -36,10 +37,10 @@ export default function Edit() {
   const { address, network } = useContractKit();
   const state = useStore();
   const [VG, setVG] = useState<ValidatorGroup>();
-  const userConnected: boolean = useMemo(
-    () => state.user.length > 0,
-    [state.user]
-  );
+  // const userConnected: boolean = useMemo(
+  //   () => state.user.length > 0,
+  //   [state.user]
+  // );
   const { fetching, error, data: validatorGroup } = useVG(state.user);
   const effectRunCount = useRef(0);
 
@@ -74,17 +75,17 @@ export default function Edit() {
   return (
     <Layout>
       <>
-        {current.matches("updating") && "updating vg"}
-        {current.matches("success") && "vg successfully updated."}
-        {current.matches("loading")
-          ? "loading"
-          : VG && (
-              <div>
-                <WelcomeHeading name={VG.Name} address={VG.Address} />
-                <TransparencyScoreBar score={Number(VG.TransparencyScore)} />
-                <VGEditForm VG={VG} setVG={setVG} send={send} />
-              </div>
-            )}
+        <Loading
+          open={current.matches("updating") || current.matches("loading")}
+        />
+
+        {VG && (
+          <div>
+            <WelcomeHeading name={VG.Name} address={VG.Address} />
+            <TransparencyScoreBar score={Number(VG.TransparencyScore)} />
+            <VGEditForm VG={VG} setVG={setVG} send={send} />
+          </div>
+        )}
       </>
     </Layout>
   );
