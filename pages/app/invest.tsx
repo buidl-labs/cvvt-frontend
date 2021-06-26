@@ -13,7 +13,7 @@ import useStore from "../../store/store";
 import Layout from "../../components/app/layout";
 import VoteVGDialog from "../../components/app/dialogs/vote-vg";
 import CeloInput from "../../components/app/celo-input";
-import { fetchExchangeRate } from "../../lib/utils";
+import { fetchExchangeRate, fetchTargetAPY } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
 import useVG from "../../hooks/useValidatorGroupSuggestion";
 import { VGSuggestion } from "../../lib/types";
@@ -36,13 +36,6 @@ const InvestMachine = createMachine({
     },
   },
 });
-
-async function fetchTargetAPY() {
-  const resp = await axios.get(
-    "https://celo-on-chain-data-service.onrender.com/target-apy"
-  );
-  return resp.data;
-}
 
 function Invest() {
   const { address, network, kit, performActions } = useContractKit();

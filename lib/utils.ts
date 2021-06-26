@@ -1,5 +1,5 @@
-import {BigNumber} from "bignumber.js"
-import axios from "axios"
+import { BigNumber } from "bignumber.js";
+import axios from "axios";
 
 export function calculateBarWidth(amount: BigNumber, total: BigNumber): string {
   const percent = amount.div(total).times(100);
@@ -8,8 +8,8 @@ export function calculateBarWidth(amount: BigNumber, total: BigNumber): string {
   return `${percent.toFormat(0)}%`;
 }
 
-export function floatToPercentage(amount: number): string { 
-  return new BigNumber(amount).times(100).toFormat(2)
+export function floatToPercentage(amount: number): string {
+  return new BigNumber(amount).times(100).toFormat(2);
 }
 
 export async function fetchExchangeRate(): Promise<number> {
@@ -20,3 +20,9 @@ export async function fetchExchangeRate(): Promise<number> {
   return data[0]["current_price"];
 }
 
+export async function fetchTargetAPY() {
+  const resp = await axios.get(
+    "https://celo-on-chain-data-service.onrender.com/target-apy"
+  );
+  return resp.data;
+}
