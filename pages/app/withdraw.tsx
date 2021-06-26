@@ -240,7 +240,7 @@ function Withdraw() {
                       className="inline-flex justify-center w-full rounded border border-transparent shadow-sm px-4 py-3 bg-primary text-base font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                       onClick={() => send("NEXT")}
                     >
-                      Go to Dashboard
+                      Go back
                     </button>
                   </div>
                 </div>
@@ -329,7 +329,7 @@ function Withdraw() {
                       className="inline-flex justify-center w-full rounded border border-transparent shadow-sm px-4 py-3 bg-primary text-base font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                       onClick={() => send("NEXT")}
                     >
-                      Go to Dashboard
+                      Go back
                     </button>
                   </div>
                 </div>
