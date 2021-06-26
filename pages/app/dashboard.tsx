@@ -36,7 +36,7 @@ export default function dashboard() {
 
   const userConnected = useMemo(() => address.length > 0, [address]);
   const state = useStore();
-  const hasActivatableVotes = useStore().hasActivatableVotes;
+  const hasActivatableVotes = state.hasActivatableVotes;
 
   const fetchVotingSummary = useCallback(() => {
     getVotingSummary(kit, address)
@@ -109,6 +109,7 @@ export default function dashboard() {
       });
 
       console.log("Votes activated");
+      state.setHasActivatableVotes(false);
     } catch (e) {
       console.log(`Unable to activate votes ${e.message}`);
     } finally {
