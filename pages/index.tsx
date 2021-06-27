@@ -5,10 +5,13 @@ import Nav from "../components/home/nav";
 import HeroIllustration from "../components/home/illustrations/hero-illustration";
 import EarningCalculator from "../components/home/earning-calc";
 import FeatureGrid from "../components/home/feature-grid";
+import SecondFeatureGrid from "../components/home/feature-grid-2";
 
 import PiggyBank from "../components/home/illustrations/piggy-bank";
 import Website from "../components/home/illustrations/website";
 import Exchange from "../components/home/illustrations/exchange";
+import { Disclosure } from "@headlessui/react";
+import React from "react";
 
 export default function Home() {
   return (
@@ -157,6 +160,94 @@ export default function Home() {
             <TestimonialGrid />
           </div>
         </div>
+        <div className="mt-32 px-36">
+          <div className="text-center">
+            <p className="text-gray text-sm">Your Question, Answered</p>
+            <p className="mt-5  text-3xl font-serif">
+              Frequently Asked Questions
+            </p>
+          </div>
+          <div className="mt-14">
+            <FAQ />
+          </div>
+          <div className="mt-10 text-center">
+            <p className="text-gray text-sm font-medium">
+              Can’t find an answer to your query? Don’t worry, we’ve got your
+              back...
+            </p>
+            <div className="mt-5 space-x-4 text-lg">
+              <Link href="/app/dashboard" passHref>
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+                  Contact Us
+                </a>
+              </Link>
+              <Link href="/how" passHref>
+                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md">
+                  How it works?
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="bg-primary-light-light mt-32 mx-36 rounded-md">
+          <div className="flex items-center justify-between p-16">
+            <div>
+              <h4 className="text-xl text-gray-dark font-medium">
+                Ready to Earn Profits?
+              </h4>
+              <p className="mt-3 text-gray-dark max-w-md">
+                Start earning maximum Profits by investing your CELOs based on
+                our Recommendations-Algorithm.
+              </p>
+            </div>
+            <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+              <Link href="/app/dashboard" passHref>
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+                  Start Investing
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="mt-28 relative">
+          <div className="absolute top-0">
+            <svg
+              width="542"
+              height="254"
+              viewBox="0 0 542 254"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M-8.42555 201.127L10.9552 202.105C100.929 206.643 189.314 177.148 258.532 119.488V119.488V119.488C336.031 68.7295 426.12 40.526 518.728 38.03L525.489 37.8477"
+                stroke="#FDEABD"
+              />
+              <g clip-path="url(#clip0)">
+                <path
+                  d="M523.563 28.6451C519.834 27.5837 515.74 30.4919 514.419 35.1419C513.097 39.7926 515.051 44.4225 518.78 45.4832C522.51 46.5458 526.607 43.6365 527.926 38.9869C529.246 34.3354 527.293 29.7076 523.563 28.6451Z"
+                  fill="#FCDB8C"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0">
+                  <rect
+                    width="16.734"
+                    height="16.743"
+                    fill="white"
+                    transform="translate(511 31.0126) rotate(-14.2654)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div className="text-center">
+            <p className="text-gray text-sm">Staking made Easy</p>
+            <p className="mt-5  text-3xl font-serif">
+              Benefits of Investing CELO
+            </p>
+            <SecondFeatureGrid />
+          </div>
+        </div>
       </main>
     </div>
   );
@@ -214,7 +305,7 @@ function TestimonialCard({
 }) {
   return (
     <div className="mx-auto bg-white border border-gray-light rounded-md p-10 relative overflow-hidden">
-      <div className="absolute top-0 left-0 z-0">
+      <div className="absolute top-0 left-0 z-0 transform scale-y-150">
         <svg
           width="120"
           height="240"
@@ -240,6 +331,95 @@ function TestimonialCard({
             <p className="text-secondary">{name}</p>
             <p className="text-gray">{subtitle}</p>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQ() {
+  const faqs = [
+    {
+      question: "How does Celo Investing work?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+    {
+      question: "What is Staking?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+    {
+      question: "What is Locking & Unlocking of CELO?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+    {
+      question: "What is Voting, Activating Vote & Unvoting of CELO?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+    {
+      question: "Am I eligible to Invest CELO?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+    {
+      question: "Is there a fee associated with this service?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+
+    {
+      question: "Will I be taxed on my Investment profits/returns?",
+      answer:
+        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+  ];
+
+  return (
+    <div>
+      <div className="mx-auto">
+        <div className="mx-auto max-w-4xl">
+          <dl className="mt-6 space-y-6">
+            {faqs.map((faq) => (
+              <Disclosure
+                as="div"
+                key={faq.question}
+                className="border border-gray-light rounded-md p-5"
+              >
+                {({ open }) => (
+                  <>
+                    <dt className="text-lg">
+                      <Disclosure.Button className="text-left w-full flex justify-between items-start text-gray-dark focus:outline-none">
+                        <span className="font-medium text-gray-dark">
+                          {faq.question}
+                        </span>
+                        <span className="ml-6 h-7 flex items-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={`${open ? "-rotate-180" : "rotate-0"}
+                              h-6 w-6 transform transition-all duration-200`}
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </Disclosure.Button>
+                    </dt>
+                    <Disclosure.Panel as="dd" className="mt-2 pr-12">
+                      <p className="text-base text-gray">{faq.answer}</p>
+                    </Disclosure.Panel>
+                  </>
+                )}
+              </Disclosure>
+            ))}
+          </dl>
         </div>
       </div>
     </div>
