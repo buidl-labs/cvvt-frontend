@@ -231,21 +231,14 @@ function TestimonialCard({
       <div className="flex relative">
         <div className="mr-6 flex flex-col justify-end">
           <div className="rounded-full w-20 h-20 overflow-hidden -mb-4">
-            <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-              alt=""
-            />
+            <img src={avatar} alt="" />
           </div>
         </div>
         <div className="flex flex-col">
-          <div className="max-w-sm text-gray">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-            distinctio ab quibusdam beatae aliquid a expedita suscipit nisi
-            totam tempora.
-          </div>
+          <div className="max-w-sm text-gray">{testimonial}</div>
           <div className="mt-5 space-y-3">
-            <p className="text-secondary">John Doe</p>
-            <p className="text-gray">Software Developer</p>
+            <p className="text-secondary">{name}</p>
+            <p className="text-gray">{subtitle}</p>
           </div>
         </div>
       </div>
