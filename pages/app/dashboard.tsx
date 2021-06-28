@@ -20,9 +20,11 @@ import { GroupVoting } from "../../lib/types";
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/stat-grid";
 import VotingSummary from "../../components/app/voting-summary";
+import { Switch } from "@headlessui/react";
 
 export default function dashboard() {
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
+  const [advanceEnabled, setAdvanceEnabled] = useState<boolean>(false);
 
   const {
     kit,
@@ -34,8 +36,8 @@ export default function dashboard() {
     performActions,
   } = useContractKit();
 
-  const userConnected = useMemo(() => address.length > 0, [address]);
   const state = useStore();
+  const userConnected = useMemo(() => state.user.length > 0, [state.user]);
   const hasActivatableVotes = state.hasActivatableVotes;
 
   const fetchVotingSummary = useCallback(() => {
@@ -147,9 +149,43 @@ export default function dashboard() {
           </div>
         ) : (
           <div>
-            <h3 className="text-2xl font-medium">Dashboard</h3>
-            <StatGrid />
-            <VotingSummary votingSummary={votingSummary} />
+            <div className="flex justify-between items-center">
+              <h3 className="text-2xl font-medium">Dashboard</h3>
+              <p>
+                <Switch.Group as="div" className="flex items-center">
+                  <Switch.Label as="span" className="mr-3">
+                    <span
+                      className={`${
+                        advanceEnabled ? "text-primary" : "text-gray"
+                      } text-medium`}
+                    >
+                      Advance View
+                    </span>
+                  </Switch.Label>
+                  <Switch
+                    checked={advanceEnabled}
+                    onChange={setAdvanceEnabled}
+                    className={`${
+                      advanceEnabled ? "bg-primary" : "bg-gray-light"
+                    }
+                      relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-gray-light rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`${
+                        advanceEnabled ? "translate-x-5" : "translate-x-0"
+                      } pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}
+                    />
+                  </Switch>
+                </Switch.Group>
+              </p>
+            </div>
+
+            <StatGrid advanced={advanceEnabled} />
+            <VotingSummary
+              votingSummary={votingSummary}
+              showWithdraw={!advanceEnabled}
+            />
           </div>
         )}
       </>
