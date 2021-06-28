@@ -1,13 +1,17 @@
-import CeloCoin from "../icons/celo-coin";
+import Link from "next/link";
 
 export default function VotingSummary({
   votingSummary,
+  showWithdraw = false,
 }: {
   votingSummary: any;
+  showWithdraw?: boolean;
 }) {
   return (
     <div className="mt-10 pt-8">
-      <h3 className="text-xl font-medium">Current Voting Summary</h3>
+      <h3 className="text-xl font-medium">
+        Current {showWithdraw ? "Investment" : "Voting"} Summary
+      </h3>
       <div className="overflow-hidden border border-gray-light rounded-lg shadow-sm mt-5">
         <table className="min-w-full divide-y divide-gray-light">
           <thead className="border-b border-gray-light">
@@ -64,6 +68,13 @@ export default function VotingSummary({
           </tbody>
         </table>
       </div>
+      {showWithdraw && votingSummary.length > 0 && (
+        <Link href="/app/withdraw" passHref>
+          <a className="border-2 border-alert py-2 mt-7 text-lg font-medium rounded-md text-alert shadow flex justify-center">
+            Withdraw Investments
+          </a>
+        </Link>
+      )}
     </div>
   );
 }
