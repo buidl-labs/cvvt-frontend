@@ -6,7 +6,7 @@ export default function Nav() {
     <nav className="flex justify-between items-center px-16 py-4 shadow-md">
       <div className="flex items-center space-x-3">
         <img src="/assets/celo-logo-32.png" />
-        <h1 className="text-2xl">CVVT</h1>
+        <h1 className="text-2xl">ChurroFi</h1>
       </div>
       <div className="flex items-center space-x-10">
         <NavLink isButton={false} to="#">

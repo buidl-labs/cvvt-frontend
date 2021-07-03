@@ -8,7 +8,7 @@ export default function nav() {
     <nav className="flex justify-between items-center px-16 py-4 shadow-md flex-shrink-0">
       <div className="flex items-center space-x-3">
         <img src="/assets/celo-logo-32.png" />
-        <h1 className="text-2xl">CVVT</h1>
+        <h1 className="text-2xl">ChurroFI</h1>
       </div>
       {user.length > 0 && (
         <div className="flex items-center">
