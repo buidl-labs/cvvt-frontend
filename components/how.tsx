@@ -3,7 +3,7 @@ import FeatureIllustrationOne from "./home/illustrations/feature-illustration-on
 import Report from "./home/illustrations/report";
 import Clipboard from "./home/illustrations/clipboard";
 import Note from "./home/illustrations/note";
-import { FAQ } from "./FAQ";
+import FAQ from "./FAQ";
 
 function How() {
   const faqs = [

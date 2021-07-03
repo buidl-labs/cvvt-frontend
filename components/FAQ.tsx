@@ -1,7 +1,7 @@
 import { Question } from "../lib/types";
 import { Disclosure } from "@headlessui/react";
 
-export function FAQ({ faqs }: { faqs: Question[] }) {
+export default function FAQ({ faqs }: { faqs: Question[] }) {
   return (
     <div>
       <div className="mx-auto">

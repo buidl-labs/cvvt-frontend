@@ -12,7 +12,7 @@ import Website from "../components/home/illustrations/website";
 import Exchange from "../components/home/illustrations/exchange";
 
 import React from "react";
-import { FAQ } from "../components/FAQ";
+import FAQ from "../components/FAQ";
 
 export default function Home() {
   const faqs = [
