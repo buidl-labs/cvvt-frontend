@@ -62,3 +62,8 @@ export type VGEditFormType = {
   twitter: string;
   discord: string;
 };
+
+export type Question = {
+  question: string;
+  answer: string;
+};
