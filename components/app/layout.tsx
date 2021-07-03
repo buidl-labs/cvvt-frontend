@@ -44,7 +44,7 @@ export default function layout({ children }: layoutProps) {
     },
     {
       text: "How it works?",
-      to: "#",
+      to: "/app/how",
       icon: "/assets/nav/nav-how-it-works.png",
     },
   ];
