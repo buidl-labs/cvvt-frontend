@@ -110,9 +110,6 @@ function Withdraw() {
   }, []);
 
   useEffect(() => {
-    state.setUser(address);
-    state.setNetwork(network.name);
-
     fetchVotingSummary();
     getPendingWithdrawals();
   }, []);

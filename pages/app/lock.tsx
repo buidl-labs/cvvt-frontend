@@ -40,11 +40,6 @@ function vote() {
   const state = useStore();
 
   useEffect(() => {
-    state.setUser(address);
-    state.setNetwork(network.name);
-  }, []);
-
-  useEffect(() => {
     if (selected === options[0]) {
       setMaxCELOAmount(state.userBalances.unlockedCelo);
     } else if (selected === options[1]) {

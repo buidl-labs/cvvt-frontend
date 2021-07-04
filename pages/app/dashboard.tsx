@@ -26,15 +26,7 @@ export default function dashboard() {
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
   const [advanceEnabled, setAdvanceEnabled] = useState<boolean>(false);
 
-  const {
-    kit,
-    address,
-    network,
-    updateNetwork,
-    connect,
-    destroy,
-    performActions,
-  } = useContractKit();
+  const { kit, address, connect, destroy, performActions } = useContractKit();
 
   const state = useStore();
   const userConnected = useMemo(() => state.user.length > 0, [state.user]);
@@ -53,12 +45,6 @@ export default function dashboard() {
         )
       )
       .then((summary) => setVotingSummary(summary));
-  }, []);
-
-  useEffect(() => {
-    state.setUser(address);
-    updateNetwork(Mainnet);
-    state.setNetwork(network.name);
   }, []);
 
   async function fetchAllAccountData(address: string) {

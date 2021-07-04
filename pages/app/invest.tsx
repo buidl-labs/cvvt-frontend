@@ -67,8 +67,6 @@ function Invest() {
   const state = useStore();
 
   useEffect(() => {
-    state.setUser(address);
-    state.setNetwork(network.name);
     fetchExchangeRate().then((rate) => setExchangeRate(rate));
     fetchTargetAPY().then((resp) =>
       setEstimatedAPY(new BigNumber(parseFloat(resp.target_apy)))

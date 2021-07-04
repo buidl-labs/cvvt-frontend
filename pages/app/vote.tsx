@@ -121,9 +121,6 @@ function vote() {
   }
 
   useEffect(() => {
-    state.setUser(address);
-    state.setNetwork(network.name);
-
     fetchActivatablePendingVotes();
   }, []);
 

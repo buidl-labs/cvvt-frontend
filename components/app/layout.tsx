@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useContractKit } from "@celo-tools/use-contractkit";
+import { Mainnet, useContractKit } from "@celo-tools/use-contractkit";
 import { useRouter } from "next/router";
 import Nav from "./nav";
 import useStore from "../../store/store";
@@ -48,19 +48,17 @@ export default function layout({ children }: layoutProps) {
       icon: "/assets/nav/nav-how-it-works.png",
     },
   ];
-  const { destroy, kit } = useContractKit();
+  const { address, network, updateNetwork, destroy, kit } = useContractKit();
+  console.log(address);
   const router = useRouter();
-  const user = useStore((state) => state.user);
-  const setUser = useStore((state) => state.setUser);
-  const setHasActivatableVotes = useStore(
-    (state) => state.setHasActivatableVotes
-  );
+  const state = useStore();
 
-  const userConnected = useMemo(() => user.length > 0, [user]);
+  const userConnected = address.length > 0;
 
   const disconnectWallet = useCallback(() => {
     destroy();
-    setUser("");
+    state.setUser("");
+    state.setHasActivatableVotes(false);
   }, []);
 
   useEffect(() => {
@@ -68,9 +66,13 @@ export default function layout({ children }: layoutProps) {
     if (!userConnected) {
       router.push(navigation[0].to);
     } else {
-      hasActivatablePendingVotes(kit, user).then((res) => {
+      state.setUser(address);
+      updateNetwork(Mainnet);
+      state.setNetwork(network.name);
+
+      hasActivatablePendingVotes(kit, address).then((res) => {
         if (res) {
-          setHasActivatableVotes(res);
+          state.setHasActivatableVotes(res);
         }
       });
     }
@@ -91,15 +93,24 @@ export default function layout({ children }: layoutProps) {
                   path = router.asPath.slice(0, -1);
                 if (item.to.includes("dashboard")) disabled = false;
 
+                const classes = path.includes(item.to)
+                  ? "bg-primary text-white"
+                  : "text-primary-dark hover:bg-primary-light transition-all duration-150";
+                // const classes = disabled
+                //   ? "opacity-40 text-primary-dark cursor-not-allowed"
+                //   : path.includes(item.to)
+                //   ? "bg-primary text-white"
+                //   : "text-primary-dark hover:bg-primary-light transition-all duration-150";
+
                 return (
-                  <MenuLink
-                    text={item.text}
-                    to={item.to}
-                    icon={item.icon}
-                    isActive={path.includes(item.to)}
-                    disabled={disabled}
-                    key={item.to}
-                  />
+                  <Link href={item.to} passHref key={item.to}>
+                    <a
+                      className={`${classes} group flex justify-start items-center px-6 py-3 text-lg rounded-md space-x-2`}
+                    >
+                      <img src={item.icon} className="h-5 w-5" />
+                      <span>{item.text}</span>
+                    </a>
+                  </Link>
                 );
               })}
             </nav>
@@ -119,36 +130,5 @@ export default function layout({ children }: layoutProps) {
         <main className="flex-1 p-16 overflow-y-auto">{children}</main>
       </div>
     </div>
-  );
-}
-
-function MenuLink({
-  text,
-  to,
-  icon,
-  isActive,
-  disabled,
-}: {
-  text: string;
-  to: string;
-  icon: string;
-  isActive: boolean;
-  disabled: boolean;
-}) {
-  return (
-    <Link href={to} passHref>
-      <a
-        className={`${
-          disabled
-            ? "opacity-40 text-primary-dark cursor-not-allowed"
-            : isActive
-            ? "bg-primary text-white"
-            : "text-primary-dark hover:bg-primary-light transition-all duration-150"
-        }  group flex justify-start items-center px-6 py-3 text-lg rounded-md space-x-2`}
-      >
-        <img src={icon} className="h-5 w-5" />
-        <span>{text}</span>
-      </a>
-    </Link>
   );
 }
