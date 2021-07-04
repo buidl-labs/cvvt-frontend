@@ -69,20 +69,17 @@ export default function dashboard() {
   }
 
   useEffect(() => {
-    state.setUser(address);
-    // fetches and sets the data to global store.
-    fetchAllAccountData(address);
+    if (address.length > 0) {
+      // fetches and sets the data to global store.
+      fetchAllAccountData(address);
 
-    // gets all VGs voted for by the user.
-    fetchVotingSummary();
+      // gets all VGs voted for by the user.
+      fetchVotingSummary();
+    }
   }, [address]);
 
   async function connectWallet() {
     await connect();
-  }
-
-  async function destroyWallet() {
-    await destroy();
   }
 
   const activateVG = async () => {

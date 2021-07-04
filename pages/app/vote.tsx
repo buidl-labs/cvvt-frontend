@@ -386,7 +386,7 @@ function vote() {
                 </span>
                 <button
                   type="button"
-                  className="bg-gray-light-light relative mt-2.5 w-full border border-gray-light rounded-md shadow-sm px-5 py-2.5 text-left cursor-default focus:outline-none focus:bg-primary-light-light focus:border-primary text-lg text-gray-dark"
+                  className="whitespace-nowrap truncate bg-gray-light-light relative mt-2.5 w-full border border-gray-light rounded-md shadow-sm px-5 py-2.5 text-left cursor-default focus:outline-none focus:bg-primary-light-light focus:border-primary text-lg text-gray-dark"
                   onClick={() => setVGDialogOpen(true)}
                 >
                   {selectedVG
