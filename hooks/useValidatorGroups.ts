@@ -2,8 +2,8 @@ import { useQuery } from "urql";
 import gql from "graphql-tag";
 
 const VG_Query = gql`
-  query {
-    ValidatorGroups {
+  query ($sort_by_score: Boolean) {
+    ValidatorGroups(sort_by_score: $sort_by_score) {
       Address
       Name
       VerifiedDns
@@ -22,9 +22,10 @@ const VG_Query = gql`
   }
 `;
 
-export default function useVG() {
+export default function useVG(sort?: boolean) {
   const [result, _] = useQuery({
     query: VG_Query,
+    variables: { sort_by_score: sort },
   });
   return result;
 }

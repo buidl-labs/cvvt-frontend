@@ -7,7 +7,7 @@ import { Validator, ValidatorGroup } from "../../../lib/types";
 
 const formatter = new Intl.NumberFormat("en-US");
 function ValidatorExplorer() {
-  const { fetching, error, data: validatorGroups } = useValidatorGroups();
+  const { fetching, error, data: validatorGroups } = useValidatorGroups(true);
   return (
     <Layout>
       <div className="text-gray-dark">
