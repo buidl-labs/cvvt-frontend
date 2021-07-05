@@ -7,17 +7,17 @@ export default function SecondFeatureGrid() {
     {
       asset: <Map />,
       heading: "Shape Direction of Celo",
-      subtext: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      subtext: "Select Validator Groups that operate a well-run Organization.",
     },
     {
       asset: <Bag />,
       heading: "Earn Voter-Rewards",
-      subtext: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      subtext: "Put your CELOs to work and earn Voter-Rewards.",
     },
     {
       asset: <Document />,
       heading: "Promote Efficient Validators",
-      subtext: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      subtext: "Vote for efficient & reliable Validator Groups on the Network.",
     },
   ];
   return (

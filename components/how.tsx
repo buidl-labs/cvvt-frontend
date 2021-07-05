@@ -56,10 +56,6 @@ function How() {
             <h2 className="text-gray-dark text-4xl font-medium font-serif mt-2">
               Investing CELO is Easy, as it should be.
             </h2>
-            <p className="text-gray mt-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
           </div>
           <section className="my-32 space-y-28">
             <div>
@@ -71,8 +67,9 @@ function How() {
                 <FeatureIllustrationOne />
               </div>
               <p className="text-gray mt-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Start earning profits with as low as 1 CELO in your wallet.{" "}
+                <br />
+                The more you hold & invest, the more you earn.
               </p>
             </div>
             <div>
@@ -84,8 +81,8 @@ function How() {
                 <Clipboard />
               </div>
               <p className="text-gray mt-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Vote for efficient & reliable Validator Groups on the <br />
+                Network that operate a well-run Organization.
               </p>
             </div>
             <div>
@@ -97,8 +94,8 @@ function How() {
                 <Note />
               </div>
               <p className="text-gray mt-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Activate vote in a subsequent epoch to convert <br />
+                the pending vote to one that earns rewards.
               </p>
             </div>
             <div>
@@ -110,8 +107,9 @@ function How() {
                 <Report />
               </div>
               <p className="text-gray mt-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Monitor growth as the CELOs earned in profit automatically
+                <br />
+                gets added to your invested CELO for compounding.
               </p>
             </div>
           </section>
