@@ -37,6 +37,9 @@ function vote() {
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
 
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
+  const [loadingVotingSummary, setLoadingVotingSummary] =
+    useState<boolean>(false);
+
   const [pendingCELO, setPendingCELO] = useState<BigNumber>(new BigNumber(0));
   const [activeCELO, setActiveCELO] = useState<BigNumber>(new BigNumber(0));
   const [totalLockedCELO, setTotalLockedCELO] = useState<BigNumber>(
@@ -61,6 +64,7 @@ function vote() {
   const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true);
 
   const fetchVotingSummary = useCallback(() => {
+    setLoadingVotingSummary(true);
     getVotingSummary(kit, address)
       .then((groupVotes) =>
         Promise.all(
@@ -72,7 +76,10 @@ function vote() {
           }))
         )
       )
-      .then((summary) => setVotingSummary(summary));
+      .then((summary) => {
+        setVotingSummary(summary);
+        setLoadingVotingSummary(false);
+      });
   }, []);
 
   const fetchActivatablePendingVotes = useCallback(() => {
@@ -429,7 +436,10 @@ function vote() {
               {selected}
             </button>
           </div>
-          <VotingSummary votingSummary={votingSummary} />
+          <VotingSummary
+            votingSummary={votingSummary}
+            loading={loadingVotingSummary}
+          />
         </main>
       </>
     </Layout>

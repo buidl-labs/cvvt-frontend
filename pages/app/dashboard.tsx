@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { Mainnet, useContractKit } from "@celo-tools/use-contractkit";
-import { BigNumber } from "bignumber.js";
+import { useContractKit } from "@celo-tools/use-contractkit";
 
 import useStore from "../../store/store";
 
@@ -20,11 +19,15 @@ import { GroupVoting } from "../../lib/types";
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/stat-grid";
 import VotingSummary from "../../components/app/voting-summary";
-import { Switch } from "@headlessui/react";
+import { Switch, Transition } from "@headlessui/react";
+import Loader from "react-loader-spinner";
 
 export default function dashboard() {
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
+  const [loadingVotingSummary, setLoadingVotingSummary] =
+    useState<boolean>(false);
   const [advanceEnabled, setAdvanceEnabled] = useState<boolean>(false);
+  const [loadingAccountData, setLoadingAccountData] = useState<boolean>(false);
 
   const { kit, address, connect, destroy, performActions } = useContractKit();
 
@@ -33,6 +36,7 @@ export default function dashboard() {
   const hasActivatableVotes = state.hasActivatableVotes;
 
   const fetchVotingSummary = useCallback(() => {
+    setLoadingVotingSummary(true);
     getVotingSummary(kit, address)
       .then((groupVotes) =>
         Promise.all(
@@ -44,10 +48,14 @@ export default function dashboard() {
           }))
         )
       )
-      .then((summary) => setVotingSummary(summary));
+      .then((summary) => {
+        setLoadingVotingSummary(false);
+        setVotingSummary(summary);
+      });
   }, []);
 
   async function fetchAllAccountData(address: string) {
+    setLoadingAccountData(true);
     const { totalCeloUnlocking, totalCeloWithdrawable } =
       await fetchPendingWithdrawals(kit, address);
     const celoBalance = await getCELOBalance(kit, address);
@@ -66,6 +74,7 @@ export default function dashboard() {
     state.setVotingLockedCelo(votingLockedCelo);
     state.setWithdrawableCelo(totalCeloWithdrawable);
     state.setUnlockingCelo(totalCeloUnlocking);
+    setLoadingAccountData(false);
   }
 
   useEffect(() => {
@@ -163,10 +172,28 @@ export default function dashboard() {
                 </Switch.Group>
               </p>
             </div>
+            <div className="mt-10 h-36">
+              {loadingAccountData && (
+                <div className="h-full flex justify-center items-center">
+                  <Loader type="Puff" color="#35d07f" height={60} width={60} />
+                </div>
+              )}
 
-            <StatGrid advanced={advanceEnabled} />
+              <Transition
+                show={!loadingAccountData}
+                enter="transition-all duration-150 transform"
+                enterFrom="opacity-0 -translate-y-24"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <StatGrid advanced={advanceEnabled} />
+              </Transition>
+            </div>
             <VotingSummary
               votingSummary={votingSummary}
+              loading={loadingVotingSummary}
               showWithdraw={!advanceEnabled}
             />
           </div>

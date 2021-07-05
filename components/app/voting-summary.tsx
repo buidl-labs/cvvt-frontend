@@ -2,9 +2,11 @@ import Link from "next/link";
 
 export default function VotingSummary({
   votingSummary,
+  loading,
   showWithdraw = false,
 }: {
   votingSummary: any;
+  loading: boolean;
   showWithdraw?: boolean;
 }) {
   return (
@@ -67,6 +69,21 @@ export default function VotingSummary({
             ))}
           </tbody>
         </table>
+        {(() => {
+          if (loading) {
+            return (
+              <p className="w-full flex py-4 justify-center items-center text-gray">
+                Loading your investments...
+              </p>
+            );
+          } else if (votingSummary.length == 0) {
+            return (
+              <p className="w-full flex py-4 justify-center items-center text-gray">
+                You've no current investments.
+              </p>
+            );
+          }
+        })()}
       </div>
       {showWithdraw && votingSummary.length > 0 && (
         <Link href="/app/withdraw" passHref>

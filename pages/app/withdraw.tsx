@@ -67,15 +67,20 @@ function Withdraw() {
       - If a withdrawal is ready for withdrawal, action button to withdraw
   */
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
+  const [loadingVotingSummary, setLoadingVotingSummary] =
+    useState<boolean>(false);
   const [pendingWithdrawals, setPendingWithdrawals] = useState<
     ProcessedWithdrawals[]
   >([]);
+  const [loadingPendingWithdrawals, setLoadingPendingWithdrawals] =
+    useState<boolean>(false);
 
   const [current, send] = useMachine(StateMachine);
   const { address, network, kit, performActions } = useContractKit();
   const state = useStore();
 
   const fetchVotingSummary = useCallback(() => {
+    setLoadingVotingSummary(true);
     getVotingSummary(kit, address)
       .then((groupVotes) =>
         Promise.all(
@@ -87,12 +92,16 @@ function Withdraw() {
           }))
         )
       )
-      .then((summary) => setVotingSummary(summary));
+      .then((summary) => {
+        setVotingSummary(summary);
+        setLoadingVotingSummary(false);
+      });
   }, []);
 
   const getPendingWithdrawals = useCallback(() => {
     const now = new Date();
-    fetchPendingWithdrawals(kit, address).then(({ pendingWithdrawals }) =>
+    setLoadingPendingWithdrawals(true);
+    fetchPendingWithdrawals(kit, address).then(({ pendingWithdrawals }) => {
       setPendingWithdrawals(
         pendingWithdrawals.map((w: PendingWithdrawal) => {
           const time = new Date(w.time.times(1000).toNumber());
@@ -105,8 +114,9 @@ function Withdraw() {
                 : WithdrawalStatus.PENDING,
           };
         })
-      )
-    );
+      );
+      setLoadingPendingWithdrawals(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -410,6 +420,21 @@ function Withdraw() {
                   ))}
                 </tbody>
               </table>
+              {(() => {
+                if (loadingPendingWithdrawals) {
+                  return (
+                    <p className="w-full flex py-4 justify-center items-center text-gray">
+                      Loading your pending withdrawals...
+                    </p>
+                  );
+                } else if (pendingWithdrawals.length == 0) {
+                  return (
+                    <p className="w-full flex py-4 justify-center items-center text-gray">
+                      You have no pending withdrawals.
+                    </p>
+                  );
+                }
+              })()}
             </div>
           </div>
           <div className="mt-10 pt-8">
@@ -473,6 +498,21 @@ function Withdraw() {
                   ))}
                 </tbody>
               </table>
+              {(() => {
+                if (loadingVotingSummary) {
+                  return (
+                    <p className="w-full flex py-4 justify-center items-center text-gray">
+                      Loading your investments...
+                    </p>
+                  );
+                } else if (votingSummary.length == 0) {
+                  return (
+                    <p className="w-full flex py-4 justify-center items-center text-gray">
+                      You've no current investments.
+                    </p>
+                  );
+                }
+              })()}
             </div>
           </div>
         </div>
