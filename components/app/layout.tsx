@@ -15,37 +15,37 @@ export default function layout({ children }: layoutProps) {
     {
       text: "Dashboard",
       to: "/app/dashboard",
-      icon: "/assets/nav/nav-home.png",
+      icon: "/assets/nav/nav-home",
     },
     {
       text: "Invest CELO",
       to: "/app/invest",
-      icon: "/assets/nav/nav-invest.png",
+      icon: "/assets/nav/nav-invest",
     },
     {
       text: "Withdraw CELO",
       to: "/app/withdraw",
-      icon: "/assets/nav/nav-invest.png",
+      icon: "/assets/nav/nav-withdraw",
     },
     {
       text: "Lock / Unlock",
       to: "/app/lock",
-      icon: "/assets/nav/nav-lock.png",
+      icon: "/assets/nav/nav-lock",
     },
     {
       text: "Vote / Revoke",
       to: "/app/vote",
-      icon: "/assets/nav/nav-vote.png",
+      icon: "/assets/nav/nav-vote",
     },
     {
       text: "Validator Groups",
       to: "/app/validators",
-      icon: "/assets/nav/nav-validator-groups.png",
+      icon: "/assets/nav/nav-validator-groups",
     },
     {
       text: "How it works?",
       to: "/app/how",
-      icon: "/assets/nav/nav-how-it-works.png",
+      icon: "/assets/nav/nav-how-it-works",
     },
   ];
   const { address, network, updateNetwork, destroy, kit } = useContractKit();
@@ -92,8 +92,8 @@ export default function layout({ children }: layoutProps) {
                 if (router.asPath.charAt(router.asPath.length - 1) == "#")
                   path = router.asPath.slice(0, -1);
                 if (item.to.includes("dashboard")) disabled = false;
-
-                const classes = path.includes(item.to)
+                const isActive = path.includes(item.to);
+                const classes = isActive
                   ? "bg-primary text-white"
                   : "text-primary-dark hover:bg-primary-light transition-all duration-150";
                 // const classes = disabled
@@ -107,7 +107,10 @@ export default function layout({ children }: layoutProps) {
                     <a
                       className={`${classes} group flex justify-start items-center px-6 py-3 text-lg rounded-md space-x-2`}
                     >
-                      <img src={item.icon} className="h-5 w-5" />
+                      <img
+                        src={`${item.icon}${isActive ? "" : "-outlined"}.svg`}
+                        className="h-5 w-5"
+                      />
                       <span>{item.text}</span>
                     </a>
                   </Link>

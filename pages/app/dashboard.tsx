@@ -181,10 +181,10 @@ export default function dashboard() {
 
               <Transition
                 show={!loadingAccountData}
-                enter="transition-all duration-150 transform"
-                enterFrom="opacity-0 -translate-y-24"
+                enter="transition-all duration-200 transform"
+                enterFrom="opacity-0 -translate-y-36"
                 enterTo="opacity-100"
-                leave="transition-opacity duration-150"
+                leave="transition-opacity duration-200"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
