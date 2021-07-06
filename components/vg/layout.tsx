@@ -14,17 +14,17 @@ export default function layout({ children }: layoutProps) {
     {
       text: "Dashboard",
       to: "/vg/dashboard",
-      icon: "/assets/nav/nav-home.png",
+      icon: "/assets/nav/nav-home",
     },
     {
       text: "View Profile",
       to: "/vg/profile",
-      icon: "/assets/nav/nav-invest.png",
+      icon: "/assets/nav/nav-view-profile",
     },
     {
       text: "Edit Profile",
       to: "/vg/edit",
-      icon: "/assets/nav/nav-invest.png",
+      icon: "/assets/nav/nav-edit-profile",
     },
   ];
   const { destroy } = useContractKit();
@@ -113,7 +113,10 @@ function MenuLink({
             : "text-primary-dark hover:bg-primary-light transition-all duration-150"
         }  group flex justify-start items-center px-6 py-3 text-lg rounded-md space-x-2`}
       >
-        <img src={icon} className="h-5 w-5" />
+        <img
+          src={`${icon}${isActive ? "" : "-outlined"}.svg`}
+          className="h-5 w-5"
+        />
         <span>{text}</span>
       </a>
     </Link>
