@@ -24,9 +24,12 @@ function Dashboard() {
 
   useEffect(() => {
     const GROUP = "0x15ed3f6b79f5fb9ef1d99d37314dd626b3005f0b";
-    const TESTING_ADDRESS = "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5";
+    const TESTING_ADDRESS = [
+      "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
+      "0xcecdcb570c5433d8ba004b7a5a793cc97aa517b6",
+    ];
     if (address === "" || vgListLoading) return;
-    if (address == TESTING_ADDRESS) {
+    if (TESTING_ADDRESS.includes(address)) {
       setIsVG(true);
       state.setUser(GROUP);
     } else {
