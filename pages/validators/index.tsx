@@ -23,10 +23,10 @@ function ValidatorExplorer() {
           <p>Estimated APY</p>
         </div>
       </div>
-      <div className="px-40 py-10 space-y-3">
+      <div className="px-40 py-10 space-y-5">
         {validatorGroups?.ValidatorGroups.map((VG: ValidatorGroup) => (
           <Link href={`/validators/${VG.Address}`}>
-            <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer">
+            <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 hover:border-primary-light-light transform transition-all duration-100">
               <div>{VG.Name ? VG.Name : "Unkown Group"}</div>
               <div className="flex flex-wrap justify-center">
                 {VG.Validators.map((v: Validator) => (

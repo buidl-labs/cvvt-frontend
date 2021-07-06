@@ -26,7 +26,7 @@ function ValidatorExplorer() {
         <div className="py-5 space-y-3">
           {validatorGroups?.ValidatorGroups.map((VG: ValidatorGroup) => (
             <Link href={`/app/validators/${VG.Address}`}>
-              <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer">
+              <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 hover:border-primary-light-light transform transition-all duration-100">
                 <div>{VG.Name ? VG.Name : "Unkown Group"}</div>
                 <div className="flex flex-wrap justify-center">
                   {VG.Validators.map((v: Validator) => (

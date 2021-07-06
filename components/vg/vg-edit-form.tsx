@@ -52,30 +52,32 @@ export default function VGEditForm({
     console.log("starting update");
     send("NEXT");
 
-    updateVG(variables).then(async (res) => {
-      if (res.error) {
-        console.log(res.error);
-        return;
-      }
-      const vgData = res.data.UpdateVGSocialInfo;
-      console.log(vgData);
-      setVG({
-        ...VG,
-        DiscordTag: vgData.DiscordTag,
-        Email: vgData.Email,
-        TwitterUsername: vgData.TwitterUsername,
-        GeographicLocation: vgData.GeographicLocation,
-      });
+    updateVG(variables)
+      .then(async (res) => {
+        if (res.error) {
+          console.log(res.error);
+          return;
+        }
+        const vgData = res.data.UpdateVGSocialInfo;
+        console.log(vgData);
+        setVG({
+          ...VG,
+          DiscordTag: vgData.DiscordTag,
+          Email: vgData.Email,
+          TwitterUsername: vgData.TwitterUsername,
+          GeographicLocation: vgData.GeographicLocation,
+        });
 
-      console.log("VG UPDATED");
+        console.log("VG UPDATED");
 
-      console.log("update complete");
-      send("NEXT");
-    });
+        console.log("update complete");
+        send("NEXT");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div className="mt-10  border border-gray-light rounded-md p-10 text-gray-dark">
+    <div className="mt-10 border border-gray-light rounded-md p-10 text-gray-dark">
       <h3 className="text-xl font-medium">Edit Your Profile</h3>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className="grid grid-cols-2 mt-5 gap-x-10 gap-y-3">
