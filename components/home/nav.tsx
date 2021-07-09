@@ -4,15 +4,20 @@ import React from "react";
 export default function Nav() {
   return (
     <nav className="flex justify-between items-center px-16 py-4 shadow-md">
-      <div className="flex items-center space-x-3">
-        <img src="/assets/celo-logo-32.png" />
-        <h1 className="text-2xl">ChurroFi</h1>
-      </div>
+      <Link href="/" passHref>
+        <a className="flex items-center space-x-3">
+          <img src="/assets/celo-logo-32.png" />
+          <h1 className="text-2xl">ChurroFi</h1>
+        </a>
+      </Link>
       <div className="flex items-center space-x-10">
-        <NavLink isButton={false} to="#">
+        <NavLink isButton={false} to="/validators">
+          Validator Explorer
+        </NavLink>
+        <NavLink isButton={false} to="/how">
           How it works?
         </NavLink>
-        <NavLink isButton={false} to="/vg/dashboard">
+        <NavLink isButton={false} to="/vg">
           For Validator Groups
         </NavLink>
         <NavLink isButton={true} to="/app/dashboard">
@@ -37,8 +42,8 @@ function NavLink({
       <a
         className={`${
           !isButton
-            ? "text-gray text-lg"
-            : "bg-primary px-14 py-3 rounded-md text-white text-base shadow-sm"
+            ? "text-gray text-lg hover:text-gray-dark hover:underline transition-all"
+            : "bg-primary px-14 py-3 rounded-md text-white text-base shadow-sm hover:bg-primary-dark transition-all"
         }`}
         href="#"
       >

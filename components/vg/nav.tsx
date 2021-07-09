@@ -1,4 +1,5 @@
 import useStore from "../../store/vg-store";
+import Link from "next/link";
 
 export default function nav() {
   const user = useStore((state) => state.user);
@@ -6,10 +7,12 @@ export default function nav() {
 
   return (
     <nav className="flex justify-between items-center px-16 py-4 shadow-md flex-shrink-0">
-      <div className="flex items-center space-x-3">
-        <img src="/assets/celo-logo-32.png" />
-        <h1 className="text-2xl">ChurroFI</h1>
-      </div>
+      <Link href="/" passHref>
+        <a className="flex items-center space-x-3">
+          <img src="/assets/celo-logo-32.png" />
+          <h1 className="text-2xl">ChurroFi</h1>
+        </a>
+      </Link>
       {user.length > 0 && (
         <div className="flex items-center">
           <svg
