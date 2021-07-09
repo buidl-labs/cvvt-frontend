@@ -13,6 +13,7 @@ import Exchange from "../components/home/illustrations/exchange";
 
 import React from "react";
 import FAQ from "../components/FAQ";
+import Footer from "../components/home/footer";
 
 export default function Home() {
   const faqs = [
@@ -288,6 +289,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

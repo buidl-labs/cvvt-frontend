@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import FAQ from "../components/FAQ";
 import FeatureGridVG from "../components/home/feature-grid-vg";
+import Footer from "../components/home/footer";
 import Nav from "../components/home/nav";
 
 export default function VGLanding() {
@@ -127,6 +128,7 @@ export default function VGLanding() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }
