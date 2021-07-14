@@ -36,6 +36,7 @@ export default function dashboard() {
   const hasActivatableVotes = state.hasActivatableVotes;
 
   const fetchVotingSummary = useCallback(() => {
+    if (address == null) return;
     setLoadingVotingSummary(true);
     getVotingSummary(kit, address)
       .then((groupVotes) =>
@@ -78,7 +79,7 @@ export default function dashboard() {
   }
 
   useEffect(() => {
-    if (address.length > 0) {
+    if (address != null) {
       // fetches and sets the data to global store.
       fetchAllAccountData(address);
 
@@ -92,6 +93,7 @@ export default function dashboard() {
   }
 
   const activateVG = async () => {
+    if (address == null) return;
     try {
       await performActions(async (k) => {
         const election = await k.contracts.getElection();

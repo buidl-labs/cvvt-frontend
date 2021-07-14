@@ -10,7 +10,7 @@ import VGDash from "../../components/vg/dash";
 function Dashboard() {
   const { connect, address, network } = useContractKit();
   const state = useStore();
-  const userConnected: boolean = useMemo(() => address.length > 0, [address]);
+  const userConnected: boolean = !(address == null);
   const {
     validatorGroups,
     loading: vgListLoading,
@@ -18,6 +18,7 @@ function Dashboard() {
 
   const [isVG, setIsVG] = useState(false);
   useEffect(() => {
+    if (address == null) return;
     state.setUser(address);
     state.setNetwork(network.name);
   }, [address]);
@@ -28,7 +29,7 @@ function Dashboard() {
       "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
       "0xcecdcb570c5433d8ba004b7a5a793cc97aa517b6",
     ];
-    if (address === "" || vgListLoading) return;
+    if (address == null || vgListLoading) return;
     if (TESTING_ADDRESS.includes(address)) {
       setIsVG(true);
       state.setUser(GROUP);

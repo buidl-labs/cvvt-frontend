@@ -93,7 +93,7 @@ function Invest() {
   );
 
   useEffect(() => {
-    if (address.length < 1) return;
+    if (address == null) return;
 
     fetchAccountData(address).then(({ unlockedCelo, nonVotingLockedCelo }) => {
       setUnlockedCelo(unlockedCelo);

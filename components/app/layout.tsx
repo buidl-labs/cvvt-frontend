@@ -53,7 +53,7 @@ export default function layout({ children }: layoutProps) {
   const router = useRouter();
   const state = useStore();
 
-  const userConnected = address.length > 0;
+  const userConnected = !(address == null);
 
   const disconnectWallet = useCallback(() => {
     destroy();
@@ -62,10 +62,10 @@ export default function layout({ children }: layoutProps) {
   }, []);
 
   useEffect(() => {
-    console.log("userConnected", userConnected);
     if (!userConnected) {
       router.push(navigation[0].to);
     } else {
+      if (address == null) return;
       state.setUser(address);
       updateNetwork(Mainnet);
       state.setNetwork(network.name);

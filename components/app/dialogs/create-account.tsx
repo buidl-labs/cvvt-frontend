@@ -21,6 +21,7 @@ function CreateAccount() {
 
   const createAccount = useCallback(async () => {
     console.log("creating account");
+    if (address == null) return;
     try {
       await performActions(async (kit) => {
         const accounts = await kit.contracts.getAccounts();

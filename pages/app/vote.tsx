@@ -64,6 +64,7 @@ function vote() {
   const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true);
 
   const fetchVotingSummary = useCallback(() => {
+    if (address == null) return;
     setLoadingVotingSummary(true);
     getVotingSummary(kit, address)
       .then((groupVotes) =>
@@ -83,6 +84,7 @@ function vote() {
   }, []);
 
   const fetchActivatablePendingVotes = useCallback(() => {
+    if (address == null) return;
     hasActivatablePendingVotes(kit, address).then((hasActivatable) =>
       setHasActivatableVotes(hasActivatable)
     );
@@ -165,7 +167,7 @@ function vote() {
   }, [selected, validatorGroups]);
 
   useEffect(() => {
-    if (address.length < 1) return;
+    if (address == null) return;
     fetchAllAccountData(address);
     fetchVotingSummary();
     fetchActivatablePendingVotes();
@@ -180,8 +182,8 @@ function vote() {
   }, [votingSummary]);
 
   const voteOnVG = async () => {
+    if (address == null) return;
     if (selectedVG == undefined || selectedVG == null) return;
-
     if (!celoAmountToInvest) return;
 
     try {
@@ -205,6 +207,7 @@ function vote() {
   };
 
   const revokeVG = async () => {
+    if (address == null) return;
     try {
       await performActions(async (k) => {
         console.log(k.defaultAccount);
@@ -234,6 +237,7 @@ function vote() {
   };
 
   const activateVG = async () => {
+    if (address == null) return;
     try {
       await performActions(async (k) => {
         const election = await k.contracts.getElection();

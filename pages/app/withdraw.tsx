@@ -80,6 +80,7 @@ function Withdraw() {
   const state = useStore();
 
   const fetchVotingSummary = useCallback(() => {
+    if (address == null) return;
     setLoadingVotingSummary(true);
     getVotingSummary(kit, address)
       .then((groupVotes) =>
@@ -99,6 +100,7 @@ function Withdraw() {
   }, []);
 
   const getPendingWithdrawals = useCallback(() => {
+    if (address == null) return;
     const now = new Date();
     setLoadingPendingWithdrawals(true);
     fetchPendingWithdrawals(kit, address).then(({ pendingWithdrawals }) => {
@@ -142,6 +144,7 @@ function Withdraw() {
   };
 
   const unvoteVG = async (vg: GroupVoting) => {
+    if (address == null) return;
     try {
       await performActions(async (k) => {
         console.log(k.defaultAccount);

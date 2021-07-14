@@ -1,11 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import {
-  ContractKitProvider,
-  Mainnet,
-  Alfajores,
-  Baklava,
-} from "@celo-tools/use-contractkit";
+import { ContractKitProvider } from "@celo-tools/use-contractkit";
 import { createClient, Provider } from "urql";
 import "tailwindcss/tailwind.css";
 import "@celo-tools/use-contractkit/lib/styles.css";
@@ -30,12 +25,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <ContractKitProvider
-        dappName="CVVT"
-        dappDescription="Stake your Celo"
-        dappUrl="http://localhost:3000/"
+        dapp={{
+          name: "ChurroFi",
+          description: "Stake your CELO",
+          url: "https://churrofi.onrender.com",
+        }}
       >
         <Provider value={client}>
-          <Component {...pageProps} />
+          <div suppressHydrationWarning>
+            {typeof window === "undefined" ? null : (
+              <Component {...pageProps} />
+            )}
+          </div>
         </Provider>
       </ContractKitProvider>
     </div>

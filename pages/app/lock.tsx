@@ -73,12 +73,13 @@ function vote() {
   }
 
   useEffect(() => {
-    if (address.length < 1) return;
+    if (address == null) return;
     fetchAllAccountData(address);
     fetchExchangeRate().then((rate) => setExchangeRate(rate));
   }, [address]);
 
   const lockCELO = async () => {
+    if (address == null) return;
     try {
       await performActions(async (k) => {
         // await ensureAccount(k, k.defaultAccount);
@@ -98,6 +99,7 @@ function vote() {
   };
 
   const unlockCELO = async () => {
+    if (address == null) return;
     try {
       await performActions(async (k) => {
         const lockedCelo = await k.contracts.getLockedGold();
@@ -115,6 +117,7 @@ function vote() {
   };
 
   const withdrawCELO = async () => {
+    if (address == null) return;
     console.log("Withdraw CELO", withdrawals[selectedWithdrawal]);
     try {
       await performActions(async (k) => {
