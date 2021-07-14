@@ -8,7 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+<<<<<<< Updated upstream
     "@celo-tools/use-contractkit": "1.0.6",
+=======
+    "@celo-tools/use-contractkit": "^1.0.0-beta.12",
+>>>>>>> Stashed changes
     "@headlessui/react": "^1.2.0",
     "@hookform/resolvers": "^2.6.0",
     "@tailwindcss/forms": "^0.3.3",
@@ -27,6 +31,9 @@
     "xstate": "^4.20.0",
     "yup": "^0.32.9",
     "zustand": "^3.5.2"
+  },
+  "resolutions": {
+    "@celo-tools/use-contractkit/@celo/contractkit": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "17.0.9",

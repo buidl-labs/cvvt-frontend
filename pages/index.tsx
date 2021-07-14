@@ -11,7 +11,6 @@ import PiggyBank from "../components/home/illustrations/piggy-bank";
 import Website from "../components/home/illustrations/website";
 import Exchange from "../components/home/illustrations/exchange";
 
-import React from "react";
 import FAQ from "../components/FAQ";
 import Footer from "../components/home/footer";
 
