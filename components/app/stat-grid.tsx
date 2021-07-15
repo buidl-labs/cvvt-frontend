@@ -13,11 +13,7 @@ export default function StatGrid({ advanced }: { advanced: boolean }) {
   }, []);
 
   return (
-    <ul
-      className={`bg-primary-light grid gap-10 ${
-        advanced ? "grid-cols-4" : "grid-cols-3"
-      }`}
-    >
+    <ul className={`grid gap-10 ${advanced ? "grid-cols-4" : "grid-cols-3"}`}>
       {advanced ? (
         <>
           <StatCard

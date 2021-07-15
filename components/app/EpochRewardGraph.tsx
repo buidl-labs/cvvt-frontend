@@ -4,7 +4,16 @@ import { fetchEpochRewards, getEpochFromBlock } from "../../lib/celo";
 import { EpochReward } from "../../lib/types";
 import Select from "./select";
 import { BigNumber } from "bignumber.js";
-import { AccountClaimType } from "@celo/contractkit/lib/identity/claims/account";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const OPTIONS = ["7 days", "30 days", "All time"];
 function EpochRewardGraph({
@@ -18,7 +27,7 @@ function EpochRewardGraph({
   const [rewards, setRewards] = useState<Map<number, BigNumber>>(
     new Map<number, BigNumber>()
   );
-  const [rewardsToShow, setRewardsToShow] = useState<EpochReward[]>([]);
+  const [rewardsToShow, setRewardsToShow] = useState<any[]>([]);
 
   useEffect(() => {
     fetchEpochRewards(kit, address).then((r) => {
@@ -35,34 +44,14 @@ function EpochRewardGraph({
     const epochNow = getEpochFromBlock(blockN, 17280);
     let fromEpoch;
     if (selected == OPTIONS[0]) {
-      // Calculate rewards for last 7 days
       fromEpoch = epochNow - 7;
-      // const rewardsDisplay = new Array<EpochReward>();
-
-      // for (let i = fromEpoch; i < epochNow; i++) {
-      //   rewardsDisplay.push({
-      //     epoch: i,
-      //     reward: rewards.get(i) || new BigNumber(0),
-      //   });
-      // }
-      // setRewardsToShow(rewardsDisplay);
     } else if (selected == OPTIONS[1]) {
-      // Calculate rewards for last 30 days
       fromEpoch = epochNow - 30;
-      // const rewardsDisplay = new Array<EpochReward>();
-      // for (let i = fromEpoch; i < epochNow; i++) {
-      //   rewardsDisplay.push({
-      //     epoch: i,
-      //     reward: rewards.get(i) || new BigNumber(0),
-      //   });
-      // }
-      // setRewardsToShow(rewardsDisplay);
     } else {
-      // Calculate rewards All Time
       fromEpoch = Math.min(...Array.from(rewards.keys()));
     }
 
-    const rewardsDisplay = new Array<EpochReward>();
+    const rewardsDisplay = new Array<any>();
     let currentReward = new BigNumber(0);
     for (let epoch = fromEpoch; epoch < epochNow; epoch++) {
       currentReward = currentReward.plus(
@@ -71,7 +60,7 @@ function EpochRewardGraph({
 
       rewardsDisplay.push({
         epoch,
-        reward: currentReward,
+        reward: currentReward.div(1e18).toNumber().toFixed(4),
       });
     }
     setRewardsToShow(rewardsDisplay);
@@ -83,18 +72,9 @@ function EpochRewardGraph({
   }, [rewards, selected]);
 
   return (
-    <div className="bg-accent-light-light mt-10 px-10 py-8 border border-gray-light rounded-md">
+    <div className="mt-10 px-10 py-8 border border-gray-light rounded-md">
       <Header selected={selected} setSelected={setSelected} />
-      <pre>
-        {JSON.stringify(
-          rewardsToShow.map((r) => ({
-            epoch: r["epoch"],
-            reward: r["reward"].div(1e18).toString(),
-          })),
-          null,
-          2
-        )}
-      </pre>
+      <RewardsGraph rewards={rewardsToShow} />
     </div>
   );
 }
@@ -122,3 +102,27 @@ const Header = ({
 );
 
 export default EpochRewardGraph;
+
+const RewardsGraph = ({ rewards }: { rewards: any[] }) => (
+  <div className="flex items-center justify-center mt-10">
+    <ResponsiveContainer width={"100%"} aspect={3}>
+      <LineChart
+        data={rewards}
+        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+      >
+        <CartesianGrid stroke="#dedede" strokeDasharray="5 5" />
+        <XAxis dataKey="epoch" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="reward"
+          name="Reward"
+          stroke="#82ca9d"
+          strokeWidth={2}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+);
