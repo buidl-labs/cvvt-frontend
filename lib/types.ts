@@ -67,3 +67,8 @@ export type Question = {
   question: string;
   answer: string;
 };
+
+export type EpochReward = {
+  epoch: number;
+  reward: BigNumber;
+};

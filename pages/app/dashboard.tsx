@@ -15,11 +15,12 @@ import {
   getVotingSummary,
   fetchEpochRewards,
 } from "../../lib/celo";
-import { GroupVoting } from "../../lib/types";
+import { EpochReward, GroupVoting } from "../../lib/types";
 
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/stat-grid";
 import VotingSummary from "../../components/app/voting-summary";
+import EpochRewardGraph from "../../components/app/EpochRewardGraph";
 import { Switch, Transition } from "@headlessui/react";
 import Loader from "react-loader-spinner";
 
@@ -29,6 +30,7 @@ export default function dashboard() {
     useState<boolean>(false);
   const [advanceEnabled, setAdvanceEnabled] = useState<boolean>(false);
   const [loadingAccountData, setLoadingAccountData] = useState<boolean>(false);
+  const [rewards, setRewards] = useState<EpochReward[]>([]);
 
   const { kit, address, connect, destroy, performActions } = useContractKit();
 
@@ -83,7 +85,7 @@ export default function dashboard() {
     if (address != null) {
       // fetches and sets the data to global store.
       fetchAllAccountData(address);
-      fetchEpochRewards(kit, address).then(console.log);
+      fetchEpochRewards(kit, address).then((r) => setRewards(r));
       // gets all VGs voted for by the user.
       fetchVotingSummary();
     }
@@ -193,6 +195,9 @@ export default function dashboard() {
               >
                 <StatGrid advanced={advanceEnabled} />
               </Transition>
+            </div>
+            <div>
+              <EpochRewardGraph address={address} rewards={rewards} />
             </div>
             <VotingSummary
               votingSummary={votingSummary}

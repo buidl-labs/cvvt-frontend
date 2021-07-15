@@ -3,6 +3,7 @@ import { BigNumber } from "bignumber.js";
 import { PendingWithdrawal } from "@celo/contractkit/lib/wrappers/LockedGold";
 import { GroupVote } from "@celo/contractkit/lib/wrappers/Election";
 import { ValidatorGroup } from "@celo/contractkit/lib/wrappers/Validators";
+import { EpochReward } from "./types";
 
 export const getCELOBalance = async (kit: ContractKit, address: string) => {
   const goldToken = await kit.contracts.getGoldToken();
@@ -108,7 +109,7 @@ export const hasActivatablePendingVotes = async (
 export const fetchEpochRewards = async (
   kit: ContractKit,
   address: string
-): Promise<any[]> => {
+): Promise<EpochReward[]> => {
   const validators = await kit.contracts.getValidators();
   const epochSize = (await validators.getEpochSize()).toNumber();
   const blockN = await kit.web3.eth.getBlockNumber();
