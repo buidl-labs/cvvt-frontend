@@ -30,7 +30,6 @@ export default function dashboard() {
     useState<boolean>(false);
   const [advanceEnabled, setAdvanceEnabled] = useState<boolean>(false);
   const [loadingAccountData, setLoadingAccountData] = useState<boolean>(false);
-  const [rewards, setRewards] = useState<EpochReward[]>([]);
 
   const { kit, address, connect, destroy, performActions } = useContractKit();
 
@@ -85,7 +84,7 @@ export default function dashboard() {
     if (address != null) {
       // fetches and sets the data to global store.
       fetchAllAccountData(address);
-      fetchEpochRewards(kit, address).then((r) => setRewards(r));
+
       // gets all VGs voted for by the user.
       fetchVotingSummary();
     }
@@ -197,7 +196,7 @@ export default function dashboard() {
               </Transition>
             </div>
             <div>
-              <EpochRewardGraph address={address} rewards={rewards} />
+              <EpochRewardGraph address={address} kit={kit} />
             </div>
             <VotingSummary
               votingSummary={votingSummary}

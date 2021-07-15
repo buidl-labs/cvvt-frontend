@@ -298,6 +298,7 @@ function vote() {
                   options={options}
                   selected={selected}
                   setSelected={setSelected}
+                  showLabel={true}
                 />
               </div>
               {selected === options[2] ? (

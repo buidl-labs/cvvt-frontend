@@ -149,7 +149,7 @@ export const fetchEpochRewards = async (
   }));
 };
 
-function getEpochFromBlock(block, epochSize) {
+export function getEpochFromBlock(block, epochSize) {
   if (block == 0) return 0;
 
   let epochNumber = Math.floor(block / epochSize);
