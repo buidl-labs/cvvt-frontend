@@ -389,6 +389,7 @@ function vote() {
                   options={options}
                   selected={selected}
                   setSelected={setSelected}
+                  showLabel={true}
                 />
               </div>
               <div className="flex flex-col">
