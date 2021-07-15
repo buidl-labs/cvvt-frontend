@@ -33,50 +33,68 @@ function EpochRewardGraph({
   async function setDataForGraph() {
     const blockN = await kit.web3.eth.getBlockNumber();
     const epochNow = getEpochFromBlock(blockN, 17280);
-
+    let fromEpoch;
     if (selected == OPTIONS[0]) {
-      const fromEpoch = epochNow - 7;
-      const rewardsDisplay = new Array<EpochReward>();
-      for (let i = fromEpoch; i < epochNow; i++) {
-        rewardsDisplay.push({
-          epoch: i,
-          reward: rewards.get(i) || new BigNumber(0),
-        });
-      }
-      setRewardsToShow(rewardsDisplay);
+      // Calculate rewards for last 7 days
+      fromEpoch = epochNow - 7;
+      // const rewardsDisplay = new Array<EpochReward>();
+
+      // for (let i = fromEpoch; i < epochNow; i++) {
+      //   rewardsDisplay.push({
+      //     epoch: i,
+      //     reward: rewards.get(i) || new BigNumber(0),
+      //   });
+      // }
+      // setRewardsToShow(rewardsDisplay);
     } else if (selected == OPTIONS[1]) {
-      const fromEpoch = epochNow - 30;
-      const rewardsDisplay = new Array<EpochReward>();
-      for (let i = fromEpoch; i < epochNow; i++) {
-        rewardsDisplay.push({
-          epoch: i,
-          reward: rewards.get(i) || new BigNumber(0),
-        });
-      }
-      setRewardsToShow(rewardsDisplay);
+      // Calculate rewards for last 30 days
+      fromEpoch = epochNow - 30;
+      // const rewardsDisplay = new Array<EpochReward>();
+      // for (let i = fromEpoch; i < epochNow; i++) {
+      //   rewardsDisplay.push({
+      //     epoch: i,
+      //     reward: rewards.get(i) || new BigNumber(0),
+      //   });
+      // }
+      // setRewardsToShow(rewardsDisplay);
     } else {
-      const fromEpoch = Math.min(...Array.from(rewards.keys()));
-      const rewardsDisplay = new Array<EpochReward>();
-      for (let i = fromEpoch; i < epochNow; i++) {
-        rewardsDisplay.push({
-          epoch: i,
-          reward: rewards.get(i) || new BigNumber(0),
-        });
-      }
-      setRewardsToShow(rewardsDisplay);
+      // Calculate rewards All Time
+      fromEpoch = Math.min(...Array.from(rewards.keys()));
     }
+
+    const rewardsDisplay = new Array<EpochReward>();
+    let currentReward = new BigNumber(0);
+    for (let epoch = fromEpoch; epoch < epochNow; epoch++) {
+      currentReward = currentReward.plus(
+        rewards.get(epoch) || new BigNumber(0)
+      );
+
+      rewardsDisplay.push({
+        epoch,
+        reward: currentReward,
+      });
+    }
+    setRewardsToShow(rewardsDisplay);
   }
 
   useEffect(() => {
     if (rewards.size == 0) return;
-
     setDataForGraph();
   }, [rewards, selected]);
 
   return (
-    <div className="bg-accent-light mt-10 px-10 py-8 border border-gray-light rounded-md">
+    <div className="bg-accent-light-light mt-10 px-10 py-8 border border-gray-light rounded-md">
       <Header selected={selected} setSelected={setSelected} />
-      <pre>{JSON.stringify(rewardsToShow, null, 2)}</pre>
+      <pre>
+        {JSON.stringify(
+          rewardsToShow.map((r) => ({
+            epoch: r["epoch"],
+            reward: r["reward"].div(1e18).toString(),
+          })),
+          null,
+          2
+        )}
+      </pre>
     </div>
   );
 }
