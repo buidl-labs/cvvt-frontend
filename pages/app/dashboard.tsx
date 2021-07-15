@@ -13,6 +13,7 @@ import {
   fetchPendingWithdrawals,
   getVGName,
   getVotingSummary,
+  fetchEpochRewards,
 } from "../../lib/celo";
 import { GroupVoting } from "../../lib/types";
 
@@ -82,7 +83,7 @@ export default function dashboard() {
     if (address != null) {
       // fetches and sets the data to global store.
       fetchAllAccountData(address);
-
+      fetchEpochRewards(kit, address).then(console.log);
       // gets all VGs voted for by the user.
       fetchVotingSummary();
     }
