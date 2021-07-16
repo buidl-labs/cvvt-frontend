@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Footer from "../../components/home/footer";
 import Nav from "../../components/home/nav";
 import useValidatorGroups from "../../hooks/useValidatorGroups";
 import { Validator, ValidatorGroup } from "../../lib/types";
@@ -10,7 +11,6 @@ function ValidatorExplorer() {
   return (
     <div className="text-gray-dark">
       <Nav />
-
       <div className="px-40 py-10 border-b border-gray-light shadow">
         <h3 className="font-medium text-2xl">Validator Groups</h3>
         <div className="mt-8 px-9 grid grid-cols-7 font-medium text-sm text-gray text-center">
@@ -54,6 +54,7 @@ function ValidatorExplorer() {
           </Link>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

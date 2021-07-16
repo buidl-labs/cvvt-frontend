@@ -1,3 +1,4 @@
+import Footer from "../components/home/footer";
 import Nav from "../components/home/nav";
 import How from "../components/how";
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
       <main className="my-32">
         <How />
       </main>
+      <Footer />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { ContractKit } from "@celo/contractkit";
 import React, { useEffect, useState } from "react";
 import { fetchEpochRewards, getEpochFromBlock } from "../../lib/celo";
-import { EpochReward } from "../../lib/types";
 import Select from "./select";
 import { BigNumber } from "bignumber.js";
 import {
