@@ -20,8 +20,8 @@ function ValidatorExplorer() {
             <p>Elected/Total Validators</p>
             <p>Recieved Votes</p>
             <p>Available Votes</p>
-            <p>Transparency Score</p>
-            <p>Performance Score</p>
+            <p>Attestation Score</p>
+            <p>Overall Score</p>
             <p>Estimated APY</p>
           </div>
         </div>
@@ -63,8 +63,14 @@ function ValidatorExplorer() {
                 </div>
                 <div>{formatter.format(VG.RecievedVotes)} CELO</div>
                 <div>{formatter.format(VG.AvailableVotes)} CELO</div>
-                <div>{(VG.TransparencyScore * 100).toFixed(0)} %</div>
-                <div>{(VG.PerformanceScore * 100).toFixed(2)} %</div>
+                <div>{(VG.AttestationScore * 100).toFixed(2)} %</div>
+                <div>
+                  {(
+                    (VG.TransparencyScore * 0.1 + VG.PerformanceScore * 0.9) *
+                    100
+                  ).toFixed(2)}{" "}
+                  %
+                </div>
                 <div>{VG.EstimatedAPY.toFixed(2)} %</div>
               </div>
             </Link>

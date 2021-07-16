@@ -39,6 +39,7 @@ export interface ValidatorGroup {
   VerifiedDns: boolean;
   TransparencyScore: number;
   PerformanceScore: number;
+  AttestationScore: number;
   EstimatedAPY: number;
   RecievedVotes: number;
   AvailableVotes: number;

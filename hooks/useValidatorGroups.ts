@@ -13,6 +13,7 @@ const VG_Query = gql`
       RecievedVotes
       AvailableVotes
       GroupShare
+      AttestationScore
       Validators {
         address
         name
