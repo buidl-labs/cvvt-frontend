@@ -1,27 +1,147 @@
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../components/app/layout";
 
 import useValidatorGroups from "../../../hooks/useValidatorGroups";
 import { Validator, ValidatorGroup } from "../../../lib/types";
+import { FIELDS, Order, SortStatus } from "../../../lib/explorer-types";
 
 const formatter = new Intl.NumberFormat("en-US");
+
+function calculateScore(VG) {
+  return VG.TransparencyScore * 0.1 + VG.PerformanceScore * 0.9;
+}
+
 function ValidatorExplorer() {
-  const { fetching, error, data: validatorGroups } = useValidatorGroups(true);
+  const [validatorGroups, setValidatorGroups] = useState([]);
+  const [sortStatus, setSortStatus] = useState<SortStatus>({
+    key: "score",
+    order: Order.DESC,
+  });
+
+  const {
+    fetching,
+    error,
+    data: validatorGroupsFromAPI,
+  } = useValidatorGroups(true);
+
+  useEffect(() => {
+    if (fetching || error) return;
+
+    if (validatorGroupsFromAPI?.ValidatorGroups.length > 0) {
+      setValidatorGroups(validatorGroupsFromAPI.ValidatorGroups);
+    }
+  }, [fetching, validatorGroupsFromAPI]);
+
+  const handleSort = (key: string) => {
+    // set new sort status
+    let newSortStatus;
+    if (sortStatus.key == key) {
+      newSortStatus = {
+        key,
+        order: sortStatus.order == Order.ASC ? Order.DESC : Order.ASC,
+      };
+      setSortStatus(newSortStatus);
+    } else {
+      newSortStatus = { key, order: Order.DESC };
+      setSortStatus(newSortStatus);
+    }
+
+    // handle sorting logic
+    let sortFn;
+    if (newSortStatus.key == "score") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? calculateScore(a) - calculateScore(b)
+          : calculateScore(b) - calculateScore(a);
+    } else if (newSortStatus.key == "name") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.Name > b.Name
+            ? 1
+            : -1
+          : a.Name < b.Name
+          ? 1
+          : -1;
+    } else if (newSortStatus.key == "available") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.AvailableVotes - b.AvailableVotes
+          : b.AvailableVotes - a.AvailableVotes;
+    } else if (newSortStatus.key == "recieved") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.RecievedVotes - b.RecievedVotes
+          : b.RecievedVotes - a.RecievedVotes;
+    } else if (newSortStatus.key == "attestation") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.AttestationScore - b.AttestationScore
+          : b.AttestationScore - a.AttestationScore;
+    } else if (newSortStatus.key == "apy") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.EstimatedAPY - b.EstimatedAPY
+          : b.EstimatedAPY - a.EstimatedAPY;
+    } else if (newSortStatus.key == "validators") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.Validators.length - b.Validators.length
+          : b.Validators.length - a.Validators.length;
+    }
+
+    setValidatorGroups(validatorGroups.sort(sortFn));
+  };
+
   return (
     <Layout>
       <div className="text-gray-dark">
         <div className="border-b-2 border-gray-light pb-5">
           <h3 className="font-medium text-2xl">Validator Groups</h3>
           <div className="mt-8 px-9 grid grid-cols-7 font-medium text-sm text-gray text-center">
-            <p>Group Name</p>
-            <p>Elected/Total Validators</p>
-            <p>Recieved Votes</p>
-            <p>Available Votes</p>
-            <p>Transparency Score</p>
-            <p>Performance Score</p>
-            <p>Estimated APY</p>
+            {FIELDS.map((f) => (
+              <button
+                key={f.key}
+                onClick={() => handleSort(f.key)}
+                className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded p-2 flex items-center justify-center ${
+                  sortStatus.key == f.key && "text-gray-dark"
+                }`}
+              >
+                <span className="truncate">{f.name}</span>
+                {sortStatus.key == f.key && (
+                  <span className="ml-0.5">
+                    {sortStatus.order == Order.DESC ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
         </div>
         <Transition
@@ -38,7 +158,7 @@ function ValidatorExplorer() {
           </div>
         </Transition>
         <div className="py-5 space-y-3">
-          {validatorGroups?.ValidatorGroups.map((VG: ValidatorGroup) => (
+          {validatorGroups?.map((VG: ValidatorGroup) => (
             <Link href={`/app/validators/${VG.Address}`}>
               <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 hover:border-primary-light-light transform transition-all duration-100">
                 <div>{VG.Name ? VG.Name : "Unkown Group"}</div>
@@ -61,8 +181,8 @@ function ValidatorExplorer() {
                 </div>
                 <div>{formatter.format(VG.RecievedVotes)} CELO</div>
                 <div>{formatter.format(VG.AvailableVotes)} CELO</div>
-                <div>{(VG.TransparencyScore * 100).toFixed(0)} %</div>
-                <div>{(VG.PerformanceScore * 100).toFixed(2)} %</div>
+                <div>{(VG.AttestationScore * 100).toFixed(2)} %</div>
+                <div>{(calculateScore(VG) * 100).toFixed(2)} %</div>
                 <div>{VG.EstimatedAPY.toFixed(2)} %</div>
               </div>
             </Link>
