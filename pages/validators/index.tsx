@@ -139,18 +139,18 @@ function ValidatorExplorer() {
     <div className="text-gray-dark">
       <Nav />
       <div className="flex flex-col">
-        <div className="px-40 py-10 border-b border-gray-light shadow">
+        <div className="px-40 pt-10 pb-6 border-b border-gray-light shadow">
           <h3 className="font-medium text-2xl">Validator Groups</h3>
-          <div className="mt-8 px-9 grid grid-cols-7 font-medium text-sm text-gray text-center">
+          <div className="mt-8 px-9 space-x-2 grid grid-cols-7 font-medium text-gray text-sm text-center">
             {FIELDS.map((f) => (
               <button
                 key={f.key}
                 onClick={() => handleSort(f.key)}
-                className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded py-2 flex items-center justify-center ${
+                className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded p-2 flex items-center justify-center ${
                   sortStatus.key == f.key && "text-gray-dark"
                 }`}
               >
-                <span>{f.name}</span>
+                <span className="truncate">{f.name}</span>
                 {sortStatus.key == f.key && (
                   <span className="ml-0.5">
                     {sortStatus.order == Order.DESC ? (
