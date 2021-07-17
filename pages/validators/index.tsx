@@ -5,6 +5,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Footer from "../../components/home/footer";
 import Nav from "../../components/home/nav";
 import useValidatorGroups from "../../hooks/useValidatorGroups";
+import { FIELDS, Order, SortStatus } from "../../lib/explorer-types";
 import { Validator, ValidatorGroup } from "../../lib/types";
 
 const formatter = new Intl.NumberFormat("en-US");
@@ -12,47 +13,6 @@ const formatter = new Intl.NumberFormat("en-US");
 function calculateScore(VG) {
   return VG.TransparencyScore * 0.1 + VG.PerformanceScore * 0.9;
 }
-
-enum Order {
-  ASC,
-  DESC,
-}
-
-type SortStatus = {
-  key: string;
-  order: Order;
-};
-
-const FIELDS = [
-  {
-    name: "Group Name",
-    key: "name",
-  },
-  {
-    name: "Elected/Total Validators",
-    key: "validators",
-  },
-  {
-    name: "Recieved Votes",
-    key: "recieved",
-  },
-  {
-    name: "Available Votes",
-    key: "available",
-  },
-  {
-    name: "Attestation Score",
-    key: "attestation",
-  },
-  {
-    name: "Overall Score",
-    key: "score",
-  },
-  {
-    name: "Estimated APY",
-    key: "apy",
-  },
-];
 
 function ValidatorExplorer() {
   const [validatorGroups, setValidatorGroups] = useState([]);
