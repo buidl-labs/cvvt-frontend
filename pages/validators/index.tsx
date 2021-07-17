@@ -1,13 +1,17 @@
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
-import { spawn } from "xstate";
+
 import Footer from "../../components/home/footer";
 import Nav from "../../components/home/nav";
 import useValidatorGroups from "../../hooks/useValidatorGroups";
 import { Validator, ValidatorGroup } from "../../lib/types";
 
 const formatter = new Intl.NumberFormat("en-US");
+
+function calculateScore(VG) {
+  return VG.TransparencyScore * 0.1 + VG.PerformanceScore * 0.9;
+}
 
 enum Order {
   ASC,
@@ -72,14 +76,63 @@ function ValidatorExplorer() {
   }, [fetching, validatorGroupsFromAPI]);
 
   const handleSort = (key: string) => {
-    if (sortStatus.key == key)
-      setSortStatus((currStatus) => ({
+    // set new sort status
+    let newSortStatus;
+    if (sortStatus.key == key) {
+      newSortStatus = {
         key,
-        order: currStatus.order == Order.ASC ? Order.DESC : Order.ASC,
-      }));
-    else setSortStatus({ key, order: Order.DESC });
+        order: sortStatus.order == Order.ASC ? Order.DESC : Order.ASC,
+      };
+      setSortStatus(newSortStatus);
+    } else {
+      newSortStatus = { key, order: Order.DESC };
+      setSortStatus(newSortStatus);
+    }
 
-    console.log(sortStatus);
+    // handle sorting logic
+    let sortFn;
+    if (newSortStatus.key == "score") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? calculateScore(a) - calculateScore(b)
+          : calculateScore(b) - calculateScore(a);
+    } else if (newSortStatus.key == "name") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.Name > b.Name
+            ? 1
+            : -1
+          : a.Name < b.Name
+          ? 1
+          : -1;
+    } else if (newSortStatus.key == "available") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.AvailableVotes - b.AvailableVotes
+          : b.AvailableVotes - a.AvailableVotes;
+    } else if (newSortStatus.key == "recieved") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.RecievedVotes - b.RecievedVotes
+          : b.RecievedVotes - a.RecievedVotes;
+    } else if (newSortStatus.key == "attestation") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.AttestationScore - b.AttestationScore
+          : b.AttestationScore - a.AttestationScore;
+    } else if (newSortStatus.key == "apy") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.EstimatedAPY - b.EstimatedAPY
+          : b.EstimatedAPY - a.EstimatedAPY;
+    } else if (newSortStatus.key == "validators") {
+      sortFn = (a, b) =>
+        newSortStatus.order == Order.ASC
+          ? a.Validators.length - b.Validators.length
+          : b.Validators.length - a.Validators.length;
+    }
+
+    setValidatorGroups(validatorGroups.sort(sortFn));
   };
 
   return (
@@ -100,7 +153,7 @@ function ValidatorExplorer() {
                 <span>{f.name}</span>
                 {sortStatus.key == f.key && (
                   <span className="ml-0.5">
-                    {sortStatus.order == Order.ASC ? (
+                    {sortStatus.order == Order.DESC ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4"
@@ -155,6 +208,7 @@ function ValidatorExplorer() {
                 <div className="flex flex-wrap justify-center">
                   {VG.Validators.map((v: Validator) => (
                     <svg
+                      key={v.address}
                       className={`h-4 w-4 ml-2 shadow-lg  ${
                         v.currently_elected ? "text-gray-dark" : "text-gray"
                       }`}
@@ -172,13 +226,7 @@ function ValidatorExplorer() {
                 <div>{formatter.format(VG.RecievedVotes)} CELO</div>
                 <div>{formatter.format(VG.AvailableVotes)} CELO</div>
                 <div>{(VG.AttestationScore * 100).toFixed(2)} %</div>
-                <div>
-                  {(
-                    (VG.TransparencyScore * 0.1 + VG.PerformanceScore * 0.9) *
-                    100
-                  ).toFixed(2)}{" "}
-                  %
-                </div>
+                <div>{(calculateScore(VG) * 100).toFixed(2)} %</div>
                 <div>{VG.EstimatedAPY.toFixed(2)} %</div>
               </div>
             </Link>
