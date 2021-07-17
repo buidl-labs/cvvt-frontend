@@ -1,3 +1,4 @@
+import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import React from "react";
 import Layout from "../../../components/app/layout";
@@ -23,6 +24,19 @@ function ValidatorExplorer() {
             <p>Estimated APY</p>
           </div>
         </div>
+        <Transition
+          show={fetching}
+          enter="transition-opacity duration-100"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-50"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-x-0 inset-y-0 bg-white bg-opacity-70 flex justify-center items-center text-xl">
+            Fetching Validator Groups...
+          </div>
+        </Transition>
         <div className="py-5 space-y-3">
           {validatorGroups?.ValidatorGroups.map((VG: ValidatorGroup) => (
             <Link href={`/app/validators/${VG.Address}`}>
