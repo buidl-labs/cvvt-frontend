@@ -168,7 +168,9 @@ function ValidatorExplorer() {
           {validatorGroups?.map((VG: ValidatorGroup) => (
             <Link href={`/validators/${VG.Address}`} key={VG.Address}>
               <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 hover:border-primary-light-light transform transition-all duration-100">
-                <div>{VG.Name ? VG.Name : "Unkown Group"}</div>
+                <div className="whitespace-nowrap truncate">
+                  {VG.Name ? VG.Name : "Unkown Group"}
+                </div>
                 <div className="flex flex-wrap justify-center">
                   {VG.Validators.map((v: Validator) => (
                     <svg
@@ -187,11 +189,21 @@ function ValidatorExplorer() {
                     </svg>
                   ))}
                 </div>
-                <div>{formatter.format(VG.RecievedVotes)} CELO</div>
-                <div>{formatter.format(VG.AvailableVotes)} CELO</div>
-                <div>{(VG.AttestationScore * 100).toFixed(2)} %</div>
-                <div>{(calculateScore(VG) * 100).toFixed(2)} %</div>
-                <div>{VG.EstimatedAPY.toFixed(2)} %</div>
+                <div className="whitespace-nowrap truncate">
+                  {formatter.format(VG.RecievedVotes)} CELO
+                </div>
+                <div className="whitespace-nowrap truncate">
+                  {formatter.format(VG.AvailableVotes)} CELO
+                </div>
+                <div className="whitespace-nowrap truncate">
+                  {(VG.AttestationScore * 100).toFixed(2)} %
+                </div>
+                <div className="whitespace-nowrap truncate">
+                  {(calculateScore(VG) * 100).toFixed(2)} %
+                </div>
+                <div className="whitespace-nowrap truncate">
+                  {VG.EstimatedAPY.toFixed(2)} %
+                </div>
               </div>
             </Link>
           ))}
