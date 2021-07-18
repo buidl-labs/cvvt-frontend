@@ -1,4 +1,7 @@
 import Link from "next/link";
+import React from "react";
+import ReactTooltip from "react-tooltip";
+import InfoIcon from "../icons/info";
 
 export default function VotingSummary({
   votingSummary,
@@ -11,9 +14,20 @@ export default function VotingSummary({
 }) {
   return (
     <div className="mt-10 pt-8">
-      <h3 className="text-xl font-medium">
-        Current {showWithdraw ? "Investment" : "Voting"} Summary
-      </h3>
+      <ReactTooltip place="top" type="dark" effect="solid" />
+      <div className="flex justify-start space-x-3 items-center">
+        <h3 className="text-xl font-medium">
+          Current {showWithdraw ? "Investment" : "Voting"} Summary
+        </h3>
+        <button
+          data-tip={
+            "This summary highlights the performance & returns of your invested CELO"
+          }
+          className="-mb-1"
+        >
+          <InfoIcon />
+        </button>
+      </div>
       <div className="overflow-hidden border border-gray-light rounded-lg shadow-sm mt-5">
         <table className="min-w-full divide-y divide-gray-light">
           <thead className="border-b border-gray-light">
