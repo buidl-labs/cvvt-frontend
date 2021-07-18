@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ContractKitProvider } from "@celo-tools/use-contractkit";
 import { createClient, Provider } from "urql";
+
 import "tailwindcss/tailwind.css";
 import "@celo-tools/use-contractkit/lib/styles.css";
 import "../style/global.css";
@@ -10,7 +11,7 @@ const client = createClient({
   url: "https://celo-tool-backend.onrender.com/query",
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Head>
@@ -34,7 +35,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Provider value={client}>
           <div suppressHydrationWarning>
             {typeof window === "undefined" ? null : (
-              <Component {...pageProps} />
+              <>
+                <Component {...pageProps} />
+              </>
             )}
           </div>
         </Provider>
@@ -42,4 +45,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </div>
   );
 }
-export default MyApp;
+export default App;

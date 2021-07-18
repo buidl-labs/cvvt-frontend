@@ -6,6 +6,7 @@ import Layout from "../../../components/app/layout";
 import useValidatorGroups from "../../../hooks/useValidatorGroups";
 import { Validator, ValidatorGroup } from "../../../lib/types";
 import { FIELDS, Order, SortStatus } from "../../../lib/explorer-types";
+import ReactTooltip from "react-tooltip";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -98,6 +99,7 @@ function ValidatorExplorer() {
     <Layout>
       <div className="text-gray-dark">
         <div className="border-b-2 border-gray-light pb-5">
+          <ReactTooltip place="top" type="dark" effect="solid" />
           <h3 className="font-medium text-2xl">Validator Groups</h3>
           <div className="mt-8 px-9 grid grid-cols-7 font-medium text-sm text-gray text-center">
             {FIELDS.map((f) => (
@@ -107,6 +109,8 @@ function ValidatorExplorer() {
                 className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded p-2 flex items-center justify-center ${
                   sortStatus.key == f.key && "text-gray-dark"
                 }`}
+                data-tip={f.tip && f.tip}
+                data-delay-show="350"
               >
                 <span className="truncate">{f.name}</span>
                 {sortStatus.key == f.key && (

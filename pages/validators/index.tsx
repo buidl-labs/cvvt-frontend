@@ -7,6 +7,7 @@ import Nav from "../../components/home/nav";
 import useValidatorGroups from "../../hooks/useValidatorGroups";
 import { FIELDS, Order, SortStatus } from "../../lib/explorer-types";
 import { Validator, ValidatorGroup } from "../../lib/types";
+import ReactTooltip from "react-tooltip";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -97,6 +98,7 @@ function ValidatorExplorer() {
 
   return (
     <div className="text-gray-dark">
+      <ReactTooltip place="top" type="dark" effect="solid" />
       <Nav />
       <div className="flex flex-col">
         <div className="px-40 pt-10 pb-6 border-b border-gray-light shadow">
@@ -109,6 +111,8 @@ function ValidatorExplorer() {
                 className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded p-2 flex items-center justify-center ${
                   sortStatus.key == f.key && "text-gray-dark"
                 }`}
+                data-tip={f.tip && f.tip}
+                data-delay-show="350"
               >
                 <span className="truncate">{f.name}</span>
                 {sortStatus.key == f.key && (
