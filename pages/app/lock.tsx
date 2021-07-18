@@ -22,6 +22,7 @@ import { calculateBarWidth, fetchExchangeRate } from "../../lib/utils";
 
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
+import ReactTooltip from "react-tooltip";
 
 const options = ["Lock", "Unlock", "Withdraw"];
 function vote() {
@@ -136,6 +137,7 @@ function vote() {
   return (
     <Layout>
       <>
+        <ReactTooltip place="top" type="dark" effect="solid" />
         <header className="flex justify-between items-baseline">
           <h3 className="text-gray-dark font-medium text-2xl">
             Lock/Unlock CELO
@@ -203,7 +205,9 @@ function vote() {
                   <CeloCoin />
                   <h4 className="text-sm font-medium ml-2.5">Unlocked CELO</h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="CELO which has not been locked yet">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {state.userBalances.unlockedCelo.div(1e18).toFormat(2)}{" "}
@@ -224,7 +228,9 @@ function vote() {
                   <CeloCoin />
                   <h4 className="text-sm font-medium ml-2.5">Locked CELO</h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="CELOs held in escrow at the Locked Gold contract.">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {state.userBalances.votingLockedCelo
@@ -251,7 +257,9 @@ function vote() {
                     Withdrawable CELO
                   </h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="Withdrawable CELO can be withdrawn into your account, it’ll then become Unlocked CELO.">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {state.userBalances.withdrawableCelo.div(1e18).toFormat(2)}{" "}
@@ -272,7 +280,9 @@ function vote() {
                   <CeloCoin />
                   <h4 className="text-sm font-medium ml-2.5">Unlocking CELO</h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="Unlocking CELO becomes available for withdrawal in 3 days of unlocking.">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {state.userBalances.unlockingCelo.div(1e18).toFormat(2)}{" "}

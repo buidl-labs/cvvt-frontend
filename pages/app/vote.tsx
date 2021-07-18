@@ -30,6 +30,7 @@ import { VGSuggestion, GroupVoting } from "../../lib/types";
 
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
+import ReactTooltip from "react-tooltip";
 
 const options = ["Vote", "Revoke"];
 function vote() {
@@ -262,6 +263,7 @@ function vote() {
   return (
     <Layout>
       <>
+        <ReactTooltip place="top" type="dark" effect="solid" />
         <ActivateVGDialog open={hasActivatableVotes} activate={activateVG} />
         {vgDialogOpen ? (
           selected === options[0] ? (
@@ -325,7 +327,9 @@ function vote() {
                     Unused Locked CELO
                   </h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="Locked CELO which has not been used yet for voting.">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {state.userBalances.nonVotingLockedCelo.div(1e18).toFormat(2)}{" "}
@@ -348,7 +352,9 @@ function vote() {
                     Pending-Vote CELO
                   </h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="Locked CELO which have been used for voting but the vote has not been activated yet.">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {pendingCELO.div(1e18).toFormat(2)}{" "}
@@ -367,7 +373,9 @@ function vote() {
                     Activated-Voting CELO
                   </h4>
                 </div>
-                <InfoIcon />
+                <button data-tip="Locked CELO which has been used for voting and the vote has also been activated.">
+                  <InfoIcon />
+                </button>
               </div>
               <p className="text-xl font-medium">
                 {activeCELO.div(1e18).toFormat(2)}{" "}
