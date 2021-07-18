@@ -17,6 +17,8 @@ import { fetchExchangeRate, fetchTargetAPY } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
 import useVG from "../../hooks/useValidatorGroupSuggestion";
 import { VGSuggestion } from "../../lib/types";
+import InfoIcon from "../../components/icons/info";
+import ReactTooltip from "react-tooltip";
 
 const InvestMachine = createMachine({
   id: "InvestFlow",
@@ -166,6 +168,7 @@ function Invest() {
   return (
     <Layout>
       <>
+        <ReactTooltip place="top" type="dark" effect="solid" />
         <VoteVGDialog
           open={vgDialogOpen}
           setOpen={setVGDialogOpen}
@@ -183,13 +186,23 @@ function Invest() {
                 : "border-primary bg-primary-light-light"
             } rounded-md py-8 px-10`}
           >
-            <h3
-              className={`${
-                current.matches("idle") ? "text-gray-dark" : "text-primary-dark"
-              } text-xl`}
-            >
-              Step 1: Investment Amount
-            </h3>
+            <div className="flex items-center justify-start  space-x-3">
+              <h3
+                className={`${
+                  current.matches("idle")
+                    ? "text-gray-dark"
+                    : "text-primary-dark"
+                } text-xl`}
+              >
+                Step 1: Investment Amount
+              </h3>
+              <div
+                className="-mb-1"
+                data-tip="This is the amount of CELOs you want to invest to gain profits."
+              >
+                <InfoIcon />
+              </div>
+            </div>
             <div className={`${!current.matches("idle") && "hidden"}`}>
               <div className="flex items-end mt-5">
                 <div className="w-1/3">
@@ -288,15 +301,23 @@ function Invest() {
                 : "border-primary bg-primary-light-light"
             } rounded-md py-8 px-10`}
           >
-            <h3
-              className={`${
-                current.matches("activating") || current.matches("completed")
-                  ? "text-primary-dark"
-                  : "text-gray-dark"
-              } text-xl`}
-            >
-              Step 2: Vote For Validator
-            </h3>
+            <div className="flex items-center justify-start space-x-3">
+              <h3
+                className={`${
+                  current.matches("activating") || current.matches("completed")
+                    ? "text-primary-dark"
+                    : "text-gray-dark"
+                } text-xl`}
+              >
+                Step 2: Vote For Validator
+              </h3>
+              <button
+                className="-mb-1"
+                data-tip="In order to invest CELOs, you need to cast vote towards electing Validator Groups on the network."
+              >
+                <InfoIcon />
+              </button>
+            </div>
             <div className={`${!current.matches("voting") && "hidden"}`}>
               <div className="text-gray mt-5">
                 <p className="font-medium">
@@ -389,9 +410,17 @@ function Invest() {
 
           {/* Activate Votes Panel */}
           <div className="border border-gray-light rounded-md py-8 px-10">
-            <h3 className="text-gray-dark text-xl">
-              Step 3: Activate Investment
-            </h3>
+            <div className="flex items-center justify-start space-x-3">
+              <h3 className="text-gray-dark text-xl">
+                Step 3: Activate Investment
+              </h3>
+              <button
+                className="-mb-1"
+                data-tip="For security purposes, you need to Activate Vote in the next epoch. Only then the investment process will be complete."
+              >
+                <InfoIcon />
+              </button>
+            </div>
             <div className={`${!current.matches("activating") && "hidden"}`}>
               <p className="text-gray font-medium mt-5">Almost there!</p>
               <p className="text-gray mt-3">
