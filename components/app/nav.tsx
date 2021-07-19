@@ -1,5 +1,6 @@
 import useStore from "../../store/store";
 import Link from "next/link";
+import ChurroFi from "../icons/churrofi";
 
 export default function nav() {
   const user = useStore((state) => state.user);
@@ -8,9 +9,8 @@ export default function nav() {
   return (
     <nav className="flex justify-between items-center px-16 py-4 shadow-md flex-shrink-0">
       <Link href="/" passHref>
-        <a className="flex items-center space-x-3">
-          <img src="/assets/celo-logo-32.png" />
-          <h1 className="text-2xl">ChurroFi</h1>
+        <a>
+          <ChurroFi />
         </a>
       </Link>
       {user.length > 0 && (
