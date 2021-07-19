@@ -6,7 +6,7 @@ export default function FAQ({ faqs }: { faqs: Question[] }) {
     <div>
       <div className="mx-auto">
         <div className="mx-auto max-w-4xl">
-          <dl className="mt-6 space-y-6">
+          <dl className="mt-6 space-y-3">
             {faqs.map((faq) => (
               <Disclosure
                 as="div"

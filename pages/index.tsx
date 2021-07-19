@@ -59,10 +59,8 @@ export default function Home() {
       <main className="mb-32 mt-52">
         <div className="px-36 grid grid-cols-2 gap-x-16">
           <div className="text-gray-dark">
-            <div className="text-secondary-dark text-sm">
-              Invest • Earn • Grow
-            </div>
-            <h2 className="mt-3 font-serif text-4xl">
+            <div className="text-secondary text-sm">Invest • Earn • Grow</div>
+            <h2 className="mt-3 font-serif font-medium text-4xl">
               Earn Profits by Investing CELO
             </h2>
             <p className="mt-5 leading-relaxed">
@@ -188,7 +186,8 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="mt-44">
+        {/* TESTIMONIAL SECTION WILL BE INCLUDED ONCE WE HAVE REVIEWS */}
+        {/* <div className="mt-44">
           <div className="text-center">
             <p className="text-gray text-sm">Don't take our word for it</p>
             <p className="mt-5  text-3xl font-serif">
@@ -198,8 +197,8 @@ export default function Home() {
           <div className="mt-12">
             <TestimonialGrid />
           </div>
-        </div>
-        <div className="mt-32 px-36">
+        </div> */}
+        <div className="mt-40 px-36 text-gray-dark">
           <div className="text-center">
             <p className="text-gray text-sm">Your Question, Answered</p>
             <p className="mt-5  text-3xl font-serif">
@@ -279,7 +278,7 @@ export default function Home() {
               </defs>
             </svg>
           </div>
-          <div className="text-center">
+          <div className="text-center text-gray-dark">
             <p className="text-gray text-sm">Staking made Easy</p>
             <p className="mt-5  text-3xl font-serif">
               Benefits of Investing CELO

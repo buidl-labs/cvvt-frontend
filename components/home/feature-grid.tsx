@@ -43,7 +43,7 @@ function FeatureItem({
   return (
     <div className="flex flex-col items-center">
       {asset}
-      <h4 className="mt-10 text-xl font-medium">{heading}</h4>
+      <h4 className="mt-10 text-xl font-medium text-gray-dark">{heading}</h4>
       <p className="mt-5 text-gray">{subtext}</p>
     </div>
   );
