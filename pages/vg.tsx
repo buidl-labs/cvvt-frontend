@@ -51,7 +51,7 @@ export default function VGLanding() {
               including greater Epoch Rewards. Here’s how it works...
             </p>
             <Link href="/vg/dashboard" passHref>
-              <a className="py-2 text-lg bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md flex justify-center mt-10 whitespace-nowrap truncate">
+              <a className="py-2 text-lg bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md flex justify-center mt-10 whitespace-nowrap truncate w-3/4">
                 Validator Group’s Dashboard
               </a>
             </Link>
@@ -95,7 +95,7 @@ export default function VGLanding() {
               </defs>
             </svg>
           </div> */}
-          <div className="text-center">
+          <div className="text-center text-gray-dark">
             <p className="text-gray text-sm">Make the most of your profile &</p>
             <p className="mt-3  text-3xl font-serif">
               Boost Your Validator Group’s Performance
@@ -103,7 +103,7 @@ export default function VGLanding() {
             <FeatureGridVG />
           </div>
         </section>
-        <section className="mt-32 px-36">
+        <section className="mt-32 px-36 text-gray-dark">
           <div className="text-center">
             <p className="text-gray text-sm">Your Question, Answered</p>
             <p className="mt-5  text-3xl font-serif">

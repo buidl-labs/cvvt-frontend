@@ -56,6 +56,11 @@ function How() {
             <h2 className="text-gray-dark text-4xl font-medium font-serif mt-2">
               Investing CELO is Easy, as it should be.
             </h2>
+            <p className="text-gray mt-5 w-2/3 mx-auto">
+              ChurroFi is a simple & smart way to put CELOs to work & earn
+              profits on the go! All you need to get started is a Celo Wallet
+              and some CELOs in it.
+            </p>
           </div>
           <section className="my-32 space-y-28">
             <div>
@@ -115,7 +120,15 @@ function How() {
           </section>
         </div>
       </div>
-      <FAQ faqs={faqs} />
+      <div>
+        <div className="text-center mb-14 mt-4">
+          <p className="text-gray text-sm">Your Question, Answered</p>
+          <p className="mt-5  text-3xl font-serif">
+            Frequently Asked Questions
+          </p>
+        </div>
+        <FAQ faqs={faqs} />
+      </div>
     </>
   );
 }
