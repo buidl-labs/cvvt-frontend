@@ -23,7 +23,7 @@ function ValidatorGroupPage() {
     <>
       <Nav />
       {VG && (
-        <div className="px-40 mt-48">
+        <div className="px-40 mt-48 mb-24">
           <ProfileHeader VG={VG} />
           <PerformanceMetricsPanel VG={VG} />
           <ValidatorsPanel VG={VG} />
