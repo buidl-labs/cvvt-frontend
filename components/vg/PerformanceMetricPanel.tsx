@@ -1,3 +1,5 @@
+import React from "react";
+import ReactTooltip from "react-tooltip";
 import { ValidatorGroup } from "../../lib/types";
 
 const formatter = new Intl.NumberFormat("en-US");
@@ -8,11 +10,17 @@ export default function PerformanceMetricsPanel({
 }) {
   return (
     <div className="mt-10 border border-gray-light rounded-md p-10 text-gray-dark">
+      <ReactTooltip place="top" type="dark" effect="solid" />
       <h4 className="text-xl font-medium">Performance Metrics</h4>
       {/* first row in performance metrics panel */}
       <div className="grid grid-cols-4 mt-5 gap-28">
         <div className="grid grid-rows-2 gap-1 text-left">
-          <p className="text-sm text-gray">Elected/Total Validators</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Validators Elected vs Total Validators in the Group"
+          >
+            Elected/Total Validators
+          </p>
           <div className="text-2xl font-medium flex flex-wrap">
             {VG.Validators.map((v) => (
               <svg
@@ -32,56 +40,101 @@ export default function PerformanceMetricsPanel({
           </div>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Transparency Score</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="A score calculated based on how transparent the Validator Group is with providing information related to it."
+          >
+            Transparency Score
+          </p>
           <p className="text-2xl font-medium">
             {(VG.TransparencyScore * 100).toFixed(2)}/100
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Performance Score</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="A score calculated based on how efficient the Validator Group has been in the past."
+          >
+            Performance Score
+          </p>
           <p className="text-2xl font-medium">
             {(VG.PerformanceScore * 100).toFixed(2)}/100
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Estimated APY</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Estimated Annual Percentage of Yield that the Validator Group can provide on investment."
+          >
+            Estimated APY
+          </p>
           <p className="text-2xl font-medium">{VG.EstimatedAPY.toFixed(2)}%</p>
         </div>
       </div>
       {/* second row in performance metrics panel */}
       <div className="grid grid-cols-6 mt-10 gap-20">
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Recieved Votes</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Votes received by the Validator Group"
+          >
+            Recieved Votes
+          </p>
           <p className="text-base font-medium">
             {formatter.format(VG.RecievedVotes)} CELO
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Available Votes</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Votes available to be received by the Validator Group"
+          >
+            Available Votes
+          </p>
           <p className="text-base font-medium">
             {formatter.format(VG.AvailableVotes)} CELO
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Epochs Served</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Total number of epochs served by the Validator Group on Mainnet"
+          >
+            Epochs Served
+          </p>
           <p className="text-base font-medium">
             {formatter.format(VG.EpochsServed)}
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Locked CELO</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Amount of CELOs locked by the Validator Group."
+          >
+            Locked CELO
+          </p>
           <p className="text-base font-medium">
             {formatter.format(VG.LockedCelo)} CELO
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Slashing Score</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="Current Slashing Penalty ratio for the Validator Group. A score of 1.0 refers to no slashing penalty."
+          >
+            Slashing Score
+          </p>
           <p className="text-base font-medium">
             {VG.SlashingPenaltyScore.toFixed(2)}
           </p>
         </div>
         <div className="grid grid-rows-2 gap-1 text-center">
-          <p className="text-sm text-gray">Group Score</p>
+          <p
+            className="text-sm text-gray"
+            data-tip="How regularly that validator participates in consensus. A score of 100% refers to highest participation."
+          >
+            Group Score
+          </p>
           <p className="text-base font-medium">
             {(VG.GroupScore * 100).toFixed(2)}%
           </p>
