@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Nav() {
   return (
-    <nav className="flex justify-between items-center px-16 py-4 shadow-md">
+    <nav className="bg-white fixed inset-x-0 top-0 z-40 flex justify-between items-center px-16 py-4 shadow-md">
       <Link href="/" passHref>
         <a className="flex items-center space-x-3">
           <img src="/assets/celo-logo-32.png" />

@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div>
       <Nav />
-      <main className="my-32">
+      <main className="mb-32 mt-52">
         <div className="px-36 grid grid-cols-2 gap-x-16">
           <div className="text-gray-dark">
             <div className="text-secondary-dark text-sm">

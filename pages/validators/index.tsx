@@ -101,7 +101,7 @@ function ValidatorExplorer() {
       <ReactTooltip place="top" type="dark" effect="solid" />
       <Nav />
       <div className="flex flex-col">
-        <div className="px-40 pt-10 pb-6 border-b border-gray-light shadow">
+        <div className="px-40 pt-40 pb-6 border-b border-gray-light shadow">
           <h3 className="font-medium text-2xl">Validator Groups</h3>
           <div className="mt-8 px-9 space-x-2 grid grid-cols-7 font-medium text-gray text-sm text-center">
             {FIELDS.map((f) => (

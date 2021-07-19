@@ -45,7 +45,7 @@ function FAQ() {
   return (
     <div>
       <Nav />
-      <div className="mb-32">
+      <div className="mb-32 pt-16">
         <div className="text-center mt-16">
           <p className="text-sm text-gray">Your Question, Answered</p>
           <h2 className="text-gray-dark text-3xl font-medium font-serif mt-2">

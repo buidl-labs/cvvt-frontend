@@ -35,7 +35,7 @@ export default function VGLanding() {
   return (
     <div>
       <Nav />
-      <main className="my-32">
+      <main className="mb-32 mt-52">
         <section className="grid grid-cols-2 pl-36 gap-x-12">
           <div className="flex flex-col justify-center max-w-lg">
             <p className="text-gray text-sm font-medium">
