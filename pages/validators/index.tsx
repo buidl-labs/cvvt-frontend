@@ -102,7 +102,13 @@ function ValidatorExplorer() {
       <Nav />
       <div className="flex flex-col">
         <div className="px-40 pt-40 pb-6 border-b border-gray-light shadow">
-          <h3 className="font-medium text-2xl">Validator Groups</h3>
+          <div className="flex justify-between">
+            <h3 className="font-medium text-2xl">Validator Groups</h3>
+            <div className="flex items-center justify-end">
+              <div className="ml-auto h-2 w-2 bg-secondary rounded-full mr-2.5"></div>
+              <p className="text-secondary text-sm">Mainnet</p>
+            </div>
+          </div>
           <div className="mt-8 px-9 space-x-2 grid grid-cols-7 font-medium text-gray text-sm text-center">
             {FIELDS.map((f) => (
               <button
@@ -164,12 +170,35 @@ function ValidatorExplorer() {
           </div>
         </Transition>
 
-        <div className="px-40 py-10 space-y-5 flex-1 min-h-screen">
+        <div className="px-40 py-10 space-y-3 flex-1 min-h-screen">
           {validatorGroups?.map((VG: ValidatorGroup) => (
             <Link href={`/validators/${VG.Address}`} key={VG.Address}>
               <div className="grid grid-cols-7 text-center font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 hover:border-primary-light-light transform transition-all duration-100">
-                <div className="whitespace-nowrap truncate">
-                  {VG.Name ? VG.Name : "Unkown Group"}
+                <div className="flex items-center space-x-2">
+                  <span className="whitespace-nowrap truncate">
+                    {VG.Name ? VG.Name : "Unkown Group"}
+                  </span>
+                  {VG.VerifiedDns && (
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0)">
+                        <path
+                          d="M16 7.99998L14.1887 5.989L14.4723 3.2968L11.8238 2.73609L10.4728 0.38913L8.00002 1.49423L5.52728 0.38913L4.17625 2.73609L1.52771 3.2968L1.81127 5.989L0 7.99998L1.81124 10.011L1.52768 12.7032L4.17622 13.2639L5.52725 15.6108L7.99998 14.5057L10.4727 15.6108L11.8237 13.2639L14.4723 12.7032L14.1887 10.011L16 7.99998ZM11.3538 6.24831L7.33811 10.7473L4.54765 7.95684L5.21136 7.29312L7.29935 9.38111L10.6535 5.62327L11.3538 6.24831Z"
+                          fill="#FBCC5C"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0">
+                          <rect width="16" height="16" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  )}
                 </div>
                 <div className="flex flex-wrap justify-center">
                   {VG.Validators.map((v: Validator) => (
