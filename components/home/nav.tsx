@@ -14,9 +14,7 @@ export default function Nav() {
         <NavLink isButton={false} to="/validators">
           Validator Explorer
         </NavLink>
-        <NavLink isButton={false} to="/how">
-          How it works?
-        </NavLink>
+
         <NavLink isButton={false} to="/vg">
           For Validator Groups
         </NavLink>
