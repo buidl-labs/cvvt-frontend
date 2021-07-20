@@ -141,7 +141,7 @@ export default function dashboard() {
               </p>
             </div>
             <div className="mt-24 flex flex-col justify-center items-center">
-              <img src="/assets/wallet.png" />
+              <img src="/assets/wallet.svg" />
               <button
                 className="text-white bg-primary rounded-md px-10 py-3 mt-14 space-x-3 flex items-center"
                 onClick={connectWallet}
