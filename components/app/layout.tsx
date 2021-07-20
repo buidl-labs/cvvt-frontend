@@ -96,16 +96,11 @@ export default function layout({ children }: layoutProps) {
                 const classes = isActive
                   ? "bg-primary text-white"
                   : "text-primary-dark hover:bg-primary-light transition-all duration-150";
-                // const classes = disabled
-                //   ? "opacity-40 text-primary-dark cursor-not-allowed"
-                //   : path.includes(item.to)
-                //   ? "bg-primary text-white"
-                //   : "text-primary-dark hover:bg-primary-light transition-all duration-150";
 
                 return (
                   <Link href={item.to} passHref key={item.to}>
                     <a
-                      className={`${classes} group flex justify-start items-center px-6 py-3 text-lg rounded-md space-x-2`}
+                      className={`${classes} group flex justify-start items-center px-6 py-3 text-lg rounded-md space-x-4`}
                     >
                       <img
                         src={`${item.icon}${isActive ? "" : "-outlined"}.svg`}
@@ -117,7 +112,7 @@ export default function layout({ children }: layoutProps) {
                 );
               })}
             </nav>
-            <div className="mb-40 mx-7 text-primary-dark">
+            <div className="mb-40 mx-2.5 px-6 text-primary-dark">
               {userConnected && (
                 <button
                   className="flex items-center focus:ring-outline-none"
