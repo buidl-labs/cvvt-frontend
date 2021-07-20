@@ -186,22 +186,49 @@ function Invest() {
                 : "border-primary bg-primary-light-light"
             } rounded-md py-8 px-10`}
           >
-            <div className="flex items-center justify-start  space-x-3">
-              <h3
-                className={`${
-                  current.matches("idle")
-                    ? "text-gray-dark"
-                    : "text-primary-dark"
-                } text-xl`}
-              >
-                Step 1: Investment Amount
-              </h3>
-              <div
-                className="-mb-1"
-                data-tip="This is the amount of CELOs you want to invest to gain profits."
-              >
-                <InfoIcon />
+            <div className="flex justify-between items-center">
+              <div className="flex items-center justify-start  space-x-3">
+                <h3
+                  className={`${
+                    current.matches("idle")
+                      ? "text-gray-dark"
+                      : "text-primary-dark"
+                  } text-xl`}
+                >
+                  Step 1: Investment Amount
+                </h3>
+                {current.matches("idle") ? (
+                  <div
+                    className="-mb-1"
+                    data-tip="This is the amount of CELOs you want to invest to gain profits."
+                  >
+                    <InfoIcon />
+                  </div>
+                ) : (
+                  <svg
+                    viewBox="0 0 32 32"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 text-primary"
+                  >
+                    <path d="M16 0C7.17794 0 0 7.17794 0 16C0 24.8221 7.17794 32 16 32C24.8221 32 32 24.8221 32 16C32 7.17794 24.8221 0 16 0ZM24.9424 11.7895L14.7168 21.9348C14.1153 22.5363 13.1529 22.5764 12.5113 21.9749L7.09774 17.0426C6.45614 16.4411 6.41604 15.4386 6.97744 14.797C7.57895 14.1554 8.58145 14.1153 9.22306 14.7168L13.5138 18.6466L22.6566 9.50376C23.2982 8.86215 24.3008 8.86215 24.9424 9.50376C25.584 10.1454 25.584 11.1479 24.9424 11.7895Z" />
+                  </svg>
+                )}
               </div>
+              {!current.matches("idle") && (
+                <p className="text-primary-light text-lg font-medium">
+                  You are investing:{" "}
+                  {parseFloat(celoToInvest == "" ? "0" : celoToInvest).toFixed(
+                    2
+                  )}{" "}
+                  CELO (${" "}
+                  {(
+                    parseFloat(celoToInvest == "" ? "0" : celoToInvest) *
+                    exchangeRate
+                  ).toFixed(2)}
+                  )
+                </p>
+              )}
             </div>
             <div className={`${!current.matches("idle") && "hidden"}`}>
               <div className="flex items-end mt-5">
@@ -301,22 +328,43 @@ function Invest() {
                 : "border-primary bg-primary-light-light"
             } rounded-md py-8 px-10`}
           >
-            <div className="flex items-center justify-start space-x-3">
-              <h3
-                className={`${
-                  current.matches("activating") || current.matches("completed")
-                    ? "text-primary-dark"
-                    : "text-gray-dark"
-                } text-xl`}
-              >
-                Step 2: Vote For Validator
-              </h3>
-              <button
-                className="-mb-1"
-                data-tip="In order to invest CELOs, you need to cast vote towards electing Validator Groups on the network."
-              >
-                <InfoIcon />
-              </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center justify-start space-x-3">
+                <h3
+                  className={`${
+                    current.matches("activating") ||
+                    current.matches("completed")
+                      ? "text-primary-dark"
+                      : "text-gray-dark"
+                  } text-xl`}
+                >
+                  Step 2: Vote For Validator
+                </h3>
+                {current.matches("activating") ||
+                current.matches("completed") ? (
+                  <svg
+                    viewBox="0 0 32 32"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 text-primary"
+                  >
+                    <path d="M16 0C7.17794 0 0 7.17794 0 16C0 24.8221 7.17794 32 16 32C24.8221 32 32 24.8221 32 16C32 7.17794 24.8221 0 16 0ZM24.9424 11.7895L14.7168 21.9348C14.1153 22.5363 13.1529 22.5764 12.5113 21.9749L7.09774 17.0426C6.45614 16.4411 6.41604 15.4386 6.97744 14.797C7.57895 14.1554 8.58145 14.1153 9.22306 14.7168L13.5138 18.6466L22.6566 9.50376C23.2982 8.86215 24.3008 8.86215 24.9424 9.50376C25.584 10.1454 25.584 11.1479 24.9424 11.7895Z" />
+                  </svg>
+                ) : (
+                  <button
+                    className="-mb-1"
+                    data-tip="In order to invest CELOs, you need to cast vote towards electing Validator Groups on the network."
+                  >
+                    <InfoIcon />
+                  </button>
+                )}
+              </div>
+              {(current.matches("activating") ||
+                current.matches("completed")) && (
+                <p className="text-primary-light text-lg font-medium">
+                  You are voting for: {selectedVG.Name}
+                </p>
+              )}
             </div>
             <div className={`${!current.matches("voting") && "hidden"}`}>
               <div className="text-gray mt-5">
@@ -346,9 +394,26 @@ function Invest() {
                     Recommended Validator Group to vote for:
                   </span>
                   <button
-                    className="text-primary"
+                    className="text-primary flex items-center"
                     onClick={() => setVGDialogOpen(true)}
                   >
+                    <span>
+                      <svg
+                        viewBox="0 0 32 32"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3 w-3 text-primary mr-2"
+                      >
+                        <g clip-path="url(#clip0)">
+                          <path d="M19.8984 5.39233L26.4079 11.9018L9.93051 28.3792L3.42468 21.8697L19.8984 5.39233ZM31.3474 3.8224L28.4444 0.919403C27.3225 -0.202505 25.5007 -0.202505 24.375 0.919403L21.5942 3.70018L28.1038 10.2097L31.3474 6.96608C32.2175 6.09586 32.2175 4.69255 31.3474 3.8224ZM0.0181145 31.0193C-0.100351 31.5525 0.381012 32.0302 0.914225 31.9005L8.168 30.1418L1.66216 23.6323L0.0181145 31.0193Z" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0">
+                            <rect width="32" height="32" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
                     Edit Validator Group preference
                   </button>
                 </div>
