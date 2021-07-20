@@ -33,7 +33,7 @@ function App({ Component, pageProps }: AppProps) {
         }}
       >
         <Provider value={client}>
-          <div suppressHydrationWarning>
+          <div suppressHydrationWarning className="antialiased">
             {typeof window === "undefined" ? null : (
               <>
                 <Component {...pageProps} />
