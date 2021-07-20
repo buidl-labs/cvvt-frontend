@@ -161,13 +161,15 @@ const RewardsGraph = ({ rewards }: { rewards: any[] }) => (
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="reward"
-          name="Reward"
-          stroke="#82ca9d"
-          strokeWidth={2}
-        />
+        {rewards.length > 0 && (
+          <Line
+            type="monotone"
+            dataKey="reward"
+            name="Reward"
+            stroke="#82ca9d"
+            strokeWidth={2}
+          />
+        )}
       </LineChart>
     </ResponsiveContainer>
   </div>
