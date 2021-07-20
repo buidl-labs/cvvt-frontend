@@ -13,7 +13,7 @@ export default function VotingSummary({
   showWithdraw?: boolean;
 }) {
   return (
-    <div className="mt-10 pt-8">
+    <div className="mt-10 pt-8 text-gray-dark">
       <ReactTooltip place="top" type="dark" effect="solid" />
       <div className="flex justify-start space-x-3 items-center">
         <h3 className="text-xl font-medium">
