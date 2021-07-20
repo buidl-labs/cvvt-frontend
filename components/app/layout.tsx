@@ -49,7 +49,7 @@ export default function layout({ children }: layoutProps) {
     },
   ];
   const { address, network, updateNetwork, destroy, kit } = useContractKit();
-  console.log(address);
+
   const router = useRouter();
   const state = useStore();
 

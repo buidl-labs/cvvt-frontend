@@ -153,7 +153,7 @@ export default function dashboard() {
           </div>
         ) : (
           <div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-gray-dark">
               <h3 className="text-2xl font-medium">Dashboard</h3>
               <p>
                 <Switch.Group as="div" className="flex items-center">
