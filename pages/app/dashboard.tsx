@@ -13,9 +13,8 @@ import {
   fetchPendingWithdrawals,
   getVGName,
   getVotingSummary,
-  fetchEpochRewards,
 } from "../../lib/celo";
-import { EpochReward, GroupVoting } from "../../lib/types";
+import { GroupVoting } from "../../lib/types";
 
 import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/stat-grid";
@@ -23,6 +22,7 @@ import VotingSummary from "../../components/app/voting-summary";
 import EpochRewardGraph from "../../components/app/EpochRewardGraph";
 import { Switch, Transition } from "@headlessui/react";
 import Loader from "react-loader-spinner";
+import { BigNumber } from "bignumber.js";
 
 export default function dashboard() {
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
@@ -30,6 +30,7 @@ export default function dashboard() {
     useState<boolean>(false);
   const [advanceEnabled, setAdvanceEnabled] = useState<boolean>(false);
   const [loadingAccountData, setLoadingAccountData] = useState<boolean>(false);
+  const [pendingVotes, setPendingVotes] = useState<BigNumber>(new BigNumber(0));
 
   const { kit, address, connect, destroy, performActions } = useContractKit();
 
@@ -54,6 +55,13 @@ export default function dashboard() {
       .then((summary) => {
         setLoadingVotingSummary(false);
         setVotingSummary(summary);
+        let pendingCELO = new BigNumber(0);
+        for (let v of summary) {
+          pendingCELO = pendingCELO.plus(v.pending);
+        }
+        // set pending votes.
+        setPendingVotes(pendingCELO);
+        console.log("set pending votes");
       });
   }, []);
 
@@ -123,13 +131,13 @@ export default function dashboard() {
         <CreateAccountDialog />
         {!userConnected ? (
           <div>
-            <div>
+            <div className="text-gray-dark">
               <h3 className="text-2xl font-medium">Welcome, celo holder!</h3>
-              <p className="mt-2.5 text-gray text-lg">
+              <p className="mt-2.5 text-gray text-lg w-4/5">
                 Safest way to put your CELOs to work &amp; earn profits on the
                 go! All you need to get started is a Celo Wallet &amp; some
-                CELOs in it. Investing CELOs has never been this easy.
-                <br /> Let’s get started by connecting your Celo Wallet...
+                CELOs in it. Investing CELOs has never been this easy. Let’s get
+                started by connecting your Celo Wallet...
               </p>
             </div>
             <div className="mt-24 flex flex-col justify-center items-center">
@@ -192,7 +200,10 @@ export default function dashboard() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <StatGrid advanced={advanceEnabled} />
+                <StatGrid
+                  advanced={advanceEnabled}
+                  pendingVotes={pendingVotes}
+                />
               </Transition>
             </div>
             <div>

@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import StatCard from "./stat-card";
 import useStore from "../../store/store";
 import { fetchExchangeRate } from "../../lib/utils";
+import { BigNumber } from "bignumber.js";
 
-export default function StatGrid({ advanced }: { advanced: boolean }) {
+export default function StatGrid({
+  advanced,
+  pendingVotes,
+}: {
+  advanced: boolean;
+  pendingVotes: BigNumber;
+}) {
   const [exchangeRate, setExchangeRate] = useState<number | undefined>(
     undefined
   );
@@ -14,11 +21,7 @@ export default function StatGrid({ advanced }: { advanced: boolean }) {
 
   return (
     <>
-      <ul
-        className={`text-gray-dark grid gap-10 ${
-          advanced ? "grid-cols-4" : "grid-cols-3"
-        }`}
-      >
+      <ul className={`text-gray-dark grid gap-10 grid-cols-4`}>
         {advanced ? (
           <>
             <StatCard
@@ -62,6 +65,13 @@ export default function StatGrid({ advanced }: { advanced: boolean }) {
               tipText={
                 "Total CELO present in your account, including Invested & Waiting for Activation CELOs."
               }
+            />
+            <StatCard
+              label="Waiting for Activation"
+              labelColor="text-secondary-light"
+              value={pendingVotes}
+              exchangeRate={exchangeRate}
+              tipText={"Voting CELO that is waiting to be activated."}
             />
             <StatCard
               label="Invested CELO"
