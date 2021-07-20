@@ -98,7 +98,7 @@ function EpochRewardGraph({
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="absolute z-20 inset-y-0 inset-x-0 bg-white  bg-opacity-90 flex items-center justify-center">
+        <div className="absolute z-10 inset-y-0 inset-x-0 bg-white  bg-opacity-90 flex items-center justify-center">
           {status == STATES.loading && (
             <div className="flex flex-col items-center space-y-4">
               <Loader type="Puff" color="#35d07f" height={60} width={60} />

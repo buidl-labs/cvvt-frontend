@@ -7,7 +7,7 @@ export default function nav() {
   const network = useStore((state) => state.network);
 
   return (
-    <nav className="flex justify-between items-center px-16 py-4 shadow-md flex-shrink-0">
+    <nav className="flex justify-between items-center px-16 py-4 shadow-md flex-shrink-0 relative z-20">
       <Link href="/" passHref>
         <a>
           <ChurroFi />
