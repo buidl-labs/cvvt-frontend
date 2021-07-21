@@ -178,7 +178,7 @@ function Withdraw() {
           <Dialog
             as="div"
             static
-            className="fixed z-10 inset-0 overflow-y-auto"
+            className="fixed z-30 inset-0 overflow-y-auto"
             open={current.value === "withdraw"}
             onClose={() => send("NEXT")}
           >
@@ -263,7 +263,7 @@ function Withdraw() {
           <Dialog
             as="div"
             static
-            className="fixed z-10 inset-0 overflow-y-auto"
+            className="fixed z-30 inset-0 overflow-y-auto"
             open={current.value === "unvote"}
             onClose={() => send("NEXT")}
           >
@@ -336,7 +336,7 @@ function Withdraw() {
                   <div className="mt-12">
                     <button
                       type="button"
-                      className="inline-flex justify-center w-full rounded border border-transparent shadow-sm px-4 py-3 bg-primary text-base font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                      className="inline-flex justify-center w-full rounded shadow-sm px-4 py-3 text-base font-medium text-white bg-primary hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
                       onClick={() => send("NEXT")}
                     >
                       Go back
@@ -410,7 +410,7 @@ function Withdraw() {
 
                       <td className="px-6 py-4 whitespace-nowrap text-center text-gray-dark">
                         <button
-                          className="border-2 rounded-md  text-accent-dark-dark font-medium shadow-sm text-base px-4 py-2 disabled:opacity-50"
+                          className="border-2 rounded-md font-medium shadow-sm text-base px-4 py-2 text-accent-dark-dark disabled:opacity-50 focus:outline-none hover:bg-accent-light-light hover:border-accent-dark-dark hover:text-accent-dark-dark focus:bg-accent-light-light focus:border-accent-dark-dark focus:text-accent-dark-dark active:bg-accent-light-light active:border-accent-dark-dark active:text-accent-dark-dark"
                           disabled={w.status === WithdrawalStatus.PENDING}
                           onClick={() => {
                             withdrawCELO(i);
@@ -489,7 +489,7 @@ function Withdraw() {
                       <td className="px-6 py-4 whitespace-nowrap text-center text-gray-dark">
                         <button
                           disabled={!group.active.gt(0)}
-                          className="border-2 rounded-md  text-alert font-medium shadow-sm text-base px-4 py-2 disabled:opacity-50"
+                          className="border-2 rounded-md  text-alert font-medium shadow-sm text-base px-4 py-2 disabled:opacity-50 hover:border-alert-dark hover:text-alert-dark focus:border-alert-dark focus:text-alert-dark focus:outline-none active:bg-alert-light-light active:border-alert-dark-dark active:text-alert-dark-dark"
                           onClick={() => {
                             unvoteVG(group);
                           }}
