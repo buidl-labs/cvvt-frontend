@@ -1,10 +1,10 @@
-export default function CopyIcon() {
+export default function CopyIcon({ size }: { size: string }) {
   return (
     <svg
-      width={16}
-      height={18}
       viewBox="0 0 16 18"
-      className="text-gray"
+      className={`text-gray ${size == "sm" && "w-3 h-3"} ${
+        size == "lg" && "w-5 h-5"
+      }`}
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >

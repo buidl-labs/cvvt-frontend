@@ -1,6 +1,7 @@
 import React from "react";
 import ReactTooltip from "react-tooltip";
 import { Validator, ValidatorGroup } from "../../lib/types";
+import CopyIcon from "../icons/copy";
 
 export default function ValidatorsPanel({ VG }: { VG: ValidatorGroup }) {
   return (
@@ -52,8 +53,14 @@ function ValidatorBlock({ validator }: { validator: Validator }) {
           </span>
         </p>
       </div>
-
-      <p className="text-gray text-sm mt-2">{validator.address}</p>
+      <div className="flex items-baseline space-x-2">
+        <p className="text-gray text-sm mt-2">{validator.address}</p>
+        <button
+          onClick={() => navigator.clipboard.writeText(validator.address)}
+        >
+          <CopyIcon size="sm" />
+        </button>
+      </div>
     </div>
   );
 }

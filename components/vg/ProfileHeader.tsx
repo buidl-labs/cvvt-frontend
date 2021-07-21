@@ -62,7 +62,9 @@ export default function ProfileHeader({ VG }: { VG: ValidatorGroup }) {
       <div className="flex items-center justify-between text-gray text-lg mt-5">
         <p className="inline-flex items-center">
           <span className="mr-3">{VG.Address}</span>
-          <CopyIcon />
+          <button onClick={() => navigator.clipboard.writeText(VG.Address)}>
+            <CopyIcon size="lg" />
+          </button>
         </p>
         <div>
           {VG.Email && (
