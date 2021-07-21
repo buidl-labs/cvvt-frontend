@@ -439,7 +439,7 @@ function vote() {
               />
             </div>
             <button
-              className="bg-primary mt-5 w-full text-white text-xl py-3 rounded-md"
+              className="mt-5 w-full text-xl py-3 rounded-md bg-primary  text-white hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
               onClick={() => {
                 if (selectedVG == undefined) return;
                 if (selected === options[0]) voteOnVG();

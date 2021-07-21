@@ -66,7 +66,7 @@ function VoteVg({
                       Select Validator Group
                     </Dialog.Title>
                     <button
-                      className="px-8 py-2 bg-primary text-white text-lg border border-primary rounded-md shadow focus:outline-none"
+                      className="px-8 py-2 bg-primary text-white text-lg rounded-md shadow hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
                       onClick={() => setOpen(false)}
                     >
                       Continue
