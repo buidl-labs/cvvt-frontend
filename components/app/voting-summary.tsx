@@ -101,7 +101,7 @@ export default function VotingSummary({
       </div>
       {showWithdraw && votingSummary.length > 0 && (
         <Link href="/app/withdraw" passHref>
-          <a className="border-2 border-alert py-2 mt-7 text-lg font-medium rounded-md text-alert shadow flex justify-center">
+          <a className="flex justify-center py-2 mt-7 shadow rounded-md text-lg font-medium text-alert border-2 border-alert hover:border-alert-dark hover:text-alert-dark focus:border-alert-dark focus:text-alert-dark focus:outline-none active:bg-alert-light-light active:border-alert-dark-dark active:text-alert-dark-dark">
             Withdraw Investments
           </a>
         </Link>

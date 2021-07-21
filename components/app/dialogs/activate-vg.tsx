@@ -26,7 +26,7 @@ function ActivateVG({ open, activate }: { open: boolean; activate(): void }) {
           <div className="mt-5">
             <button
               type="button"
-              className="border px-10 py-3 rounded-md bg-primary text-white"
+              className="px-10 py-3 rounded-md bg-primary text-white hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
               onClick={activate}
             >
               Activate
