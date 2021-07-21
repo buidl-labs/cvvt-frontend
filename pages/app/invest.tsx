@@ -277,7 +277,7 @@ function Invest() {
                 </div>
               </div>
               <button
-                className="bg-primary text-white text-lg font-medium block w-full rounded-md mt-5 py-3"
+                className="transition-all text-lg font-medium block w-full rounded-md mt-5 py-3 bg-primary text-white hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
                 onClick={() => {
                   if (
                     unlockedCelo === undefined ||
@@ -463,7 +463,7 @@ function Invest() {
                 </div>
               </div>
               <button
-                className="bg-primary text-white font-medium text-lg block w-full rounded-md mt-5 py-3"
+                className="font-medium text-lg block w-full rounded-md mt-5 py-3 transition-all bg-primary text-white hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
                 onClick={() => {
                   voteOnVG();
                 }}
