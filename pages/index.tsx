@@ -72,12 +72,12 @@ export default function Home() {
             </p>
             <div className="mt-10 space-x-4 text-lg">
               <Link href="/app/dashboard" passHref>
-                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
                   Start Investing
                 </a>
               </Link>
               <Link href="/how" passHref>
-                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md">
+                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
                   How it works?
                 </a>
               </Link>
@@ -168,12 +168,12 @@ export default function Home() {
             </div>
             <div className="mt-10 space-x-4 text-lg">
               <Link href="/app/dashboard" passHref>
-                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
                   Start Investing
                 </a>
               </Link>
               <Link href="/how" passHref>
-                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md">
+                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
                   How it works?
                 </a>
               </Link>
@@ -214,13 +214,13 @@ export default function Home() {
               back...
             </p>
             <div className="mt-5 space-x-4 text-lg">
-              <Link href="/app/dashboard" passHref>
-                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+              <Link href="#" passHref>
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
                   Contact Us
                 </a>
               </Link>
               <Link href="/how" passHref>
-                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md">
+                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
                   How it works?
                 </a>
               </Link>
@@ -240,7 +240,7 @@ export default function Home() {
             </div>
             <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
               <Link href="/app/dashboard" passHref>
-                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
                   Start Investing
                 </a>
               </Link>

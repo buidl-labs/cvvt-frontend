@@ -9,7 +9,7 @@ export default function Nav() {
   return (
     <nav className="bg-white fixed inset-x-0 top-0 z-40 flex justify-between items-center px-16 py-4 shadow-md">
       <Link href="/" passHref>
-        <a>
+        <a className="focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-4">
           <ChurroFi />
         </a>
       </Link>
@@ -49,12 +49,12 @@ function NavLink({
       <a
         className={`${
           !isButton
-            ? `text-lg hover:underline transition-all ${
+            ? `text-lg hover:underline transition-all focus:outline-none focus:underline ${
                 active
-                  ? "text-primary hover:text-primary-dark"
-                  : "text-gray hover:text-gray-dark"
+                  ? "text-primary hover:text-primary-dark focus:text-primary-dark"
+                  : "text-gray hover:text-gray-dark focus:text-gray-dark"
               }`
-            : "bg-primary px-14 py-3 rounded-md text-white text-base shadow-sm hover:bg-primary-dark transition-all"
+            : "bg-primary hover:bg-primary-dark focus:bg-primary-dark active:bg-primary-dark-dark focus:outline-none px-14 py-3 rounded-md text-white text-base shadow-sm transition-all"
         }`}
         href="#"
       >
