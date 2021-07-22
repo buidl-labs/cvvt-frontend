@@ -15,7 +15,7 @@ import VoteVGDialog from "../../components/app/dialogs/vote-vg";
 import CeloInput from "../../components/app/celo-input";
 import { fetchExchangeRate, fetchTargetAPY } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
-import useVG from "../../hooks/useValidatorGroupSuggestion";
+import useVG from "../../hooks/useValidatorGroups";
 import { VGSuggestion } from "../../lib/types";
 import InfoIcon from "../../components/icons/info";
 import ReactTooltip from "react-tooltip";
@@ -39,6 +39,8 @@ const InvestMachine = createMachine({
   },
 });
 
+const formatter = new Intl.NumberFormat("en-US");
+
 function Invest() {
   const { address, network, kit, performActions } = useContractKit();
 
@@ -56,13 +58,14 @@ function Invest() {
   const [nonVotingLockedCelo, setNonVotingLockedCelo] = useState<BigNumber>();
   const [exchangeRate, setExchangeRate] = useState(0);
   const [estimatedAPY, setEstimatedAPY] = useState<BigNumber>(new BigNumber(0));
-  const [validatorGroups, setValidatorGroups] = useState<VGSuggestion[]>([]);
+  const [validatorGroups, setValidatorGroups] = useState<any[]>([]);
   const [selectedVGAddress, setSelectedVGAddress] = useState<string>("");
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
 
-  const selectedVG = useMemo<VGSuggestion | undefined>(() => {
+  const selectedVG = useMemo<any>(() => {
     return validatorGroups.find((vg) => vg.Address === selectedVGAddress);
   }, [selectedVGAddress]);
+  const [expandedVG, setExpandedVG] = useState(false);
 
   const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true, 5);
 
@@ -417,49 +420,174 @@ function Invest() {
                     Edit Validator Group preference
                   </button>
                 </div>
-                <div className="border border-gray-light rounded-md grid grid-cols-5 gap-9 px-12 py-5 mt-3 text-center">
-                  <div className="grid grid-rows-2 gap-2">
-                    <span className="text-gray">Name</span>
-                    <span className="text-gray-dark text-base">
-                      {selectedVG?.Name}
-                    </span>
+                <div className="border border-gray-light rounded-md pl-6 pr-12 py-5 mt-3">
+                  <div className="flex">
+                    <div className="flex items-center justify-center w-6">
+                      <button
+                        className="mx-auto flex items-center justify-center rounded-full p-2 relative z-20 hover:bg-primary-light-light focus:outline-none"
+                        onClick={() => setExpandedVG((curr) => !curr)}
+                      >
+                        {expandedVG ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 15l7-7 7 7"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-5 gap-9 flex-1 text-center">
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Name</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.Name}
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Group Score</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.GroupScore
+                            ? (selectedVG.GroupScore * 100).toFixed(2)
+                            : "-"}{" "}
+                          %
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Performance Score</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.PerformanceScore
+                            ? (selectedVG.PerformanceScore * 100).toFixed(2)
+                            : "-"}{" "}
+                          %
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Transparency Score</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.TransparencyScore
+                            ? (selectedVG.TransparencyScore * 100).toFixed(2)
+                            : "-"}{" "}
+                          %
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Estimated APY</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.EstimatedAPY
+                            ? selectedVG.EstimatedAPY.toFixed(2)
+                            : "-"}{" "}
+                          %
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="grid grid-rows-2 gap-2">
-                    <span className="text-gray">Group Score</span>
-                    <span className="text-gray-dark text-base">
-                      {selectedVG?.GroupScore
-                        ? (selectedVG.GroupScore * 100).toFixed(2)
-                        : "-"}{" "}
-                      %
-                    </span>
-                  </div>
-                  <div className="grid grid-rows-2 gap-2">
-                    <span className="text-gray">Performance Score</span>
-                    <span className="text-gray-dark text-base">
-                      {selectedVG?.PerformanceScore
-                        ? (selectedVG.PerformanceScore * 100).toFixed(2)
-                        : "-"}{" "}
-                      %
-                    </span>
-                  </div>
-                  <div className="grid grid-rows-2 gap-2">
-                    <span className="text-gray">Transparency Score</span>
-                    <span className="text-gray-dark text-base">
-                      {selectedVG?.TransparencyScore
-                        ? (selectedVG.TransparencyScore * 100).toFixed(2)
-                        : "-"}{" "}
-                      %
-                    </span>
-                  </div>
-                  <div className="grid grid-rows-2 gap-2">
-                    <span className="text-gray">Estimated APY</span>
-                    <span className="text-gray-dark text-base">
-                      {selectedVG?.EstimatedAPY
-                        ? selectedVG.EstimatedAPY.toFixed(2)
-                        : "-"}{" "}
-                      %
-                    </span>
-                  </div>
+                  {expandedVG && (
+                    <div className="pl-6 mt-5 grid grid-cols-7 text-center">
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">
+                          Elected/Total Validators
+                        </span>
+                        <div className="flex flex-wrap justify-center items-center">
+                          {selectedVG.Validators.map((v) => (
+                            <svg
+                              key={v.address}
+                              className={`h-4 w-4 ml-2 shadow-lg  ${
+                                v.currently_elected
+                                  ? "text-gray-dark"
+                                  : "text-gray"
+                              }`}
+                              viewBox="0 0 32 32"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M31.9217 28.2182L25.8851 2.03636C25.53 0.872727 24.2102 0 23.5 0H8.5C7.61226 0 6.53233 0.872727 6.17724 2.03636L0.140599 28.2182C-0.392046 29.9636 0.673244 32 1.91608 32H29.9687C31.3891 32 32.2768 29.9636 31.9217 28.2182Z"
+                                fill="currentColor"
+                              />
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Recieved Votes</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.RecievedVotes
+                            ? formatter.format(selectedVG.RecievedVotes)
+                            : "-"}{" "}
+                          CELO
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Available Votes</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.AvailableVotes
+                            ? formatter.format(selectedVG.AvailableVotes)
+                            : "-"}{" "}
+                          CELO
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Epochs Served</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.EpochsServed
+                            ? formatter.format(selectedVG.EpochsServed)
+                            : "-"}{" "}
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Locked CELO</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.LockedCelo
+                            ? formatter.format(selectedVG.LockedCelo)
+                            : "-"}{" "}
+                          CELO
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">Slashing Penalty</span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.SlashingPenaltyScore
+                            ? selectedVG.SlashingPenaltyScore.toFixed(2)
+                            : "-"}{" "}
+                        </span>
+                      </div>
+                      <div className="grid grid-rows-2 gap-2">
+                        <span className="text-gray">
+                          Attestation Percentage
+                        </span>
+                        <span className="text-gray-dark text-base">
+                          {selectedVG?.AttestationScore
+                            ? (selectedVG.AttestationScore * 100).toFixed(2)
+                            : "-"}{" "}
+                          %
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <button
