@@ -2,7 +2,7 @@ import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import { floatToPercentage } from "../../../lib/utils";
 
-function VoteVg({
+function RevokeVG({
   open,
   setOpen,
   selectedVG,
@@ -129,7 +129,7 @@ function VoteVg({
                                         active
                                           ? "ring-2 ring-offset-2 ring-primary"
                                           : ""
-                                      } h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0 mx-auto`}
+                                      } h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0 mx-auto my-auto`}
                                       aria-hidden="true"
                                     >
                                       <span className="rounded-full bg-white w-1.5 h-1.5" />
@@ -174,4 +174,4 @@ function VoteVg({
   );
 }
 
-export default VoteVg;
+export default RevokeVG;

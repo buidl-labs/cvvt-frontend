@@ -119,7 +119,7 @@ function VoteVg({
                                         "0.5fr 1fr 1fr 1fr 1fr 1fr",
                                     }}
                                   >
-                                    <span
+                                    <div
                                       className={`${
                                         checked
                                           ? "bg-primary-dark border-transparent"
@@ -128,11 +128,11 @@ function VoteVg({
                                         active
                                           ? "ring-2 ring-offset-2 ring-primary"
                                           : ""
-                                      } h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0 mx-auto`}
+                                      } h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0 mx-auto my-auto`}
                                       aria-hidden="true"
                                     >
                                       <span className="rounded-full bg-white w-1.5 h-1.5" />
-                                    </span>
+                                    </div>
 
                                     <RadioGroup.Label
                                       as="span"
