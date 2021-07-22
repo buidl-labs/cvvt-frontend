@@ -20,6 +20,7 @@ function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     Fathom.load(process.env.NEXT_PUBLIC_FATHOM_ID, {
       includedDomains: ["churrofi.app"],
+      url: "https://wildcat.churrofi.app/script.js",
     });
 
     function onRouteChangeComplete() {
