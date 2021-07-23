@@ -70,17 +70,32 @@ export default function layout({ children }: layoutProps) {
                 );
               })}
             </nav>
-            <div className="mb-40 mx-7 text-primary-dark">
-              {userConnected && (
-                <button
-                  className="flex items-center focus:ring-outline-none"
-                  onClick={disconnectWallet}
+            {userConnected && (
+              <button
+                className="mx-2.5 mb-8 px-6 flex items-center focus:ring-outline-none text-primary-dark hover:text-primary-dark-dark focus:outline-none focus:text-primary-dark-dark"
+                onClick={disconnectWallet}
+              >
+                <svg
+                  width={20}
+                  height={20}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <img src="/assets/nav/nav-logout-outlined.png" />
-                  <span className="ml-5 text-lg">Logout</span>
-                </button>
-              )}
-            </div>
+                  <g clipPath="url(#prefix__clip0)">
+                    <path d="M19.375 9.375h-7.917a.625.625 0 010-1.25h7.917a.625.625 0 010 1.25z" />
+                    <path d="M16.25 12.5a.625.625 0 01-.442-1.067L18.49 8.75l-2.683-2.684a.625.625 0 11.884-.884l3.125 3.125a.625.625 0 010 .884l-3.125 3.125a.62.62 0 01-.442.184zM6.667 20c-.179 0-.348-.025-.517-.077l-5.015-1.67A1.682 1.682 0 010 16.666v-15C0 .749.748.002 1.667.002c.178 0 .347.025.516.077L7.198 1.75a1.682 1.682 0 011.135 1.585v15c0 .919-.747 1.666-1.666 1.666zm-5-18.75a.418.418 0 00-.417.418v15c0 .177.12.342.29.4l4.99 1.664a.452.452 0 00.137.018c.229 0 .416-.187.416-.416v-15a.433.433 0 00-.29-.401l-4.99-1.664a.452.452 0 00-.136-.018z" />
+                    <path d="M12.708 6.667a.625.625 0 01-.625-.624v-3.75c0-.575-.467-1.042-1.042-1.042H1.667a.625.625 0 010-1.25h9.374a2.293 2.293 0 012.292 2.292v3.75c0 .345-.28.624-.625.624zM11.041 17.5H7.708a.625.625 0 010-1.25h3.333c.575 0 1.042-.467 1.042-1.041v-3.75a.625.625 0 011.25 0v3.75A2.293 2.293 0 0111.04 17.5z" />
+                  </g>
+                  <defs>
+                    <clipPath id="prefix__clip0">
+                      <path fill="#fff" d="M0 0h20v20H0z" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <span className="ml-5 text-lg">Logout</span>
+              </button>
+            )}
           </div>
         </div>
         <main className="flex-1 p-16 overflow-y-auto">{children}</main>
