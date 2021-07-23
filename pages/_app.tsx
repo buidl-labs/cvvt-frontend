@@ -46,6 +46,8 @@ function App({ Component, pageProps }: AppProps) {
           href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Jost:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/churrofi-logo.png" />
+        <title>ChurroFi - Investing CELO made easy</title>
       </Head>
       <ContractKitProvider
         dapp={{
