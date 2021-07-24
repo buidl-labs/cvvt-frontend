@@ -52,9 +52,6 @@ function EpochRewardGraph({
     });
   }, []);
 
-  useEffect(() => {
-    console.log("status", status);
-  }, [status]);
   async function setDataForGraph() {
     const blockN = await kit.web3.eth.getBlockNumber();
     const epochNow = getEpochFromBlock(blockN, 17280);
