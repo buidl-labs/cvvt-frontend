@@ -17,6 +17,8 @@ import { Transition } from "@headlessui/react";
 import Loader from "react-loader-spinner";
 import Link from "next/link";
 
+import subDays from "date-fns/subDays";
+
 enum STATES {
   idle,
   loading,
@@ -66,17 +68,22 @@ function EpochRewardGraph({
 
     const rewardsDisplay = new Array<any>();
     let currentReward = new BigNumber(0);
+    const currentDate = new Date();
+    let offset = epochNow - fromEpoch;
     for (let epoch = fromEpoch; epoch < epochNow; epoch++) {
       currentReward = currentReward.plus(
         rewards.get(epoch) || new BigNumber(0)
       );
-
+      let epochDate = subDays(currentDate, offset);
       rewardsDisplay.push({
-        epoch,
+        epoch: `${epochDate.getUTCDate()}/${epochDate.getUTCMonth() + 1}`,
         reward: currentReward.div(1e18).toNumber().toFixed(4),
       });
+      offset--;
     }
     setRewardsToShow(rewardsDisplay);
+
+    console.log(rewardsDisplay);
   }
 
   useEffect(() => {
