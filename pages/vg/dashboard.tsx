@@ -45,7 +45,7 @@ function Dashboard() {
   return (
     <Layout>
       <>
-        <CheckingVG dialogOpen={!isVG && vgListLoading} />
+        <CheckingVG dialogOpen={userConnected && !isVG && vgListLoading} />
         {!userConnected ? (
           <div>
             <div>
