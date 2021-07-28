@@ -82,8 +82,6 @@ function EpochRewardGraph({
       offset--;
     }
     setRewardsToShow(rewardsDisplay);
-
-    console.log(rewardsDisplay);
   }
 
   useEffect(() => {
