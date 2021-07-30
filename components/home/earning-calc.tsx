@@ -32,7 +32,7 @@ export default function EarningCalculator() {
     );
   }, []);
   return (
-    <div className="p-10 text-gray-dark border border-gray-light rounded-md">
+    <div className="mt-20 lg:mt-0 lg:p-10 p-8 text-gray-dark border border-gray-light rounded-md">
       <h3 className="text-xl font-medium">Calculate Your Earnings</h3>
       <div className="mt-5">
         <label htmlFor="amount" className="block text-sm text-gray-dark">
@@ -44,7 +44,7 @@ export default function EarningCalculator() {
             type="number"
             name="amount"
             id="amount"
-            className="block w-full h-full px-5 py-4 text-xl bg-gray-light-light border border-gray-light rounded-md focus:border-primary focus:ring-primary focus:bg-primary-light-light"
+            className="block w-full h-full lg:px-5 lg:py-4 px-3 py-2 text-lg lg:text-xl bg-gray-light-light border border-gray-light rounded-md focus:border-primary focus:ring-primary focus:bg-primary-light-light"
             placeholder="0.00 CELO"
             value={celoAmountToInvest}
             onChange={(e) => setCeloAmountToInvest(e.target.value)}
@@ -53,7 +53,7 @@ export default function EarningCalculator() {
             <label htmlFor="currency" className="sr-only">
               Currency
             </label>
-            <div className="h-full py-0 pl-2 pr-7 text-lg rounded-md flex items-center justify-center text-primary">
+            <div className="h-full py-0 pl-2 pr-7 text-sm lg:text-lg rounded-md flex items-center justify-center text-primary">
               <span>
                 $ {celoToInvestInUSD ? celoToInvestInUSD.toFixed(2) : "-"}
               </span>
@@ -64,10 +64,12 @@ export default function EarningCalculator() {
       <div className="mt-10">
         <p className="text-sm">You could be earning:</p>
         <div className="flex items-center mt-3">
-          <p className="text-3xl text-primary font-medium">
+          <p className="text-2xl lg:text-3xl text-primary font-medium">
             {estimatedAPY ? `${estimatedAPY.toFixed(2)}%` : "-"} APY
           </p>
-          <p className="text-gray ml-5">(Annual Percentage Yield)</p>
+          <p className="text-gray ml-5 hidden lg:block">
+            (Annual Percentage Yield)
+          </p>
         </div>
         <div className="mt-5">
           <p className="text-gray text-sm">Yearly Earning</p>
