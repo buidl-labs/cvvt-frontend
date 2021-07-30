@@ -29,6 +29,7 @@ function Dashboard() {
       "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
       "0xcecdcb570c5433d8ba004b7a5a793cc97aa517b6",
       "0x3a85a88a1d7ced078066ce8f9cd524e965265b1e",
+      "0xec687AF2f05e6472BfE3eD63Bef9261609040700",
     ];
     if (address == null || vgListLoading) return;
     if (TESTING_ADDRESS.includes(address)) {
