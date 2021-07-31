@@ -21,7 +21,7 @@ export default function SecondFeatureGrid() {
     },
   ];
   return (
-    <div className="grid grid-cols-3 gap-x-20 mt-16 px-56">
+    <div className="grid lg:grid-cols-3 lg:gap-x-20 mt-16 gap-y-16">
       {features.map((f) => (
         <FeatureItem asset={f.asset} heading={f.heading} subtext={f.subtext} />
       ))}
@@ -41,8 +41,10 @@ function FeatureItem({
   return (
     <div className="flex flex-col items-center">
       {asset}
-      <h4 className="mt-10 text-xl font-medium">{heading}</h4>
-      <p className="mt-5 text-gray max-w-xs">{subtext}</p>
+      <h4 className="lg:mt-10 mt-5 text-xl font-medium text-gray-dark">
+        {heading}
+      </h4>
+      <p className="lg:mt-5 mt-3 text-gray">{subtext}</p>
     </div>
   );
 }

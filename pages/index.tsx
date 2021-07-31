@@ -55,9 +55,10 @@ export default function Home() {
   ];
   return (
     <div>
-      <main className="md:mb-32 md:mt-52 mt-16 px-10">
-        <div>
-          <div className="text-gray-dark text-center">
+      <Nav />
+      <main className="md:mb-32 md:mt-52 mt-32 mb-16 px-10 lg:px-36">
+        <div className="lg:grid lg:grid-cols-2">
+          <div className="text-gray-dark text-center lg:text-left">
             <div className="text-secondary text-sm">Invest • Earn • Grow</div>
             <h2 className="mt-3 font-serif font-medium text-4xl">
               Earn Profits by Investing CELO
@@ -129,7 +130,7 @@ export default function Home() {
             <FeatureGrid />
           </div>
         </div>
-        <div className="mt-32 lg:grid lg:grid-cols-2 lg:gap-x-16 text-center">
+        <div className="mt-32 lg:grid lg:grid-cols-2 lg:gap-x-16 text-center lg:text-left">
           <div>
             <p className="text-sm text-gray">
               Welcome to the Future of Staking
@@ -189,7 +190,96 @@ export default function Home() {
             />
           </div>
         </div>
+        <div className="mt-40 text-gray-dark">
+          <div className="text-center">
+            <p className="text-gray text-sm">Your Question, Answered</p>
+            <p className="mt-5  text-3xl font-serif">
+              Frequently Asked Questions
+            </p>
+          </div>
+          <div className="mt-14">
+            <FAQ faqs={faqs} />
+          </div>
+          <div className="mt-10 text-center">
+            <p className="text-gray text-sm font-medium">
+              Can’t find an answer to your query? Don’t worry, we’ve got your
+              back...
+            </p>
+            <div className="mt-5 flex flex-col space-y-4 lg:space-y-0 lg:block lg:space-x-4 text-lg">
+              <Link href="#" passHref>
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
+                  Contact Us
+                </a>
+              </Link>
+              <Link href="/how" passHref>
+                <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
+                  How it works?
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="bg-primary-light-light mt-32 rounded-md">
+          <div className="flex flex-col lg:flex-row items-center lg:justify-between p-8 lg:p-16">
+            <div>
+              <h4 className="text-xl text-gray-dark font-medium">
+                Ready to Earn Profits?
+              </h4>
+              <p className="mt-3 text-gray-dark max-w-md">
+                Start earning maximum Profits by investing your CELOs based on
+                our Recommendations-Algorithm.
+              </p>
+            </div>
+            <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+              <Link href="/app/dashboard" passHref>
+                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
+                  Start Investing
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="mt-28 relative">
+          {/* <div className="absolute top-0">
+            <svg
+              width="542"
+              height="254"
+              viewBox="0 0 542 254"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M-8.42555 201.127L10.9552 202.105C100.929 206.643 189.314 177.148 258.532 119.488V119.488V119.488C336.031 68.7295 426.12 40.526 518.728 38.03L525.489 37.8477"
+                stroke="#FDEABD"
+              />
+              <g clip-path="url(#clip0)">
+                <path
+                  d="M523.563 28.6451C519.834 27.5837 515.74 30.4919 514.419 35.1419C513.097 39.7926 515.051 44.4225 518.78 45.4832C522.51 46.5458 526.607 43.6365 527.926 38.9869C529.246 34.3354 527.293 29.7076 523.563 28.6451Z"
+                  fill="#FCDB8C"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0">
+                  <rect
+                    width="16.734"
+                    height="16.743"
+                    fill="white"
+                    transform="translate(511 31.0126) rotate(-14.2654)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </div> */}
+          <div className="text-center text-gray-dark">
+            <p className="text-gray text-sm">Staking made Easy</p>
+            <p className="mt-5  text-3xl font-serif">
+              Benefits of Investing CELO
+            </p>
+            <SecondFeatureGrid />
+          </div>
+        </div>
       </main>
+      <Footer />
     </div>
   );
 
@@ -338,94 +428,94 @@ export default function Home() {
   //           <TestimonialGrid />
   //         </div>
   //       </div> */}
-  //       <div className="mt-40 px-36 text-gray-dark">
-  //         <div className="text-center">
-  //           <p className="text-gray text-sm">Your Question, Answered</p>
-  //           <p className="mt-5  text-3xl font-serif">
-  //             Frequently Asked Questions
-  //           </p>
-  //         </div>
-  //         <div className="mt-14">
-  //           <FAQ faqs={faqs} />
-  //         </div>
-  //         <div className="mt-10 text-center">
-  //           <p className="text-gray text-sm font-medium">
-  //             Can’t find an answer to your query? Don’t worry, we’ve got your
-  //             back...
-  //           </p>
-  //           <div className="mt-5 space-x-4 text-lg">
-  //             <Link href="#" passHref>
-  //               <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
-  //                 Contact Us
-  //               </a>
-  //             </Link>
-  //             <Link href="/how" passHref>
-  //               <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
-  //                 How it works?
-  //               </a>
-  //             </Link>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       <div className="bg-primary-light-light mt-32 mx-36 rounded-md">
-  //         <div className="flex items-center justify-between p-16">
-  //           <div>
-  //             <h4 className="text-xl text-gray-dark font-medium">
-  //               Ready to Earn Profits?
-  //             </h4>
-  //             <p className="mt-3 text-gray-dark max-w-md">
-  //               Start earning maximum Profits by investing your CELOs based on
-  //               our Recommendations-Algorithm.
-  //             </p>
-  //           </div>
-  //           <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-  //             <Link href="/app/dashboard" passHref>
-  //               <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
-  //                 Start Investing
-  //               </a>
-  //             </Link>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       <div className="mt-28 relative">
-  //         <div className="absolute top-0">
-  //           <svg
-  //             width="542"
-  //             height="254"
-  //             viewBox="0 0 542 254"
-  //             fill="none"
-  //             xmlns="http://www.w3.org/2000/svg"
-  //           >
-  //             <path
-  //               d="M-8.42555 201.127L10.9552 202.105C100.929 206.643 189.314 177.148 258.532 119.488V119.488V119.488C336.031 68.7295 426.12 40.526 518.728 38.03L525.489 37.8477"
-  //               stroke="#FDEABD"
-  //             />
-  //             <g clip-path="url(#clip0)">
-  //               <path
-  //                 d="M523.563 28.6451C519.834 27.5837 515.74 30.4919 514.419 35.1419C513.097 39.7926 515.051 44.4225 518.78 45.4832C522.51 46.5458 526.607 43.6365 527.926 38.9869C529.246 34.3354 527.293 29.7076 523.563 28.6451Z"
-  //                 fill="#FCDB8C"
-  //               />
-  //             </g>
-  //             <defs>
-  //               <clipPath id="clip0">
-  //                 <rect
-  //                   width="16.734"
-  //                   height="16.743"
-  //                   fill="white"
-  //                   transform="translate(511 31.0126) rotate(-14.2654)"
-  //                 />
-  //               </clipPath>
-  //             </defs>
-  //           </svg>
-  //         </div>
-  //         <div className="text-center text-gray-dark">
-  //           <p className="text-gray text-sm">Staking made Easy</p>
-  //           <p className="mt-5  text-3xl font-serif">
-  //             Benefits of Investing CELO
-  //           </p>
-  //           <SecondFeatureGrid />
-  //         </div>
-  //       </div>
+  // <div className="mt-40 px-36 text-gray-dark">
+  //   <div className="text-center">
+  //     <p className="text-gray text-sm">Your Question, Answered</p>
+  //     <p className="mt-5  text-3xl font-serif">
+  //       Frequently Asked Questions
+  //     </p>
+  //   </div>
+  //   <div className="mt-14">
+  //     <FAQ faqs={faqs} />
+  //   </div>
+  //   <div className="mt-10 text-center">
+  //     <p className="text-gray text-sm font-medium">
+  //       Can’t find an answer to your query? Don’t worry, we’ve got your
+  //       back...
+  //     </p>
+  //     <div className="mt-5 space-x-4 text-lg">
+  //       <Link href="#" passHref>
+  //         <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
+  //           Contact Us
+  //         </a>
+  //       </Link>
+  //       <Link href="/how" passHref>
+  //         <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
+  //           How it works?
+  //         </a>
+  //       </Link>
+  //     </div>
+  //   </div>
+  // </div>
+  // <div className="bg-primary-light-light mt-32 mx-36 rounded-md">
+  //   <div className="flex items-center justify-between p-16">
+  //     <div>
+  //       <h4 className="text-xl text-gray-dark font-medium">
+  //         Ready to Earn Profits?
+  //       </h4>
+  //       <p className="mt-3 text-gray-dark max-w-md">
+  //         Start earning maximum Profits by investing your CELOs based on
+  //         our Recommendations-Algorithm.
+  //       </p>
+  //     </div>
+  //     <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+  //       <Link href="/app/dashboard" passHref>
+  //         <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
+  //           Start Investing
+  //         </a>
+  //       </Link>
+  //     </div>
+  //   </div>
+  // </div>
+  // <div className="mt-28 relative">
+  //   <div className="absolute top-0">
+  //     <svg
+  //       width="542"
+  //       height="254"
+  //       viewBox="0 0 542 254"
+  //       fill="none"
+  //       xmlns="http://www.w3.org/2000/svg"
+  //     >
+  //       <path
+  //         d="M-8.42555 201.127L10.9552 202.105C100.929 206.643 189.314 177.148 258.532 119.488V119.488V119.488C336.031 68.7295 426.12 40.526 518.728 38.03L525.489 37.8477"
+  //         stroke="#FDEABD"
+  //       />
+  //       <g clip-path="url(#clip0)">
+  //         <path
+  //           d="M523.563 28.6451C519.834 27.5837 515.74 30.4919 514.419 35.1419C513.097 39.7926 515.051 44.4225 518.78 45.4832C522.51 46.5458 526.607 43.6365 527.926 38.9869C529.246 34.3354 527.293 29.7076 523.563 28.6451Z"
+  //           fill="#FCDB8C"
+  //         />
+  //       </g>
+  //       <defs>
+  //         <clipPath id="clip0">
+  //           <rect
+  //             width="16.734"
+  //             height="16.743"
+  //             fill="white"
+  //             transform="translate(511 31.0126) rotate(-14.2654)"
+  //           />
+  //         </clipPath>
+  //       </defs>
+  //     </svg>
+  //   </div>
+  //   <div className="text-center text-gray-dark">
+  //     <p className="text-gray text-sm">Staking made Easy</p>
+  //     <p className="mt-5  text-3xl font-serif">
+  //       Benefits of Investing CELO
+  //     </p>
+  //     <SecondFeatureGrid />
+  //   </div>
+  // </div>
   //     </main>
   //     <Footer />
   //   </div>

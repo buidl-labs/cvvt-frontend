@@ -7,13 +7,13 @@ export default function Nav() {
   const router = useRouter();
   const currentPath = router.pathname;
   return (
-    <nav className="bg-white fixed inset-x-0 top-0 z-40 flex justify-between items-center px-16 py-4 shadow-md">
+    <nav className="bg-white fixed inset-x-0 top-0 z-40 flex justify-between items-center px-5 py-3 lg:px-16 :py-4 shadow-md">
       <Link href="/" passHref>
         <a className="focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-4">
           <ChurroFi />
         </a>
       </Link>
-      <div className="flex items-center space-x-10">
+      <div className="items-center space-x-10 hidden lg:flex">
         <NavLink
           isButton={false}
           to="/validators"
@@ -28,6 +28,24 @@ export default function Nav() {
         <NavLink isButton={true} to="/app/dashboard" active={false}>
           Dashboard
         </NavLink>
+      </div>
+      <div className="lg:hidden flex items-center justify-center">
+        <button>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
       </div>
     </nav>
   );
