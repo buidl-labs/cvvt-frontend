@@ -32,32 +32,42 @@ export default function VGLanding() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa deleniti dolorem, nulla voluptatibus placeat dicta quo natus? Amet sequi expedita minima ipsa quibusdam. Eligendi, nostrum?",
     },
   ];
+
   return (
     <div>
       <Nav />
-      <main className="mb-32 mt-52">
-        <section className="grid grid-cols-2 pl-36 gap-x-12">
-          <div className="flex flex-col justify-center max-w-lg">
-            <p className="text-gray text-sm font-medium">
-              Build Profile & Market Yourself to
-            </p>
-            <h2 className="text-gray-dark font-serif font-medium text-4xl mt-3">
-              Earn More Epoch Rewards
-            </h2>
-            <p className="text-gray-dark mt-5">
-              Mitigate the information disparity between Voters & Validators{" "}
-              <br />
-              by building your Profile & enjoy various perks, <br />
-              including greater Epoch Rewards. Here’s how it works...
-            </p>
-            <Link href="/vg/dashboard" passHref>
-              <a className="py-2 text-lg bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark focus:border-primary-dark focus:text-primary-dark focus:outline-none active:bg-primary-light-light active:border-primary-dark-dark active:text-primary-dark-dark font-medium rounded-md shadow-md flex justify-center mt-10 whitespace-nowrap truncate w-3/4">
-                Validator Group’s Dashboard
-              </a>
-            </Link>
+      <main className="md:mb-32 md:mt-52 mt-32 mb-16">
+        <section className="lg:grid lg:grid-cols-2 lg:gap-x-12 text-center lg:text-left lg:pl-36">
+          <div className="flex flex-col justify-center lg:max-w-lg">
+            <div className="px-10 lg:px-0">
+              <p className="text-gray text-sm font-medium">
+                Build Profile & Market Yourself to
+              </p>
+              <h2 className="text-gray-dark font-serif font-medium text-4xl mt-3">
+                Earn More Epoch Rewards
+              </h2>
+              <p className="text-gray-dark mt-5">
+                Mitigate the information disparity between Voters & Validators
+                by building your Profile & enjoy various perks, including
+                greater Epoch Rewards. Here’s how it works...
+              </p>
+            </div>
+            <div className="relative ml-8 mt-5 block lg:hidden">
+              <img
+                // className="absolute right-0"
+                src="/assets/home/vg-landing-hero.png"
+              />
+            </div>
+            <div className="flex justify-center lg:block mt-10">
+              <Link href="/vg/dashboard" passHref>
+                <a className="py-2 text-lg bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark focus:border-primary-dark focus:text-primary-dark focus:outline-none active:bg-primary-light-light active:border-primary-dark-dark active:text-primary-dark-dark font-medium rounded-md shadow-md flex justify-center whitespace-nowrap truncate w-3/4">
+                  Validator Group’s Dashboard
+                </a>
+              </Link>
+            </div>
           </div>
 
-          <div className="relative">
+          <div className="relative hidden lg:block">
             <img
               // className="absolute right-0"
               src="/assets/home/vg-landing-hero.png"
@@ -95,15 +105,15 @@ export default function VGLanding() {
               </defs>
             </svg>
           </div> */}
-          <div className="text-center text-gray-dark">
+          <div className="text-center text-gray-dark px-10 lg:px-36">
             <p className="text-gray text-sm">Make the most of your profile &</p>
-            <p className="mt-3  text-3xl font-serif">
+            <p className="mt-3 text-3xl font-serif">
               Boost Your Validator Group’s Performance
             </p>
             <FeatureGridVG />
           </div>
         </section>
-        <section className="mt-32 px-36 text-gray-dark">
+        <section className="mt-32 px-10 lg:px-36 text-gray-dark">
           <div className="text-center">
             <p className="text-gray text-sm">Your Question, Answered</p>
             <p className="mt-5  text-3xl font-serif">
