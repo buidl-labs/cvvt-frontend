@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Nav />
-      <main className="mb-32 mt-52">
+      <main className="md:mb-32 md:mt-52 mt-32 mb-16">
         <How />
       </main>
       <Footer />
