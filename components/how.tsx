@@ -44,6 +44,7 @@ function How() {
         "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
     },
   ];
+
   return (
     <div className="px-10 lg:px-36">
       <div className="w-full flex justify-center">
@@ -61,19 +62,18 @@ function How() {
               and some CELOs in it.
             </p>
           </div>
-          <section className="my-32 space-y-28">
+          <section className="mt-32 mb-20 space-y-28">
             <div>
               <p className="text-gray text-sm font-medium">STEP 1</p>
               <h3 className="font-serif font-medium text-3xl text-gray-dark mt-2">
                 Select the investment amount
               </h3>
-              <div className="mt-10 flex justify-center">
+              <div className="mt-5 lg:mt-10 flex justify-center">
                 <FeatureIllustrationOne />
               </div>
-              <p className="text-gray mt-6">
-                Start earning profits with as low as 1 CELO in your wallet.{" "}
-                <br />
-                The more you hold & invest, the more you earn.
+              <p className="text-gray mt-6 max-w-sm mx-auto">
+                Start earning profits with as low as 1 CELO in your wallet. The
+                more you hold & invest, the more you earn.
               </p>
             </div>
             <div>
@@ -84,9 +84,9 @@ function How() {
               <div className="mt-10 -ml-7 flex justify-center">
                 <Clipboard />
               </div>
-              <p className="text-gray mt-6">
-                Vote for efficient & reliable Validator Groups on the <br />
-                Network that operate a well-run Organization.
+              <p className="text-gray mt-6 max-w-sm mx-auto">
+                Vote for efficient & reliable Validator Groups on the Network
+                that operate a well-run Organization.
               </p>
             </div>
             <div>
@@ -97,9 +97,9 @@ function How() {
               <div className="mt-10 -mr-10 flex justify-center">
                 <Note />
               </div>
-              <p className="text-gray mt-6">
-                Activate vote in a subsequent epoch to convert <br />
-                the pending vote to one that earns rewards.
+              <p className="text-gray mt-6 max-w-sm mx-auto">
+                Activate vote in a subsequent epoch to convert the pending vote
+                to one that earns rewards.
               </p>
             </div>
 
@@ -111,112 +111,23 @@ function How() {
               <div className="mt-10 flex justify-center">
                 <Report />
               </div>
-              <p className="text-gray mt-6">
-                Monitor growth as the CELOs earned in profit automatically
-                <br />
-                gets added to your invested CELO for compounding.
+              <p className="text-gray mt-6 max-w-sm mx-auto">
+                Monitor growth as the CELOs earned in profit automatically gets
+                added to your invested CELO for compounding.
               </p>
             </div>
           </section>
         </div>
       </div>
       <div>
-        <div className="text-center mb-14 mt-4">
+        <div className="text-center mb-14">
           <p className="text-gray text-sm">Your Question, Answered</p>
-          <p className="mt-5  text-3xl font-serif">
-            Frequently Asked Questions
-          </p>
+          <p className="mt-5 text-3xl font-serif">Frequently Asked Questions</p>
         </div>
         <FAQ faqs={faqs} />
       </div>
     </div>
   );
-  // return (
-  // <>
-  //   <div className="w-full flex justify-center">
-  //     <div className="text-center">
-  //       <div>
-  //         <p className="text-gray text-sm font-medium">
-  //           Simplicity First, and Second.
-  //         </p>
-  //         <h2 className="text-gray-dark text-4xl font-medium font-serif mt-2">
-  //           Investing CELO is Easy, as it should be.
-  //         </h2>
-  //         <p className="text-gray mt-5 w-2/3 mx-auto">
-  //           ChurroFi is a simple & smart way to put CELOs to work & earn
-  //           profits on the go! All you need to get started is a Celo Wallet
-  //           and some CELOs in it.
-  //         </p>
-  //       </div>
-  //       <section className="my-32 space-y-28">
-  //         <div>
-  //           <p className="text-gray text-sm font-medium">STEP 1</p>
-  //           <h3 className="font-serif font-medium text-3xl text-gray-dark mt-2">
-  //             Select the investment amount
-  //           </h3>
-  //           <div className="mt-10 flex justify-center">
-  //             <FeatureIllustrationOne />
-  //           </div>
-  //           <p className="text-gray mt-6">
-  //             Start earning profits with as low as 1 CELO in your wallet.{" "}
-  //             <br />
-  //             The more you hold & invest, the more you earn.
-  //           </p>
-  //         </div>
-  //         <div>
-  //           <p className="text-gray text-sm font-medium">STEP 2</p>
-  //           <h3 className="font-serif font-medium text-3xl text-gray-dark mt-2">
-  //             Vote for Validator Group
-  //           </h3>
-  //           <div className="mt-10 -ml-7 flex justify-center">
-  //             <Clipboard />
-  //           </div>
-  //           <p className="text-gray mt-6">
-  //             Vote for efficient & reliable Validator Groups on the <br />
-  //             Network that operate a well-run Organization.
-  //           </p>
-  //         </div>
-  //         <div>
-  //           <p className="text-gray text-sm font-medium">STEP 3</p>
-  //           <h3 className="font-serif font-medium text-3xl text-gray-dark mt-2">
-  //             Activate Your Vote
-  //           </h3>
-  //           <div className="mt-10 -mr-10 flex justify-center">
-  //             <Note />
-  //           </div>
-  //           <p className="text-gray mt-6">
-  //             Activate vote in a subsequent epoch to convert <br />
-  //             the pending vote to one that earns rewards.
-  //           </p>
-  //         </div>
-  //         <div>
-  //           <p className="text-gray text-sm font-medium">All set!</p>
-  //           <h3 className="font-serif font-medium text-3xl text-gray-dark mt-2">
-  //             Earn Profits & Monitor Growth
-  //           </h3>
-  //           <div className="mt-10 flex justify-center">
-  //             <Report />
-  //           </div>
-  //           <p className="text-gray mt-6">
-  //             Monitor growth as the CELOs earned in profit automatically
-  //             <br />
-  //             gets added to your invested CELO for compounding.
-  //           </p>
-  //         </div>
-  //       </section>
-  //     </div>
-  //   </div>
-  //   <div>
-  //     <div className="text-center mb-14 mt-4">
-  //       <p className="text-gray text-sm">Your Question, Answered</p>
-  //       <p className="mt-5  text-3xl font-serif">
-  //         Frequently Asked Questions
-  //       </p>
-  //     </div>
-  //     <FAQ faqs={faqs} />
-  //   </div>
-  // </>
-  // );
 }
 
 export default How;
