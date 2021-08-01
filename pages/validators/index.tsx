@@ -104,40 +104,8 @@ function ValidatorExplorer() {
       <ReactTooltip place="top" type="dark" effect="solid" />
       <Nav />
       <div className="flex flex-col">
-        <div className="px-40 pt-40 pb-6 border-b border-gray-light shadow">
-          <div className="flex justify-between">
-            <h3 className="font-medium text-2xl">Validator Groups</h3>
-            <div className="flex items-center justify-end">
-              <div className="ml-auto h-2 w-2 bg-secondary rounded-full mr-2.5"></div>
-              <p className="text-secondary text-sm">Mainnet</p>
-            </div>
-          </div>
-          <div className="mt-8 px-9 space-x-2 grid grid-cols-8 font-medium text-gray text-sm text-center">
-            <div></div>
-            {FIELDS.map((f) => (
-              <button
-                key={f.key}
-                onClick={() => handleSort(f.key)}
-                className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded p-2 flex items-center ${
-                  f.key == "name" ? "justify-start" : "justify-center"
-                }  ${sortStatus.key == f.key && "text-gray-dark"}`}
-                data-tip={f.tip && f.tip}
-                data-delay-show="350"
-              >
-                <span className="truncate">{f.name}</span>
-                {sortStatus.key == f.key && (
-                  <span className="ml-0.5">
-                    {sortStatus.order == Order.DESC ? (
-                      <DownArrow />
-                    ) : (
-                      <UpArrow />
-                    )}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
+        <ExplorerHeader handleSort={handleSort} sortStatus={sortStatus} />
+
         <Transition
           show={fetching}
           enter="transition-opacity duration-100"
@@ -152,7 +120,7 @@ function ValidatorExplorer() {
           </div>
         </Transition>
 
-        <ul className="px-40 py-10 space-y-3 flex-1 min-h-screen">
+        <ul className="lg:px-40 py-10 space-y-3 flex-1 min-h-screen">
           {validatorGroups?.map((VG: ValidatorGroup) => (
             <li
               className="relative overflow-hidden  font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:border-primary-light-light hover:shadow-lg transform transition-all duration-100"
@@ -357,6 +325,46 @@ export const UpArrow = () => (
       clipRule="evenodd"
     />
   </svg>
+);
+
+const ExplorerHeader = ({
+  handleSort,
+  sortStatus,
+}: {
+  sortStatus: SortStatus;
+  handleSort: (key: string) => void;
+}) => (
+  <div className="lg:px-40 lg:pt-40 px-10 pt-20 pb-6 border-b border-gray-light shadow">
+    <div className="flex justify-between">
+      <h3 className="font-medium text-2xl">Validator Groups</h3>
+      <div className="flex items-center justify-end">
+        <div className="ml-auto h-2 w-2 bg-secondary rounded-full mr-2.5"></div>
+        <p className="text-secondary text-sm">Mainnet</p>
+      </div>
+    </div>
+
+    <div className="mt-8 px-9 space-x-2 grid grid-cols-8 font-medium text-gray text-sm text-center">
+      <div></div>
+      {FIELDS.map((f) => (
+        <button
+          key={f.key}
+          onClick={() => handleSort(f.key)}
+          className={`hover:text-gray-dark focus:ring-2 focus:ring-primary focus:text-gray-dark transition-all rounded p-2 flex items-center ${
+            f.key == "name" ? "justify-start" : "justify-center"
+          }  ${sortStatus.key == f.key && "text-gray-dark"}`}
+          data-tip={f.tip && f.tip}
+          data-delay-show="350"
+        >
+          <span className="truncate">{f.name}</span>
+          {sortStatus.key == f.key && (
+            <span className="ml-0.5">
+              {sortStatus.order == Order.DESC ? <DownArrow /> : <UpArrow />}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  </div>
 );
 
 export default ValidatorExplorer;
