@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Footer from "../../components/home/footer";
 import Nav from "../../components/home/nav";
@@ -9,6 +9,7 @@ import { FIELDS, Order, SortStatus } from "../../lib/explorer-types";
 import { Validator, ValidatorGroup } from "../../lib/types";
 import ReactTooltip from "react-tooltip";
 import CopyIcon from "../../components/icons/copy";
+import VerifiedDNSBadge from "../../components/icons/verified-dns";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -105,7 +106,6 @@ function ValidatorExplorer() {
       <Nav />
       <div className="flex flex-col">
         <ExplorerHeader handleSort={handleSort} sortStatus={sortStatus} />
-
         <Transition
           show={fetching}
           enter="transition-opacity duration-100"
@@ -123,7 +123,7 @@ function ValidatorExplorer() {
         <ul className="lg:px-40 py-10 space-y-3 flex-1 min-h-screen">
           {validatorGroups?.map((VG: ValidatorGroup) => (
             <li
-              className="relative overflow-hidden  font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:border-primary-light-light hover:shadow-lg transform transition-all duration-100"
+              className="relative font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:border-primary-light-light hover:shadow-lg transform transition-all duration-100 overflow-x-auto overflow-y-hidden w-auto"
               key={VG.Address}
             >
               <Link href={`/validators/${VG.Address}`} passHref>
@@ -160,27 +160,7 @@ function ValidatorExplorer() {
                   <span className="whitespace-nowrap truncate">
                     {VG.Name ? VG.Name : "Unkown Group"}
                   </span>
-                  {VG.VerifiedDns && (
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0)">
-                        <path
-                          d="M16 7.99998L14.1887 5.989L14.4723 3.2968L11.8238 2.73609L10.4728 0.38913L8.00002 1.49423L5.52728 0.38913L4.17625 2.73609L1.52771 3.2968L1.81127 5.989L0 7.99998L1.81124 10.011L1.52768 12.7032L4.17622 13.2639L5.52725 15.6108L7.99998 14.5057L10.4727 15.6108L11.8237 13.2639L14.4723 12.7032L14.1887 10.011L16 7.99998ZM11.3538 6.24831L7.33811 10.7473L4.54765 7.95684L5.21136 7.29312L7.29935 9.38111L10.6535 5.62327L11.3538 6.24831Z"
-                          fill="#FBCC5C"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0">
-                          <rect width="16" height="16" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  )}
+                  {VG.VerifiedDns && <VerifiedDNSBadge />}
                 </div>
                 <div className="flex flex-wrap justify-center items-center">
                   {VG.Validators.map((v: Validator) => (
@@ -355,7 +335,7 @@ const ExplorerHeader = ({
           data-tip={f.tip && f.tip}
           data-delay-show="350"
         >
-          <span className="truncate">{f.name}</span>
+          <span className="whitespace-nowrap">{f.name}</span>
           {sortStatus.key == f.key && (
             <span className="ml-0.5">
               {sortStatus.order == Order.DESC ? <DownArrow /> : <UpArrow />}
