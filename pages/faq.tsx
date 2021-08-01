@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import FAQComponent from "../components/FAQ";
+import Footer from "../components/home/footer";
 import Nav from "../components/home/nav";
 
 function FAQ() {
@@ -42,10 +43,11 @@ function FAQ() {
         "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
     },
   ];
+
   return (
     <div>
       <Nav />
-      <div className="mb-32 pt-16">
+      <div className="mb-32 pt-16 px-5 lg:px-0">
         <div className="text-center mt-16">
           <p className="text-sm text-gray">Your Question, Answered</p>
           <h2 className="text-gray-dark text-3xl font-medium font-serif mt-2">
@@ -60,20 +62,21 @@ function FAQ() {
             Can’t find an answer to your query? Don’t worry, we’ve got your
             back...
           </p>
-          <div className="mt-5 space-x-4 text-lg">
+          <div className="mt-5 space-y-5 lg:space-x-4 text-lg px-6 text-center">
             <Link href="#" passHref>
-              <a className="inline-block px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
+              <a className="inline-block w-full lg:w-auto px-14 py-2 border-2 border-primary bg-primary text-white font-medium rounded-md shadow-md">
                 Contact Us
               </a>
             </Link>
             <Link href="/how" passHref>
-              <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md">
+              <a className="inline-block w-full lg:w-auto px-14 py-2 bg-white text-primary border-2 border-primary font-medium rounded-md shadow-md">
                 How it works?
               </a>
             </Link>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
