@@ -177,17 +177,20 @@ function Withdraw() {
         address,
         vg.vg,
         "revoke"
+      ).then(() =>
+        trackCELOLockedOrUnlockedOrWithdraw(
+          vg.active.div(1e18).toNumber(),
+          address,
+          "unlock"
+        )
       );
-      trackCELOLockedOrUnlockedOrWithdraw(
-        vg.active.div(1e18).toNumber(),
-        address,
-        "unlock"
-      );
+
       send("UNVOTE");
     } catch (e) {
       console.log(`Unable to vote ${e.message}`);
     } finally {
       fetchVotingSummary();
+      getPendingWithdrawals();
     }
   };
 
