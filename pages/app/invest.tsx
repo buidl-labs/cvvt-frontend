@@ -16,9 +16,13 @@ import CeloInput from "../../components/app/celo-input";
 import { fetchExchangeRate, fetchTargetAPY } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
 import useVG from "../../hooks/useValidatorGroups";
-import { VGSuggestion } from "../../lib/types";
 import InfoIcon from "../../components/icons/info";
 import ReactTooltip from "react-tooltip";
+import {
+  trackCELOLockedOrUnlockedOrWithdraw,
+  trackVoteOrRevoke,
+} from "../../lib/supabase";
+// import { supabase } from "../../lib/supabase";
 
 const InvestMachine = createMachine({
   id: "InvestFlow",
@@ -140,6 +144,11 @@ function Invest() {
       });
 
       console.log("CELO locked");
+      trackCELOLockedOrUnlockedOrWithdraw(
+        amount.div(1e18).toNumber(),
+        address,
+        "lock"
+      );
       send("NEXT");
     } catch (e) {
       console.log("Couldn't lock");
@@ -162,6 +171,13 @@ function Invest() {
           )
         ).sendAndWaitForReceipt({ from: k.defaultAccount });
       });
+
+      trackVoteOrRevoke(
+        parseFloat(celoToInvest),
+        address,
+        selectedVGAddress,
+        "vote"
+      );
       send("NEXT");
     } catch (e) {
       console.log("unable to vote", e.message);

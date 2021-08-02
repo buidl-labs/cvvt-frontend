@@ -793,6 +793,45 @@
     "@stablelib/random" "^1.0.1"
     "@stablelib/wipe" "^1.0.1"
 
+"@supabase/gotrue-js@^1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@supabase/gotrue-js/-/gotrue-js-1.17.0.tgz#0ff46f844ddd124543d2769da8eda58ab479b49b"
+  integrity sha512-c+GSSoW+PIT3/r7TnBdc4gPjtWDutO/2ROafSKUFl39Pb8aHIUbUvzK9sjuedaaLKH7bV8VefuRy2L8c0BUAzg==
+  dependencies:
+    cross-fetch "^3.0.6"
+
+"@supabase/postgrest-js@^0.33.0":
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-0.33.0.tgz#36e0bfd0f79a0fa01a4bb7c7881ee463fd7d60a8"
+  integrity sha512-og6Evdkan7Qp6+tOch7Pyq+ZWMnrCQtPHWwPpsN5A3iYQSro2yn21Yvazs9qAFoWAeTGNkuTOVpShT5Mbc9WcQ==
+  dependencies:
+    cross-fetch "^3.0.6"
+
+"@supabase/realtime-js@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@supabase/realtime-js/-/realtime-js-1.1.1.tgz#3a1be101eecbc2413d41bfdd6757d964a5f82b14"
+  integrity sha512-kUew5KPjgWYtenxrQJWZ/tHMGlg5Qz++bbsiY8Y89AjZQioSO557MlGHaEoT6k4s7CJ6e/ctNsT7tRhCKJimcQ==
+  dependencies:
+    "@types/websocket" "^1.0.3"
+    websocket "^1.0.34"
+
+"@supabase/storage-js@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@supabase/storage-js/-/storage-js-1.4.0.tgz#0692782ccaf10df27d539d9349031ed87c7ec426"
+  integrity sha512-7+SGyXOgdhtz8qHzXo64HiS66PT/y4F8YFNMtXqYOu1LjHh0YwtOgpPLDA8obiSsNVwZiKwpgBJkz4LHG1YvRQ==
+  dependencies:
+    cross-fetch "^3.1.0"
+
+"@supabase/supabase-js@^1.21.0":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-1.21.0.tgz#7fe3575a41644048ecbe2ed6eba89e830959d47b"
+  integrity sha512-SJgRQCdHRpnnuXVCb7X8XA/u2S4oo1Jdn92eLBl0QaUKGhREFHk2x4XlJZA9bJNzAhby9eQZ56FCtBrUda2CRQ==
+  dependencies:
+    "@supabase/gotrue-js" "^1.17.0"
+    "@supabase/postgrest-js" "^0.33.0"
+    "@supabase/realtime-js" "^1.1.1"
+    "@supabase/storage-js" "^1.4.0"
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -997,6 +1036,13 @@
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@types/utf8/-/utf8-2.1.6.tgz#430cabb71a42d0a3613cce5621324fe4f5a25753"
   integrity sha512-pRs2gYF5yoKYrgSaira0DJqVg2tFuF+Qjp838xS7K+mJyY2jJzjsrl6y17GbIa4uMRogMbxs+ghNCvKg6XyNrA==
+
+"@types/websocket@^1.0.3":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@types/websocket/-/websocket-1.0.4.tgz#1dc497280d8049a5450854dd698ee7e6ea9e60b8"
+  integrity sha512-qn1LkcFEKK8RPp459jkjzsfpbsx36BBt3oC3pITYtkoBw/aVX+EZFa5j3ThCRTNpLFvIMr5dSTD4RaMdilIOpA==
+  dependencies:
+    "@types/node" "*"
 
 "@urql/core@^2.1.4":
   version "2.1.5"
@@ -2067,6 +2113,13 @@ cross-fetch@3.0.4:
   dependencies:
     node-fetch "2.6.0"
     whatwg-fetch "3.0.0"
+
+cross-fetch@^3.0.6, cross-fetch@^3.1.0:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
+  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
+  dependencies:
+    node-fetch "2.6.1"
 
 crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
   version "3.12.0"
@@ -6561,7 +6614,7 @@ webidl-conversions@^4.0.2:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
-websocket@^1.0.32:
+websocket@^1.0.32, websocket@^1.0.34:
   version "1.0.34"
   resolved "https://registry.yarnpkg.com/websocket/-/websocket-1.0.34.tgz#2bdc2602c08bf2c82253b730655c0ef7dcab3111"
   integrity sha512-PRDso2sGwF6kM75QykIesBijKSVceR6jL2G8NGYyq2XrItNC2P5/qL5XeR056GhA+Ly7JMFvJb9I312mJfmqnQ==

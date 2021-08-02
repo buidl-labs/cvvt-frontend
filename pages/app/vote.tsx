@@ -31,6 +31,7 @@ import { VGSuggestion, GroupVoting } from "../../lib/types";
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 import ReactTooltip from "react-tooltip";
+import { trackVoteOrRevoke } from "../../lib/supabase";
 
 const options = ["Vote", "Revoke"];
 function vote() {
@@ -197,6 +198,12 @@ function vote() {
           )
         ).sendAndWaitForReceipt({ from: k.defaultAccount });
       });
+      trackVoteOrRevoke(
+        parseFloat(celoAmountToInvest),
+        address,
+        selectedVG,
+        "vote"
+      );
     } catch (e) {
       console.log("unable to vote", e.message);
     } finally {
@@ -226,6 +233,12 @@ function vote() {
           ).map((tx) => tx.sendAndWaitForReceipt({ from: k.defaultAccount }))
         );
       });
+      trackVoteOrRevoke(
+        parseFloat(celoAmountToInvest),
+        address,
+        selectedVG,
+        "revoke"
+      );
       console.log("Vote cast");
     } catch (e) {
       console.log(`Unable to vote ${e.message}`);

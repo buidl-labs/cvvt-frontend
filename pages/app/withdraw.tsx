@@ -21,6 +21,10 @@ import {
   WithdrawalStatus,
 } from "../../lib/types";
 import { Dialog, Transition } from "@headlessui/react";
+import {
+  trackCELOLockedOrUnlockedOrWithdraw,
+  trackVoteOrRevoke,
+} from "../../lib/supabase";
 
 const StateMachine = createMachine({
   id: "StateMachine",
@@ -135,6 +139,11 @@ function Withdraw() {
           .withdraw(idx)
           .sendAndWaitForReceipt({ from: k.defaultAccount });
       });
+      trackCELOLockedOrUnlockedOrWithdraw(
+        pendingWithdrawals[idx].value.div(1e18).toNumber(),
+        address,
+        "withdraw"
+      );
       send("WITHDRAW");
     } catch (e) {
       console.log(e.message);
@@ -163,6 +172,17 @@ function Withdraw() {
           .sendAndWaitForReceipt({ from: k.defaultAccount });
       });
       console.log("Unvote & Unlock");
+      trackVoteOrRevoke(
+        vg.active.div(1e18).toNumber(),
+        address,
+        vg.vg,
+        "revoke"
+      );
+      trackCELOLockedOrUnlockedOrWithdraw(
+        vg.active.div(1e18).toNumber(),
+        address,
+        "unlock"
+      );
       send("UNVOTE");
     } catch (e) {
       console.log(`Unable to vote ${e.message}`);

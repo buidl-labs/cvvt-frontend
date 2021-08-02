@@ -23,6 +23,7 @@ import { calculateBarWidth, fetchExchangeRate } from "../../lib/utils";
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 import ReactTooltip from "react-tooltip";
+import { trackCELOLockedOrUnlockedOrWithdraw } from "../../lib/supabase";
 
 const options = ["Lock", "Unlock", "Withdraw"];
 function vote() {
@@ -92,6 +93,11 @@ function vote() {
       });
 
       console.log("CELO locked");
+      trackCELOLockedOrUnlockedOrWithdraw(
+        parseFloat(celoAmount),
+        address,
+        "lock"
+      );
     } catch (e) {
       console.error(e.message);
     } finally {
@@ -109,6 +115,11 @@ function vote() {
           .sendAndWaitForReceipt({ from: k.defaultAccount });
       });
 
+      trackCELOLockedOrUnlockedOrWithdraw(
+        parseFloat(celoAmount),
+        address,
+        "unlock"
+      );
       console.log("CELO unlocked");
     } catch (e) {
       console.error(e.message);
@@ -127,6 +138,11 @@ function vote() {
           .withdraw(selectedWithdrawal)
           .sendAndWaitForReceipt({ from: k.defaultAccount });
       });
+      trackCELOLockedOrUnlockedOrWithdraw(
+        withdrawals[selectedWithdrawal].value.div(1e18).toNumber(),
+        address,
+        "withdraw"
+      );
     } catch (e) {
       console.log(e.message);
     } finally {
