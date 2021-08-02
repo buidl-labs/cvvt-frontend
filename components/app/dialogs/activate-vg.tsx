@@ -1,6 +1,5 @@
-import { Dialog, RadioGroup, Transition } from "@headlessui/react";
+import { Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
-import { floatToPercentage } from "../../../lib/utils";
 
 function ActivateVG({ open, activate }: { open: boolean; activate(): void }) {
   return (

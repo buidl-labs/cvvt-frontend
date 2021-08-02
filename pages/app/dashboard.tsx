@@ -23,6 +23,7 @@ import EpochRewardGraph from "../../components/app/EpochRewardGraph";
 import { Switch, Transition } from "@headlessui/react";
 import Loader from "react-loader-spinner";
 import { BigNumber } from "bignumber.js";
+import { trackActivate } from "../../lib/supabase";
 
 export default function dashboard() {
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
@@ -113,7 +114,7 @@ export default function dashboard() {
           ).map((tx) => tx.sendAndWaitForReceipt({ from: k.defaultAccount }))
         );
       });
-
+      trackActivate(address);
       console.log("Votes activated");
       state.setHasActivatableVotes(false);
     } catch (e) {

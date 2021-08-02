@@ -31,7 +31,7 @@ import { VGSuggestion, GroupVoting } from "../../lib/types";
 import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 import ReactTooltip from "react-tooltip";
-import { trackVoteOrRevoke } from "../../lib/supabase";
+import { trackActivate, trackVoteOrRevoke } from "../../lib/supabase";
 
 const options = ["Vote", "Revoke"];
 function vote() {
@@ -261,7 +261,7 @@ function vote() {
           ).map((tx) => tx.sendAndWaitForReceipt({ from: k.defaultAccount }))
         );
       });
-
+      trackActivate(address);
       console.log("Votes activated");
     } catch (e) {
       console.log(`Unable to activate votes ${e.message}`);

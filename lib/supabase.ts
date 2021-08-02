@@ -87,3 +87,15 @@ export const trackVoteOrRevoke = async (
   if (error) return false;
   return true;
 };
+
+export const trackActivate = async (address: string): Promise<boolean> => {
+  const wallet_id = await fetchIdaddWalletIfDoesntExist(address);
+  if (wallet_id == -1) {
+    return false;
+  }
+  const { error } = await supabase
+    .from("actions")
+    .insert([{ wallet_id, action: "activate" }]);
+  if (error) return false;
+  return true;
+};
