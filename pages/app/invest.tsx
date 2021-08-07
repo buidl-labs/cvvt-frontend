@@ -22,6 +22,7 @@ import {
   trackCELOLockedOrUnlockedOrWithdraw,
   trackVoteOrRevoke,
 } from "../../lib/supabase";
+import { useRouter } from "next/router";
 // import { supabase } from "../../lib/supabase";
 
 const InvestMachine = createMachine({
@@ -46,7 +47,10 @@ const InvestMachine = createMachine({
 const formatter = new Intl.NumberFormat("en-US");
 
 function Invest() {
-  const { address, network, kit, performActions } = useContractKit();
+  const { address, kit, performActions } = useContractKit();
+  const router = useRouter();
+  console.log(router.query);
+  console.log(router.query.amount);
 
   const [current, send] = useMachine(InvestMachine);
 
@@ -71,7 +75,7 @@ function Invest() {
   }, [selectedVGAddress]);
   const [expandedVG, setExpandedVG] = useState(false);
 
-  const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true, 5);
+  const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true);
 
   const state = useStore();
 
@@ -83,8 +87,26 @@ function Invest() {
   }, []);
 
   useEffect(() => {
+    if (Object.keys(router.query).includes("amount")) {
+      const { amount } = router.query;
+      console.log("setting amount as ", amount);
+      if (typeof amount == "string") setCeloToInvest(amount);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
     if (fetchingVG == false && errorFetchingVG == undefined) {
       setValidatorGroups(data["ValidatorGroups"]);
+      const isVGInQuery = Object.keys(router.query).includes("vg");
+      if (isVGInQuery) {
+        const vgInQuery = data["ValidatorGroups"].find(
+          (vg) => vg.Address == router.query["vg"]
+        );
+        if (vgInQuery) {
+          setSelectedVGAddress(vgInQuery.Address);
+          return;
+        }
+      }
       setSelectedVGAddress(data["ValidatorGroups"][0].Address);
     }
   }, [fetchingVG, errorFetchingVG, data]);
@@ -124,10 +146,6 @@ function Invest() {
     setMonthlyEarning(monthly);
     setYearlyEarning(yearly);
   }, [celoToInvest]);
-
-  useEffect(() => {
-    console.log("State machine:", current.value);
-  }, [current.value]);
 
   const lockCELO = async (amount: BigNumber) => {
     if (!unlockedCelo) return;
