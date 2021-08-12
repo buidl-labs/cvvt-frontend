@@ -6,7 +6,6 @@ import { createMachine } from "xstate";
 import { useMachine } from "@xstate/react";
 
 import { BigNumber } from "bignumber.js";
-import axios from "axios";
 
 import useStore from "../../store/store";
 
@@ -23,6 +22,7 @@ import {
   trackVoteOrRevoke,
 } from "../../lib/supabase";
 import { useRouter } from "next/router";
+import { intervalToDuration, add } from "date-fns";
 // import { supabase } from "../../lib/supabase";
 
 const InvestMachine = createMachine({
@@ -49,8 +49,6 @@ const formatter = new Intl.NumberFormat("en-US");
 function Invest() {
   const { address, kit, performActions } = useContractKit();
   const router = useRouter();
-  console.log(router.query);
-  console.log(router.query.amount);
 
   const [current, send] = useMachine(InvestMachine);
 
@@ -69,6 +67,7 @@ function Invest() {
   const [validatorGroups, setValidatorGroups] = useState<any[]>([]);
   const [selectedVGAddress, setSelectedVGAddress] = useState<string>("");
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
+  const [hoursToNextEpoch, setHoursToNextEpoch] = useState(0);
 
   const selectedVG = useMemo<any>(() => {
     return validatorGroups.find((vg) => vg.Address === selectedVGAddress);
@@ -78,6 +77,25 @@ function Invest() {
   const { fetching: fetchingVG, error: errorFetchingVG, data } = useVG(true);
 
   const state = useStore();
+
+  async function getTimeToNextEpoch() {
+    const block = await kit.web3.eth.getBlockNumber();
+    const EPOCH_SIZE = await kit.getEpochSize();
+    const BLOCK_TIME = 5;
+    const secondsToNextEpoch = BLOCK_TIME * (EPOCH_SIZE - (block % EPOCH_SIZE));
+    const timeToNextEpoch = intervalToDuration({
+      start: new Date(),
+      end: add(new Date(), { seconds: secondsToNextEpoch }),
+    });
+    setHoursToNextEpoch(
+      timeToNextEpoch.minutes > 0
+        ? timeToNextEpoch.hours + 1
+        : timeToNextEpoch.hours
+    );
+  }
+  useEffect(() => {
+    getTimeToNextEpoch();
+  }, []);
 
   useEffect(() => {
     fetchExchangeRate().then((rate) => setExchangeRate(rate));
@@ -630,11 +648,21 @@ function Invest() {
                 <InfoIcon />
               </button>
             </div>
-            <div className={`${!current.matches("activating") && "hidden"}`}>
-              <p className="text-gray font-medium mt-5">Almost there!</p>
+            <div
+              className={`${
+                !current.matches("activating") && "hidden"
+              } font-medium`}
+            >
+              <p className="text-gray text-lg mt-5">Almost there!</p>
               <p className="text-gray mt-3">
                 To finish your investment & start earning profits - please
-                return back in a day.
+                return back in{" "}
+                <span className="text-primary text-lg">
+                  {`${hoursToNextEpoch} ${
+                    hoursToNextEpoch == 1 ? "hour" : "hours"
+                  }`}
+                </span>{" "}
+                to activate your investment and start earning rewards.
               </p>
             </div>
           </div>
