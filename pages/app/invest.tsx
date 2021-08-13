@@ -655,12 +655,11 @@ function Invest() {
                 <InfoIcon />
               </button>
             </div>
-            {/* <div
+            <div
               className={`${
                 !current.matches("activating") && "hidden"
               } font-medium`}
-            > */}
-            <div className={`font-medium`}>
+            >
               <p className="text-gray text-lg mt-5">Almost there!</p>
               <p className="text-gray mt-3">
                 To finish your investment & start earning profits - please
