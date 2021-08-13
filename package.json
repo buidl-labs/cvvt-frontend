@@ -25,6 +25,7 @@
     "react-hook-form": "^7.9.0",
     "react-loader-spinner": "^4.0.0",
     "react-query": "^3.16.1",
+    "react-toastify": "^7.0.4",
     "react-tooltip": "^4.2.21",
     "recharts": "^2.0.10",
     "urql": "^2.0.3",

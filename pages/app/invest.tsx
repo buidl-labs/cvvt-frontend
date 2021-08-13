@@ -11,6 +11,7 @@ import useStore from "../../store/store";
 
 import Layout from "../../components/app/layout";
 import VoteVGDialog from "../../components/app/dialogs/vote-vg";
+import ReminderModal from "../../components/app/dialogs/reminder";
 import CeloInput from "../../components/app/celo-input";
 import { fetchExchangeRate, fetchTargetAPY } from "../../lib/utils";
 import { getCELOBalance, getNonVotingLockedGold } from "../../lib/celo";
@@ -23,7 +24,6 @@ import {
 } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import { intervalToDuration, add } from "date-fns";
-// import { supabase } from "../../lib/supabase";
 
 const InvestMachine = createMachine({
   id: "InvestFlow",
@@ -68,6 +68,7 @@ function Invest() {
   const [selectedVGAddress, setSelectedVGAddress] = useState<string>("");
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
   const [hoursToNextEpoch, setHoursToNextEpoch] = useState(0);
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
 
   const selectedVG = useMemo<any>(() => {
     return validatorGroups.find((vg) => vg.Address === selectedVGAddress);
@@ -231,6 +232,12 @@ function Invest() {
           setSelectedVG={setSelectedVGAddress}
           validatorGroups={validatorGroups}
         />
+        <ReminderModal
+          open={reminderModalOpen}
+          setOpen={setReminderModalOpen}
+          action="activate"
+        />
+
         <h1 className="text-2xl font-medium text-gray-dark">Invest CELO</h1>
         <main className="space-y-10 mt-10">
           {/* Amount Panel */}
@@ -648,11 +655,12 @@ function Invest() {
                 <InfoIcon />
               </button>
             </div>
-            <div
+            {/* <div
               className={`${
                 !current.matches("activating") && "hidden"
               } font-medium`}
-            >
+            > */}
+            <div className={`font-medium`}>
               <p className="text-gray text-lg mt-5">Almost there!</p>
               <p className="text-gray mt-3">
                 To finish your investment & start earning profits - please
@@ -664,6 +672,38 @@ function Invest() {
                 </span>{" "}
                 to activate your investment and start earning rewards.
               </p>
+              <button
+                className="mt-5 text-primary flex items-center justify-center border-2 border-primary bg-white font-medium py-2 w-full text-lg rounded-md"
+                onClick={() => setReminderModalOpen(true)}
+              >
+                <span className="mr-2">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.606 8.08232L15.9999 11.4923V4.52832L10.606 8.08232Z"
+                      fill="#35D07F"
+                    />
+                    <path
+                      d="M0 4.52832V11.4923L5.394 8.08232L0 4.52832Z"
+                      fill="#35D07F"
+                    />
+                    <path
+                      d="M15 2.5H1.00003C0.501029 2.5 0.105029 2.872 0.0300293 3.351L8.00003 8.602L15.97 3.351C15.895 2.872 15.499 2.5 15 2.5Z"
+                      fill="#35D07F"
+                    />
+                    <path
+                      d="M9.68998 8.68557L8.27498 9.61757C8.19098 9.67257 8.09598 9.69957 7.99998 9.69957C7.90398 9.69957 7.80898 9.67257 7.72498 9.61757L6.30998 8.68457L0.0319824 12.6556C0.108982 13.1306 0.502982 13.4996 0.999982 13.4996H15C15.497 13.4996 15.891 13.1306 15.968 12.6556L9.68998 8.68557Z"
+                      fill="#35D07F"
+                    />
+                  </svg>
+                </span>
+                Add Email Reminder
+              </button>
             </div>
           </div>
         </main>

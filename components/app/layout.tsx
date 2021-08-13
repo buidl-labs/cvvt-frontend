@@ -5,10 +5,17 @@ import { useRouter } from "next/router";
 import Nav from "./nav";
 import useStore from "../../store/store";
 import { hasActivatablePendingVotes } from "../../lib/celo";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface layoutProps {
   children: React.ReactChild;
 }
+
+const toastClasses = {
+  success: "bg-primary",
+  error: "bg-alert",
+};
 
 export default function layout({ children }: layoutProps) {
   const navigation = [
@@ -80,6 +87,12 @@ export default function layout({ children }: layoutProps) {
 
   return (
     <div className="h-screen overflow-hidden flex flex-col">
+      <ToastContainer
+        className="space-y-2"
+        toastClassName={({ type }) =>
+          `${toastClasses[type]} relative flex p-3 rounded justify-between overflow-hidden cursor-pointer`
+        }
+      />
       <Nav />
       <div className="flex-1 flex overflow-hidden">
         <div className="bg-primary-light-light w-64 flex flex-col flex-shrink-0">
