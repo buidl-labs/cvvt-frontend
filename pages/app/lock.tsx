@@ -24,6 +24,7 @@ import CeloCoin from "../../components/icons/celo-coin";
 import InfoIcon from "../../components/icons/info";
 import ReactTooltip from "react-tooltip";
 import { trackCELOLockedOrUnlockedOrWithdraw } from "../../lib/supabase";
+import ReminderModal from "../../components/app/dialogs/reminder";
 
 const options = ["Lock", "Unlock", "Withdraw"];
 function vote() {
@@ -37,6 +38,7 @@ function vote() {
   );
 
   const [celoAmount, setCeloAmount] = useState("");
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
 
   const { address, network, kit, performActions } = useContractKit();
   const state = useStore();
@@ -115,6 +117,7 @@ function vote() {
           .sendAndWaitForReceipt({ from: k.defaultAccount });
       });
 
+      setReminderModalOpen(true);
       trackCELOLockedOrUnlockedOrWithdraw(
         parseFloat(celoAmount),
         address,
@@ -154,6 +157,11 @@ function vote() {
     <Layout>
       <>
         <ReactTooltip place="top" type="dark" effect="solid" />
+        <ReminderModal
+          open={reminderModalOpen}
+          setOpen={setReminderModalOpen}
+          action="withdraw"
+        />
         <header className="flex justify-between items-baseline">
           <h3 className="text-gray-dark font-medium text-2xl">
             Lock/Unlock CELO

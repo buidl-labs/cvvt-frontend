@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { BigNumber } from "bignumber.js";
 
+import ReminderModal from "../../components/app/dialogs/reminder";
+
 import useStore from "../../store/store";
 
 import Layout from "../../components/app/layout";
@@ -37,6 +39,7 @@ const options = ["Vote", "Revoke"];
 function vote() {
   const [selected, setSelected] = useState<string>(options[0]);
   const [vgDialogOpen, setVGDialogOpen] = useState<boolean>(false);
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
 
   const [votingSummary, setVotingSummary] = useState<GroupVoting[]>([]);
   const [loadingVotingSummary, setLoadingVotingSummary] =
@@ -198,6 +201,7 @@ function vote() {
           )
         ).sendAndWaitForReceipt({ from: k.defaultAccount });
       });
+      setReminderModalOpen(true);
       trackVoteOrRevoke(
         parseFloat(celoAmountToInvest),
         address,
@@ -278,6 +282,11 @@ function vote() {
       <>
         <ReactTooltip place="top" type="dark" effect="solid" />
         <ActivateVGDialog open={hasActivatableVotes} activate={activateVG} />
+        <ReminderModal
+          open={reminderModalOpen}
+          setOpen={setReminderModalOpen}
+          action="activate"
+        />
         {vgDialogOpen ? (
           selected === options[0] ? (
             <VoteVGDialog

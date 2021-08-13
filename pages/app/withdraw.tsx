@@ -25,6 +25,7 @@ import {
   trackCELOLockedOrUnlockedOrWithdraw,
   trackVoteOrRevoke,
 } from "../../lib/supabase";
+import ReminderModal from "../../components/app/dialogs/reminder";
 
 const StateMachine = createMachine({
   id: "StateMachine",
@@ -78,6 +79,7 @@ function Withdraw() {
   >([]);
   const [loadingPendingWithdrawals, setLoadingPendingWithdrawals] =
     useState<boolean>(false);
+  const [reminderModalOpen, setReminderModalOpen] = useState<boolean>(false);
 
   const [current, send] = useMachine(StateMachine);
   const { address, network, kit, performActions } = useContractKit();
@@ -172,6 +174,7 @@ function Withdraw() {
           .sendAndWaitForReceipt({ from: k.defaultAccount });
       });
       console.log("Unvote & Unlock");
+      setReminderModalOpen(true);
       trackVoteOrRevoke(
         vg.active.div(1e18).toNumber(),
         address,
@@ -370,7 +373,11 @@ function Withdraw() {
             </div>
           </Dialog>
         </Transition.Root>
-
+        <ReminderModal
+          open={reminderModalOpen}
+          setOpen={setReminderModalOpen}
+          action="withdraw"
+        />
         <h3 className="text-gray-dark font-medium text-2xl">
           Withdraw Invested CELO
         </h3>
