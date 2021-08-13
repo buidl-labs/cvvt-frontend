@@ -19,38 +19,26 @@ export default function Home() {
     {
       question: "How does Celo Investing work?",
       answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+        "First, you need to lock your CELO. Once your CELO is locked, you can use that to vote on a Validator Group. If the Validator Group you vote on performs well - you earn an amount of CELO every day.",
     },
     {
-      question: "What is Staking?",
+      question: "What is voting?",
       answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+        "Celo is a proof of stake blockchain. On CELO, users can use their CELO to vote/stake on a Validator Group. This earns a reward for the voters and also helps secure the CELO network.",
     },
     {
       question: "What is Locking & Unlocking of CELO?",
       answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+        "To invest your CELO, you need to first lock it on the network. When you want to get your CELO back, you need to unlock your CELO and you'll be able to withdraw it in three days.",
     },
     {
-      question: "What is Voting, Activating Vote & Unvoting of CELO?",
+      question: "What is Activating of CELO?",
       answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+        "Once your CELO is locked, and you've voted it with it. It needs to be activated the next day to start earning with it.",
     },
     {
       question: "Am I eligible to Invest CELO?",
-      answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-    },
-    {
-      question: "Is there a fee associated with this service?",
-      answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-    },
-
-    {
-      question: "Will I be taxed on my Investment profits/returns?",
-      answer:
-        "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      answer: "If you've CELO, you can invest with it.",
     },
   ];
   return (

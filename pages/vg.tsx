@@ -8,28 +8,14 @@ import Nav from "../components/home/nav";
 export default function VGLanding() {
   const faqs = [
     {
-      question:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro, tempore.",
+      question: "How do you select Validator Groups to recommend to the users?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa deleniti dolorem, nulla voluptatibus placeat dicta quo natus? Amet sequi expedita minima ipsa quibusdam. Eligendi, nostrum?",
+        "Every few minutes we calculate a score for all the Groups based on several on-chain metrics - the better the Group scores, higher it is ranked.",
     },
     {
-      question:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro, tempore.",
+      question: "How can I improve my Group's ranking?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa deleniti dolorem, nulla voluptatibus placeat dicta quo natus? Amet sequi expedita minima ipsa quibusdam. Eligendi, nostrum?",
-    },
-    {
-      question:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro, tempore.",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa deleniti dolorem, nulla voluptatibus placeat dicta quo natus? Amet sequi expedita minima ipsa quibusdam. Eligendi, nostrum?",
-    },
-    {
-      question:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro, tempore.",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa deleniti dolorem, nulla voluptatibus placeat dicta quo natus? Amet sequi expedita minima ipsa quibusdam. Eligendi, nostrum?",
+        "Apart from just making sure the validators in your Group perform well - you can access the Validator Group dashboard and complete your profile. We recommend based on a combination of on-chain metrics and a transparency score, which you can bump up by completing your profile.",
     },
   ];
 
