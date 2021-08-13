@@ -25,7 +25,7 @@ export default function Loading({ open }: { open: boolean }) {
             &#8203;
           </span>
           <div className="inline-block overflow-hidden transform transition-all">
-            <Loader type="Puff" color="#35d07f" height={90} width={90} />
+            <Loader type="Oval" color="#35d07f" height={90} width={90} />
           </div>
         </div>
       </div>

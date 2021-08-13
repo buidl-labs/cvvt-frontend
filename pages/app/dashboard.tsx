@@ -188,7 +188,7 @@ export default function dashboard() {
             <div className="mt-10 h-36">
               {loadingAccountData && (
                 <div className="h-full flex justify-center items-center">
-                  <Loader type="Puff" color="#35d07f" height={60} width={60} />
+                  <Loader type="Oval" color="#35d07f" height={60} width={60} />
                 </div>
               )}
 
