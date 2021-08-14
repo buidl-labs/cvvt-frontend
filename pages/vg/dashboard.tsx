@@ -36,7 +36,7 @@ function Dashboard() {
       setIsVG(true);
       state.setUser(GROUP);
     } else {
-      if (validatorGroups.includes(address)) {
+      if (validatorGroups.map((a) => a.toLowerCase()).includes(address)) {
         setIsVG(true);
         state.setUser(address);
       }
