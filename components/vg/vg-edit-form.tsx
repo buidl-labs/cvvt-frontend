@@ -56,6 +56,7 @@ export default function VGEditForm({
       .then(async (res) => {
         if (res.error) {
           console.log(res.error);
+          send("ERROR");
           return;
         }
         const vgData = res.data.UpdateVGSocialInfo;
@@ -73,7 +74,7 @@ export default function VGEditForm({
         console.log("update complete");
         send("NEXT");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => send("ERROR"));
   };
 
   return (
