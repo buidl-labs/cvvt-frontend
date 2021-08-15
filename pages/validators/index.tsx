@@ -10,6 +10,7 @@ import { Validator, ValidatorGroup } from "../../lib/types";
 import ReactTooltip from "react-tooltip";
 import CopyIcon from "../../components/icons/copy";
 import VerifiedDNSBadge from "../../components/icons/verified-dns";
+import Mobile from "../../components/mobile-view";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -101,179 +102,184 @@ function ValidatorExplorer() {
   };
 
   return (
-    <div className="text-gray-dark">
-      <ReactTooltip place="top" type="dark" effect="solid" />
-      <Nav />
-      <div className="flex flex-col">
-        <ExplorerHeader handleSort={handleSort} sortStatus={sortStatus} />
-        <Transition
-          show={fetching}
-          enter="transition-opacity duration-100"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-50"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-x-0 inset-y-0 bg-white bg-opacity-70 flex justify-center items-center text-xl">
-            Fetching Validator Groups...
-          </div>
-        </Transition>
+    <>
+      <div className="text-gray-dark hidden lg:block">
+        <ReactTooltip place="top" type="dark" effect="solid" />
+        <Nav />
+        <div className="flex flex-col">
+          <ExplorerHeader handleSort={handleSort} sortStatus={sortStatus} />
+          <Transition
+            show={fetching}
+            enter="transition-opacity duration-100"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-50"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-x-0 inset-y-0 bg-white bg-opacity-70 flex justify-center items-center text-xl">
+              Fetching Validator Groups...
+            </div>
+          </Transition>
 
-        <ul className="lg:px-40 py-10 space-y-3 flex-1 min-h-screen">
-          {validatorGroups?.map((VG: ValidatorGroup) => (
-            <li
-              className="relative font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:border-primary-light-light hover:shadow-lg transform transition-all duration-100 overflow-x-auto overflow-y-hidden w-auto"
-              key={VG.Address}
-            >
-              <Link href={`/validators/${VG.Address}`} passHref>
-                <a className="absolute inset-0 z-10" />
-              </Link>
-              <div className="grid grid-cols-8 text-center">
-                <div>
-                  <button
-                    className="mx-auto flex items-center justify-center rounded-full p-2 relative z-20 hover:bg-primary-light-light"
-                    onClick={() =>
-                      setExpandedVG((curr) =>
-                        curr == VG.Address ? "" : VG.Address
-                      )
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className={`${
-                        expandedVG == VG.Address ? "rotate-180" : "rotate-0"
-                      }
-                              h-6 w-6 transform transition-all duration-200`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="whitespace-nowrap truncate">
-                    {VG.Name ? VG.Name : "Unkown Group"}
-                  </span>
-                  {VG.VerifiedDns && <VerifiedDNSBadge />}
-                </div>
-                <div className="flex flex-wrap justify-center items-center">
-                  {VG.Validators.map((v: Validator) => (
-                    <svg
-                      key={v.address}
-                      className={`h-4 w-4 ml-2 shadow-lg  ${
-                        v.currently_elected ? "text-gray-dark" : "text-gray"
-                      }`}
-                      viewBox="0 0 32 32"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M31.9217 28.2182L25.8851 2.03636C25.53 0.872727 24.2102 0 23.5 0H8.5C7.61226 0 6.53233 0.872727 6.17724 2.03636L0.140599 28.2182C-0.392046 29.9636 0.673244 32 1.91608 32H29.9687C31.3891 32 32.2768 29.9636 31.9217 28.2182Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  ))}
-                </div>
-                <div className="whitespace-nowrap truncate flex justify-center items-center">
-                  {formatter.format(VG.RecievedVotes)} CELO
-                </div>
-                <div className="whitespace-nowrap truncate flex justify-center items-center">
-                  {formatter.format(VG.AvailableVotes)} CELO
-                </div>
-                <div className="whitespace-nowrap truncate flex justify-center items-center">
-                  {(VG.AttestationScore * 100).toFixed(2)} %
-                </div>
-                <div className="whitespace-nowrap truncate flex justify-center items-center">
-                  {(calculateScore(VG) * 100).toFixed(2)} %
-                </div>
-                <div className="whitespace-nowrap truncate flex justify-center items-center">
-                  {VG.EstimatedAPY.toFixed(2)} %
-                </div>
-              </div>
-              {expandedVG == VG.Address && (
-                <div
-                  className="mt-3 mb-10 grid"
-                  style={{ gridTemplateColumns: "1fr 7fr" }}
-                >
-                  <div />
+          <ul className="lg:px-40 py-10 space-y-3 flex-1 min-h-screen">
+            {validatorGroups?.map((VG: ValidatorGroup) => (
+              <li
+                className="relative font-medium px-9 py-6 border border-gray-light rounded-md cursor-pointer hover:border-primary-light-light hover:shadow-lg transform transition-all duration-100 overflow-x-auto overflow-y-hidden w-auto"
+                key={VG.Address}
+              >
+                <Link href={`/validators/${VG.Address}`} passHref>
+                  <a className="absolute inset-0 z-10" />
+                </Link>
+                <div className="grid grid-cols-8 text-center">
                   <div>
-                    <p className="inline-flex items-center text-gray space-x-1">
-                      <span className="text-sm">{VG.Address}</span>
-                      <button
-                        className="relative z-20 p-2"
-                        onClick={() =>
-                          navigator.clipboard.writeText(VG.Address)
+                    <button
+                      className="mx-auto flex items-center justify-center rounded-full p-2 relative z-20 hover:bg-primary-light-light"
+                      onClick={() =>
+                        setExpandedVG((curr) =>
+                          curr == VG.Address ? "" : VG.Address
+                        )
+                      }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`${
+                          expandedVG == VG.Address ? "rotate-180" : "rotate-0"
                         }
+                              h-6 w-6 transform transition-all duration-200`}
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
                       >
-                        <CopyIcon size="sm" />
-                      </button>
-                    </p>
-                    <div className="mt-5 grid grid-cols-2 gap-5">
-                      {VG.Validators.map((validator) => (
-                        <div className="border border-gray-light rounded-md px-5 py-3">
-                          <div className="flex items-baseline justify-between">
-                            <h5 className="font-medium">
-                              {validator.name
-                                ? validator.name
-                                : "Unknown Validator"}
-                            </h5>
-                            <p
-                              className={`${
-                                validator.currently_elected
-                                  ? "text-gray-dark"
-                                  : "text-gray"
-                              } flex items-center`}
-                            >
-                              <svg
-                                className={`h-4 w-4`}
-                                viewBox="0 0 32 32"
-                                fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M31.9217 28.2182L25.8851 2.03636C25.53 0.872727 24.2102 0 23.5 0H8.5C7.61226 0 6.53233 0.872727 6.17724 2.03636L0.140599 28.2182C-0.392046 29.9636 0.673244 32 1.91608 32H29.9687C31.3891 32 32.2768 29.9636 31.9217 28.2182Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                              <span className="ml-3 mt-0.5">
-                                {validator.currently_elected
-                                  ? "Elected"
-                                  : "Refused"}
-                              </span>
-                            </p>
-                          </div>
-                          <div className="flex items-baseline space-x-2">
-                            <p className="text-gray text-sm mt-2">
-                              {validator.address}
-                            </p>
-                            <button
-                              onClick={() =>
-                                navigator.clipboard.writeText(validator.address)
-                              }
-                              className="relative z-20"
-                            >
-                              <CopyIcon size="sm" />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="whitespace-nowrap truncate">
+                      {VG.Name ? VG.Name : "Unkown Group"}
+                    </span>
+                    {VG.VerifiedDns && <VerifiedDNSBadge />}
+                  </div>
+                  <div className="flex flex-wrap justify-center items-center">
+                    {VG.Validators.map((v: Validator) => (
+                      <svg
+                        key={v.address}
+                        className={`h-4 w-4 ml-2 shadow-lg  ${
+                          v.currently_elected ? "text-gray-dark" : "text-gray"
+                        }`}
+                        viewBox="0 0 32 32"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M31.9217 28.2182L25.8851 2.03636C25.53 0.872727 24.2102 0 23.5 0H8.5C7.61226 0 6.53233 0.872727 6.17724 2.03636L0.140599 28.2182C-0.392046 29.9636 0.673244 32 1.91608 32H29.9687C31.3891 32 32.2768 29.9636 31.9217 28.2182Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    ))}
+                  </div>
+                  <div className="whitespace-nowrap truncate flex justify-center items-center">
+                    {formatter.format(VG.RecievedVotes)} CELO
+                  </div>
+                  <div className="whitespace-nowrap truncate flex justify-center items-center">
+                    {formatter.format(VG.AvailableVotes)} CELO
+                  </div>
+                  <div className="whitespace-nowrap truncate flex justify-center items-center">
+                    {(VG.AttestationScore * 100).toFixed(2)} %
+                  </div>
+                  <div className="whitespace-nowrap truncate flex justify-center items-center">
+                    {(calculateScore(VG) * 100).toFixed(2)} %
+                  </div>
+                  <div className="whitespace-nowrap truncate flex justify-center items-center">
+                    {VG.EstimatedAPY.toFixed(2)} %
                   </div>
                 </div>
-              )}
-            </li>
-          ))}
-        </ul>
+                {expandedVG == VG.Address && (
+                  <div
+                    className="mt-3 mb-10 grid"
+                    style={{ gridTemplateColumns: "1fr 7fr" }}
+                  >
+                    <div />
+                    <div>
+                      <p className="inline-flex items-center text-gray space-x-1">
+                        <span className="text-sm">{VG.Address}</span>
+                        <button
+                          className="relative z-20 p-2"
+                          onClick={() =>
+                            navigator.clipboard.writeText(VG.Address)
+                          }
+                        >
+                          <CopyIcon size="sm" />
+                        </button>
+                      </p>
+                      <div className="mt-5 grid grid-cols-2 gap-5">
+                        {VG.Validators.map((validator) => (
+                          <div className="border border-gray-light rounded-md px-5 py-3">
+                            <div className="flex items-baseline justify-between">
+                              <h5 className="font-medium">
+                                {validator.name
+                                  ? validator.name
+                                  : "Unknown Validator"}
+                              </h5>
+                              <p
+                                className={`${
+                                  validator.currently_elected
+                                    ? "text-gray-dark"
+                                    : "text-gray"
+                                } flex items-center`}
+                              >
+                                <svg
+                                  className={`h-4 w-4`}
+                                  viewBox="0 0 32 32"
+                                  fill="currentColor"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M31.9217 28.2182L25.8851 2.03636C25.53 0.872727 24.2102 0 23.5 0H8.5C7.61226 0 6.53233 0.872727 6.17724 2.03636L0.140599 28.2182C-0.392046 29.9636 0.673244 32 1.91608 32H29.9687C31.3891 32 32.2768 29.9636 31.9217 28.2182Z"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                                <span className="ml-3 mt-0.5">
+                                  {validator.currently_elected
+                                    ? "Elected"
+                                    : "Refused"}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="flex items-baseline space-x-2">
+                              <p className="text-gray text-sm mt-2">
+                                {validator.address}
+                              </p>
+                              <button
+                                onClick={() =>
+                                  navigator.clipboard.writeText(
+                                    validator.address
+                                  )
+                                }
+                                className="relative z-20"
+                              >
+                                <CopyIcon size="sm" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
 
-        <Footer />
+          <Footer />
+        </div>
       </div>
-    </div>
+      <Mobile />
+    </>
   );
 }
 
