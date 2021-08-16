@@ -55,7 +55,8 @@ export default function VGEditForm({
     updateVG(variables)
       .then(async (res) => {
         if (res.error) {
-          console.log(res.error);
+          console.log(res.error.message);
+
           send("ERROR");
           return;
         }
@@ -163,7 +164,7 @@ export default function VGEditForm({
             </label>
             <div className="mt-2">
               <input
-                {...register("discord")}
+                {...(register("discord"), { pattern: `.+#\d{4}` })}
                 type="text"
                 id="discord"
                 className={`${

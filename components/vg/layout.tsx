@@ -9,6 +9,10 @@ import Mobile from "../mobile-view";
 interface layoutProps {
   children: React.ReactChild;
 }
+const toastClasses = {
+  success: "bg-primary",
+  error: "bg-alert",
+};
 
 export default function layout({ children }: layoutProps) {
   const navigation = [
