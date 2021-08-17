@@ -6,6 +6,7 @@ import useVGList from "../../hooks/useVGAddressList";
 import CheckingVG from "../../components/vg/dialogs/checking-vg";
 import Link from "next/link";
 import VGDash from "../../components/vg/dash";
+import VGMapping from "../../vg-mapping";
 
 function Dashboard() {
   const { connect, address, network } = useContractKit();
@@ -24,6 +25,8 @@ function Dashboard() {
   }, [address]);
 
   useEffect(() => {
+    console.log(VGMapping.map((vg) => vg.Beneficiary));
+    // Address for AG
     const GROUP = "0x15ed3f6b79f5fb9ef1d99d37314dd626b3005f0b";
     const TESTING_ADDRESS = [
       "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
@@ -39,6 +42,14 @@ function Dashboard() {
       if (validatorGroups.map((a) => a.toLowerCase()).includes(address)) {
         setIsVG(true);
         state.setUser(address);
+      } else {
+        const VGAccount = VGMapping.find(
+          (vg) => vg.Beneficiary.toLowerCase() === address
+        );
+        if (VGAccount) {
+          setIsVG(true);
+          state.setUser(VGAccount.ContractAddress.toLowerCase());
+        }
       }
     }
   }, [address, vgListLoading]);
