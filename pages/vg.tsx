@@ -6,6 +6,14 @@ import FeatureGridVG from "../components/home/feature-grid-vg";
 import Footer from "../components/home/footer";
 import Nav from "../components/home/nav";
 
+const ChurrofiWidget = () => (
+  <churrofi-widgets-lg
+    theme="green"
+    address="0x481eade762d6d0b49580189b78709c9347b395bf"
+    name="HappyCelo"
+  />
+);
+
 export default function VGLanding() {
   const faqs = [
     {
@@ -83,25 +91,22 @@ export default function VGLanding() {
             <div className="relative hidden lg:block">
               <img src="/assets/home/widget-laptop.png" />
               <div className="absolute inset-0 right-32 top-4 flex items-center justify-center ml-4">
-                <churrofi-widgets-lg
-                  theme="green"
-                  address="0x481eade762d6d0b49580189b78709c9347b395bf"
-                  name="HappyCelo"
-                />
+                <ChurrofiWidget />
               </div>
             </div>
             <div className="flex flex-col justify-center lg:max-w-lg justify-self-end">
               <div className="px-10 lg:px-0">
                 <p className="text-gray text-sm font-medium">
-                  Build Profile & Market Yourself to
+                  Enable one-click vote by adding
                 </p>
                 <h2 className="text-gray-dark font-serif font-medium text-4xl mt-3">
-                  Earn More Epoch Rewards
+                  Voting Widget for Your Website
                 </h2>
                 <p className="text-gray-dark mt-5">
-                  Mitigate the information disparity between Voters & Validators
-                  by building your Profile & enjoy various perks, including
-                  greater Epoch Rewards. Here’s how it works...
+                  Choose from a vide range of Voting Wigets to make it easy for
+                  CELO Holders to vote. Log into the Validator Group Dashboard,
+                  copy any widget’s <code>{" <code-snippet />"}</code> from
+                  Widget tab and paste it in your website’s code. Voila!
                 </p>
               </div>
 

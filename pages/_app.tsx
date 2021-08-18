@@ -10,6 +10,14 @@ import "../style/global.css";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "churrofi-widgets-lg": any;
+    }
+  }
+}
+
 const client = createClient({
   url: "https://celo-tool-backend.onrender.com/query",
 });
