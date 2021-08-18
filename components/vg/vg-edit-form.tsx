@@ -6,6 +6,7 @@ import * as yup from "yup";
 
 import { ValidatorGroup, VGEditFormType } from "../../lib/types";
 import useVGMutation from "../../hooks/useVGMutation";
+import { toast } from "react-toastify";
 
 const FormSchema = yup.object().shape({
   email: yup.string().email(),
@@ -55,8 +56,8 @@ export default function VGEditForm({
     updateVG(variables)
       .then(async (res) => {
         if (res.error) {
-          console.log(res.error.message);
-
+          const e = res.error.message;
+          toast.error(e.charAt(10).toUpperCase() + e.slice(11));
           send("ERROR");
           return;
         }
@@ -71,9 +72,10 @@ export default function VGEditForm({
         });
 
         console.log("VG UPDATED");
+        send("NEXT");
+        toast.success("Group details updated.");
 
         console.log("update complete");
-        send("NEXT");
       })
       .catch((err) => send("ERROR"));
   };
@@ -164,7 +166,7 @@ export default function VGEditForm({
             </label>
             <div className="mt-2">
               <input
-                {...(register("discord"), { pattern: `.+#\d{4}` })}
+                {...register("discord")}
                 type="text"
                 id="discord"
                 className={`${
