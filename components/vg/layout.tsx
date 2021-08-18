@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import Nav from "./nav";
 import useStore from "../../store/vg-store";
 import Mobile from "../mobile-view";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface layoutProps {
   children: React.ReactChild;
@@ -31,6 +33,11 @@ export default function layout({ children }: layoutProps) {
       to: "/vg/edit",
       icon: "/assets/nav/nav-edit-profile",
     },
+    {
+      text: "Widgets",
+      to: "/vg/widgets",
+      icon: "/assets/nav/nav-widget",
+    },
   ];
   const { destroy } = useContractKit();
   const router = useRouter();
@@ -50,7 +57,13 @@ export default function layout({ children }: layoutProps) {
 
   return (
     <>
-      <div className="h-screen overflow-hidden hidden lg:flex flex-col">
+      <div className="h-screen overflow-hidden hidden flex-col lg:flex">
+        <ToastContainer
+          className="space-y-2"
+          toastClassName={({ type }) =>
+            `${toastClasses[type]} relative flex p-3 rounded justify-between overflow-hidden cursor-pointer`
+          }
+        />
         <Nav />
         <div className="flex-1 flex overflow-hidden">
           <div className="bg-primary-light-light w-64 flex flex-col flex-shrink-0">

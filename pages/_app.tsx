@@ -13,7 +13,11 @@ import { useEffect } from "react";
 declare global {
   namespace JSX {
     interface IntrinsicElements {
+      "churrofi-widgets-xs": any;
+      "churrofi-widgets-sm": any;
+      "churrofi-widgets-md": any;
       "churrofi-widgets-lg": any;
+      "churrofi-widgets-xl": any;
     }
   }
 }

@@ -11,7 +11,7 @@ import PerformanceMetricsPanel from "../../components/vg/PerformanceMetricPanel"
 import ValidatorsPanel from "../../components/vg/ValidatorPanel";
 import ProfileHeader from "../../components/vg/ProfileHeader";
 
-export default function Edit() {
+export default function Profile() {
   const { address, network } = useContractKit();
   const state = useStore();
   const [VG, setVG] = useState<ValidatorGroup>();

@@ -1,8 +1,14 @@
-export default function CopyIcon({ size }: { size: string }) {
+export default function CopyIcon({
+  size,
+  color = "text-gray",
+}: {
+  size: string;
+  color?: string;
+}) {
   return (
     <svg
       viewBox="0 0 16 18"
-      className={`text-gray ${size == "sm" && "w-3 h-3"} ${
+      className={`${color} ${size == "sm" && "w-3 h-3"} ${
         size == "lg" && "w-5 h-5"
       }`}
       fill="currentColor"
