@@ -1,15 +1,17 @@
 import { useContractKit } from "@celo-tools/use-contractkit";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-import useStore from "../../store/vg-store";
-import Layout from "../../components/vg/layout";
-import { ValidatorGroup } from "../../lib/types";
-import useVG from "../../hooks/useVG";
 import Head from "next/head";
+
+import useVG from "../../hooks/useVG";
+import useStore from "../../store/vg-store";
+import { ValidatorGroup } from "../../lib/types";
 import CODE from "../../widget-code";
+
+import Layout from "../../components/vg/layout";
 import Loading from "../../components/Loading";
 import CopyIcon from "../../components/icons/copy";
-import { toast } from "react-toastify";
 
 const CodeBlock = ({ snippet }: { snippet: string }) => {
   return (
@@ -57,6 +59,11 @@ export default function Widgets() {
   return (
     <>
       <Head>
+        <link
+          rel="stylesheet"
+          href="https://highlightjs.org/static/demo/styles/railscasts.css"
+        />
+
         <script
           src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-xl.js?module"
           type="module"
