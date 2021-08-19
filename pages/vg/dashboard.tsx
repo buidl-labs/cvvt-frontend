@@ -61,10 +61,14 @@ function Dashboard() {
         {!userConnected ? (
           <div>
             <div>
-              <h3 className="text-2xl font-medium">Welcome, celo holder!</h3>
+              <h3 className="text-2xl font-medium">Welcome!</h3>
               <p className="mt-2.5 text-gray text-lg">
                 Please connect the Celo Wallet of your Validator Group to log in
-                to your profile:
+                to your profile. <br />
+                If your group address is a{" "}
+                <span className="text-secondary-dark">ReleaseGold</span>{" "}
+                contract, connect the address of the beneficiary to log in to
+                your profile:
               </p>
             </div>
             <div className="mt-24 flex flex-col justify-center items-center">

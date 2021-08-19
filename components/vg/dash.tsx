@@ -13,10 +13,9 @@ export default function VGDash() {
   const [VG, setVG] = useState<ValidatorGroup>();
   const user = useStore((state) => state.user);
   const { fetching, error, data: validatorGroup } = useVG(user);
-  console.log(fetching, error, validatorGroup);
 
   useEffect(() => {
-    if (!fetching && !error) {
+    if (validatorGroup) {
       setVG(validatorGroup["ValidatorGroup"]);
     }
   }, [fetching, validatorGroup]);
