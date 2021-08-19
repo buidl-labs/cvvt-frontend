@@ -7,7 +7,7 @@ function Disclaimer() {
     <div>
       <Nav />
 
-      <main className="md:mb-32 md:mt-52 mt-32 mb-16 prose prose-lg mx-auto">
+      <main className="md:mb-32 md:mt-52 mt-32 mb-16 px-8 prose prose-md lg:prose-lg mx-auto">
         <h1>Disclaimer</h1>
         <article>
           <h2>1. Information published on churrofi.app</h2>

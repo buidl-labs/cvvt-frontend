@@ -6,7 +6,7 @@ function Terms() {
   return (
     <div>
       <Nav />
-      <main className="md:mb-32 md:mt-52 mt-32 mb-16 prose prose-lg mx-auto">
+      <main className="md:mb-32 md:mt-52 mt-32 mb-16 px-8 prose prose-md lg:prose-lg mx-auto">
         <article>
           <h2>Terms of Service of https://churrofi.app</h2>
           <p>
