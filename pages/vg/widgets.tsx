@@ -11,51 +11,6 @@ import Loading from "../../components/Loading";
 import CopyIcon from "../../components/icons/copy";
 import { toast } from "react-toastify";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-const tabs = [
-  { name: "HTML", slug: "html" },
-  { name: "React", slug: "react" },
-];
-const TabGroup = ({ selected, setSelected }) => {
-  return (
-    <div className="mt-10">
-      <div className="w-1/5">
-        <nav
-          className="relative z-0 rounded-lg shadow-md flex divide-x divide-gray-light"
-          aria-label="Tabs"
-        >
-          {tabs.map((tab, tabIdx) => (
-            <button
-              key={tab.name}
-              onClick={() => setSelected(tab.slug)}
-              className={classNames(
-                selected == tab.slug
-                  ? "text-gray-dark-dark"
-                  : "text-gray hover:text-gray-dark",
-                tabIdx === 0 ? "rounded-l-lg" : "",
-                tabIdx === tabs.length - 1 ? "rounded-r-lg" : "",
-                "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10"
-              )}
-              aria-current={selected == tab.slug ? "page" : undefined}
-            >
-              <span>{tab.name}</span>
-              <span
-                aria-hidden="true"
-                className={classNames(
-                  selected == tab.slug ? "bg-primary" : "bg-transparent",
-                  "absolute inset-x-0 bottom-0 h-0.5 transition"
-                )}
-              />
-            </button>
-          ))}
-        </nav>
-      </div>
-    </div>
-  );
-};
-
 const CodeBlock = ({ snippet }: { snippet: string }) => {
   return (
     <pre className="relative p-4 pt-8 pr-8 bg-gray-light border-2 border-gray rounded-md">
@@ -77,7 +32,6 @@ export default function Widgets() {
   const { address, network } = useContractKit();
   const state = useStore();
   const [VG, setVG] = useState<ValidatorGroup>();
-  const [selected, setSelected] = useState(tabs[0].slug);
 
   const { fetching, error, data: validatorGroup } = useVG(state.user);
 
