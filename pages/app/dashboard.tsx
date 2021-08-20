@@ -1,6 +1,12 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useContractKit } from "@celo-tools/use-contractkit";
 
+import { Switch, Transition } from "@headlessui/react";
+import Loader from "react-loader-spinner";
+
+import { BigNumber } from "bignumber.js";
+import * as Fathom from "fathom-client";
+
 import useStore from "../../store/store";
 
 import ActivateVGDialog from "../../components/app/dialogs/activate-vg";
@@ -20,9 +26,7 @@ import Layout from "../../components/app/layout";
 import StatGrid from "../../components/app/stat-grid";
 import VotingSummary from "../../components/app/voting-summary";
 import EpochRewardGraph from "../../components/app/EpochRewardGraph";
-import { Switch, Transition } from "@headlessui/react";
-import Loader from "react-loader-spinner";
-import { BigNumber } from "bignumber.js";
+
 import { trackActivate } from "../../lib/supabase";
 
 export default function dashboard() {
@@ -62,7 +66,6 @@ export default function dashboard() {
         }
         // set pending votes.
         setPendingVotes(pendingCELO);
-        console.log("set pending votes");
       });
   }, []);
 
@@ -96,6 +99,8 @@ export default function dashboard() {
 
       // gets all VGs voted for by the user.
       fetchVotingSummary();
+
+      Fathom.trackGoal("85ZBBEN3", 0);
     }
   }, [address]);
 

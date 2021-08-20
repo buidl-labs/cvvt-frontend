@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import * as Fathom from "fathom-client";
+import { toast } from "react-toastify";
+
 import { ValidatorGroup, VGEditFormType } from "../../lib/types";
 import useVGMutation from "../../hooks/useVGMutation";
-import { toast } from "react-toastify";
 
 const FormSchema = yup.object().shape({
   email: yup.string().email(),
@@ -72,8 +74,10 @@ export default function VGEditForm({
         });
 
         console.log("VG UPDATED");
+
         send("NEXT");
         toast.success("Group details updated.");
+        Fathom.trackGoal("ZX7HIDAN", 0);
 
         console.log("update complete");
       })
