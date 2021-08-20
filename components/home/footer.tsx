@@ -171,7 +171,8 @@ export default function Footer() {
               </p>
               <p>
                 <a
-                  href="#"
+                  href="https://discord.com/invite/5uWg3DVd2B"
+                  target="_blank"
                   className="text-gray-dark hover:text-black underline"
                 >
                   Contact us
@@ -381,7 +382,8 @@ export default function Footer() {
               </p>
               <p>
                 <a
-                  href="#"
+                  href="https://discord.com/invite/5uWg3DVd2B"
+                  target="_blank"
                   className="text-gray-dark hover:text-black underline"
                 >
                   Contact us

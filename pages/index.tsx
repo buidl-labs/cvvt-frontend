@@ -194,11 +194,14 @@ export default function Home() {
               back...
             </p>
             <div className="mt-5 flex flex-col space-y-4 lg:space-y-0 lg:block lg:space-x-4 text-lg">
-              <Link href="#" passHref>
-                <a className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md">
-                  Contact Us
-                </a>
-              </Link>
+              <a
+                href="https://discord.com/invite/5uWg3DVd2B"
+                target="_blank"
+                className="inline-block px-14 py-2 border-2 border-primary bg-primary hover:bg-primary-dark focus:bg-primary-dark hover:border-primary-dark focus:border-primary-dark focus:outline-none text-white font-medium rounded-md shadow-md"
+              >
+                Contact Us
+              </a>
+
               <Link href="/how" passHref>
                 <a className="inline-block px-14 py-2 bg-white text-primary border-2 border-primary hover:border-primary-dark hover:text-primary-dark font-medium rounded-md shadow-md">
                   How it works?

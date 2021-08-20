@@ -123,7 +123,6 @@ function NavLink({
               }`
             : "bg-primary hover:bg-primary-dark focus:bg-primary-dark active:bg-primary-dark-dark focus:outline-none px-14 py-3 rounded-md text-white text-base shadow-sm transition-all"
         }`}
-        href="#"
       >
         {children}
       </a>
