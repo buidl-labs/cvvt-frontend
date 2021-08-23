@@ -271,7 +271,7 @@ export default function Footer() {
                 buidllabs.io
               </a>
               <a
-                href="mailto:manan@findsignal.studio"
+                href="mailto:saumay@findsignal.studio"
                 target="_blank"
                 className="flex items-center text-gray-dark hover:text-black underline"
               >
@@ -301,7 +301,7 @@ export default function Footer() {
                     />
                   </svg>
                 </span>
-                manan@findsignal.studio
+                saumay@findsignal.studio
               </a>
               <div className="flex justify-between">
                 <a
@@ -424,14 +424,14 @@ export default function Footer() {
                 buidllabs.io
               </a>
               <a
-                href="mailto:manan@findsignal.studio"
+                href="mailto:saumay@findsignal.studio"
                 target="_blank"
                 className="flex items-center text-gray-dark hover:text-black underline"
               >
                 <span className="mr-3">
                   <FaEnvelope />
                 </span>
-                manan@findsignal.studio
+                saumay@findsignal.studio
               </a>
             </div>
           </div>
