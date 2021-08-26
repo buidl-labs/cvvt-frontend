@@ -33,7 +33,7 @@ function ValidatorGroupPage() {
               target="_blank"
               className="fixed bottom-20 right-40 bg-primary hover:bg-primary-dark focus:bg-primary-dark active:bg-primary-dark-dark focus:outline-none px-14 py-3 rounded-md text-white text-lg font-medium shadow-sm transition-all"
             >
-              Invest in {VG.Name ? VG.Name : `${VG.Address.slice(0, 8)}...`}
+              Stake on {VG.Name ? VG.Name : `${VG.Address.slice(0, 8)}...`}
             </a>
           </Link>
         </div>
