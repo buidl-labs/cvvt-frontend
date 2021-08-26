@@ -59,29 +59,24 @@ export default function Widgets() {
   return (
     <>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://highlightjs.org/static/demo/styles/railscasts.css"
-        />
-
         <script
-          src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-xl.js?module"
+          src="https://unpkg.com/churrofi-widgets@0.1.1/dist/churrofi-widgets-xl.js?module"
           type="module"
         />
         <script
-          src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-lg.js?module"
+          src="https://unpkg.com/churrofi-widgets@0.1.1/dist/churrofi-widgets-lg.js?module"
           type="module"
         />
         <script
-          src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-md.js?module"
+          src="https://unpkg.com/churrofi-widgets@0.1.1/dist/churrofi-widgets-md.js?module"
           type="module"
         />
         <script
-          src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-sm.js?module"
+          src="https://unpkg.com/churrofi-widgets@0.1.1/dist/churrofi-widgets-sm.js?module"
           type="module"
         />
         <script
-          src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-xs.js?module"
+          src="https://unpkg.com/churrofi-widgets@0.1.1/dist/churrofi-widgets-xs.js?module"
           type="module"
         />
       </Head>

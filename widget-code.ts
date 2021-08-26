@@ -6,7 +6,7 @@ const buildCode = (
 ) => `
 <!–– Paste this script in the head tag of your website -->
 <script
-  src="https://unpkg.com/churrofi-widgets@0.0.9/dist/
+  src="https://unpkg.com/churrofi-widgets@0.1.1/dist/
      churrofi-widgets-${size}.js?module"
   type="module"
 ></script>
