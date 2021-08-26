@@ -461,11 +461,11 @@ const VGMapping = [
     ContractAddress: "0x474df04481f778b46Fc71204C72B6A8BE396F0FF",
   },
   {
-    Beneficiary: "36F669B1C347CB52Df8fa9e8FDE0b3061170669e",
+    Beneficiary: "0x36F669B1C347CB52Df8fa9e8FDE0b3061170669e",
     ContractAddress: "0x95aE59515915D6c493a846aE022F93726652b50A",
   },
   {
-    Beneficiary: "4fC0e6c1AC6eD1c600e57baf304212dc8d98F7Fd",
+    Beneficiary: "0x4fC0e6c1AC6eD1c600e57baf304212dc8d98F7Fd",
     ContractAddress: "0x9C542c0B5aF5e04E2D1e67cf1fC176E91bC18dA0",
   },
   {
@@ -477,7 +477,7 @@ const VGMapping = [
     ContractAddress: "0xF2aADf8fF2Ad7e5C1efb0d45Cb622618BA6636A7",
   },
   {
-    Beneficiary: "658b5Df4E9deac0f3dabDe671CaEA3c77582f222",
+    Beneficiary: "0x658b5Df4E9deac0f3dabDe671CaEA3c77582f222",
     ContractAddress: "0x1Dd301fEaa72F4C07b3ca56ce0C27e98E66B77Bd",
   },
   {

@@ -60,7 +60,7 @@ export default function Edit() {
   useEffect(() => {
     state.setNetwork(network.name);
     if (address == null) return;
-    const GROUP = "0x15ed3f6b79f5fb9ef1d99d37314dd626b3005f0b";
+    const GROUP = "0x2c2b0f71d59b546b2cafd222696589c13c3c325c";
     const TESTING_ADDRESS = "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5";
     if (address === "") return;
     if (address == TESTING_ADDRESS) {
