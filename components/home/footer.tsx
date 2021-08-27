@@ -163,7 +163,7 @@ export default function Footer() {
             <div className="w-1/3 space-y-5">
               <p className="text-primary font-medium">Company</p>
               <p>
-                <Link href="/" passHref>
+                <Link href="/about" passHref>
                   <a className="text-gray-dark hover:text-black underline">
                     About us
                   </a>

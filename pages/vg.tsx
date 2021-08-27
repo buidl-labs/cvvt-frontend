@@ -17,6 +17,11 @@ const ChurrofiWidget = () => (
 export default function VGLanding() {
   const faqs = [
     {
+      question: "How do I sign in to my group's account?",
+      answer:
+        "If your group's address is a normal Celo account, you should connect your wallet with the group's address to log in. But, if the group's address is a ReleaseGold contract - connect your group's beneficiary address to log in.",
+    },
+    {
       question: "How do you select Validator Groups to recommend to the users?",
       answer:
         "Every few minutes we calculate a score for all the Groups based on several on-chain metrics - the better the Group scores, higher it is ranked.",
@@ -30,12 +35,6 @@ export default function VGLanding() {
 
   return (
     <>
-      <Head>
-        <script
-          src="https://unpkg.com/churrofi-widgets@0.0.9/dist/churrofi-widgets-lg.js?module"
-          type="module"
-        />
-      </Head>
       <div>
         <Nav />
         <main className="md:mb-32 md:mt-52 mt-32 mb-16">
@@ -91,7 +90,7 @@ export default function VGLanding() {
             <div className="relative hidden lg:block">
               <img src="/assets/home/widget-laptop.png" />
               <div className="absolute inset-0 right-32 top-4 flex items-center justify-center ml-4">
-                <ChurrofiWidget />
+                <img src="/assets/home/widget.svg" />
               </div>
             </div>
             <div className="flex flex-col justify-center lg:max-w-lg justify-self-end">
