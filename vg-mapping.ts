@@ -532,6 +532,10 @@ const VGMapping = [
     Beneficiary: "0x008105af3e4a32ce8476cb8927f482bc3830a714",
     ContractAddress: "0x9E236db32fcE9471A2099059A299956a2c4C61D0",
   },
+  {
+    Beneficiary: "0x66501a0A13B9B77ADB332A3aeF4F6eBe4F8Fd12E",
+    ContractAddress: "0x21FB4411FA5828344c2788aB07D4cc12a12571b9"
+  }
 ];
 
 export default VGMapping;
