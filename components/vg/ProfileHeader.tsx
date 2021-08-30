@@ -5,7 +5,7 @@ import MailIcon from "../icons/mail";
 import TwitterIcon from "../icons/twitter";
 import DiscordIcon from "../icons/discord";
 import CopyIcon from "../icons/copy";
-import VerifiedDnsBadge from "../icons/verified-dns";
+import VerifiedDnsBadge from "../icons/profile-claimed";
 
 export default function ProfileHeader({ VG }: { VG: ValidatorGroup }) {
   return (

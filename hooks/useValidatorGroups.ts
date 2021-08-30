@@ -7,6 +7,10 @@ const VG_Query = gql`
       Address
       Name
       VerifiedDns
+      TwitterUsername
+      DiscordTag
+      GeographicLocation
+      Email
       TransparencyScore
       PerformanceScore
       EstimatedAPY

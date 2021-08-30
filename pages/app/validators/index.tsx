@@ -8,12 +8,22 @@ import { Validator, ValidatorGroup } from "../../../lib/types";
 import { FIELDS, Order, SortStatus } from "../../../lib/explorer-types";
 import ReactTooltip from "react-tooltip";
 import CopyIcon from "../../../components/icons/copy";
-import VerifiedDnsBadge from "../../../components/icons/verified-dns";
+import ProfileBadge from "../../../components/icons/profile-claimed";
 
 const formatter = new Intl.NumberFormat("en-US");
 
 function calculateScore(VG) {
   return VG.TransparencyScore * 0.1 + VG.PerformanceScore * 0.9;
+}
+
+function hasProfile(VG) {
+  console.log(VG);
+  return (
+    VG.Email !== "" ||
+    VG.GeographicLocation !== "" ||
+    VG.TwitterUsername !== "" ||
+    VG.DiscordTag !== ""
+  );
 }
 
 function ValidatorExplorer() {
@@ -203,7 +213,7 @@ function ValidatorExplorer() {
                   <span className="whitespace-nowrap truncate">
                     {VG.Name ? VG.Name : "Unkown Group"}
                   </span>
-                  {VG.VerifiedDns && <VerifiedDnsBadge />}
+                  {hasProfile(VG) && <ProfileBadge />}
                 </div>
                 <div className="flex flex-wrap justify-center">
                   {VG.Validators.map((v: Validator) => (
