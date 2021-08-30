@@ -21,10 +21,12 @@ export default function VGEditForm({
   VG,
   setVG,
   send,
+  setTwitterOpen,
 }: {
   VG: ValidatorGroup;
   setVG: React.Dispatch<React.SetStateAction<ValidatorGroup | undefined>>;
   send: any;
+  setTwitterOpen: any;
 }) {
   // GraphQL Mutation
   const { updateVG } = useVGMutation();
@@ -80,6 +82,7 @@ export default function VGEditForm({
         Fathom.trackGoal("ZX7HIDAN", 0);
 
         console.log("update complete");
+        setTwitterOpen();
       })
       .catch((err) => send("ERROR"));
   };

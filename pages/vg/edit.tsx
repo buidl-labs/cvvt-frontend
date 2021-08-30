@@ -8,6 +8,7 @@ import useVG from "../../hooks/useVG";
 import WelcomeHeading from "../../components/vg/welcome-heading";
 import TransparencyScoreBar from "../../components/vg/transparency-score-bar";
 import VGEditForm from "../../components/vg/vg-edit-form";
+import TwitterDialog from "../../components/vg/dialogs/twitter";
 
 import { createMachine } from "xstate";
 import { useMachine } from "@xstate/react";
@@ -38,10 +39,8 @@ export default function Edit() {
   const { address, network } = useContractKit();
   const state = useStore();
   const [VG, setVG] = useState<ValidatorGroup>();
-  // const userConnected: boolean = useMemo(
-  //   () => state.user.length > 0,
-  //   [state.user]
-  // );
+  const [twitterOpen, setTwitterOpen] = useState(false);
+
   const { fetching, error, data: validatorGroup } = useVG(state.user);
   const effectRunCount = useRef(0);
 
@@ -60,7 +59,7 @@ export default function Edit() {
   useEffect(() => {
     state.setNetwork(network.name);
     if (address == null) return;
-    const GROUP = "0xf83c93ea360b66ddcd532960304948b1c10786a1";
+    const GROUP = "0x07fa1874ad4655ad0c763a7876503509be11e29e";
     const TESTING_ADDRESS = "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5";
     if (address === "") return;
     if (address == TESTING_ADDRESS) {
@@ -80,12 +79,17 @@ export default function Edit() {
         <Loading
           open={current.matches("updating") || current.matches("loading")}
         />
-
+        <TwitterDialog open={twitterOpen} setOpen={setTwitterOpen} />
         {VG && (
           <div>
             <WelcomeHeading name={VG.Name} address={VG.Address} />
             <TransparencyScoreBar score={Number(VG.TransparencyScore)} />
-            <VGEditForm VG={VG} setVG={setVG} send={send} />
+            <VGEditForm
+              VG={VG}
+              setVG={setVG}
+              send={send}
+              setTwitterOpen={() => setTwitterOpen(true)}
+            />
           </div>
         )}
       </>
