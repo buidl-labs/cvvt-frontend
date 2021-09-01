@@ -73,10 +73,10 @@ function ValidatorExplorer() {
     } else if (newSortStatus.key == "name") {
       sortFn = (a, b) =>
         newSortStatus.order == Order.ASC
-          ? a.Name > b.Name
+          ? a.Name.toLowerCase() > b.Name.toLowerCase()
             ? 1
             : -1
-          : a.Name < b.Name
+          : a.Name.toLowerCase() < b.Name.toLowerCase()
           ? 1
           : -1;
     } else if (newSortStatus.key == "available") {

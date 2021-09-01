@@ -27,7 +27,7 @@ function Dashboard() {
   useEffect(() => {
     console.log(VGMapping.map((vg) => vg.Beneficiary));
 
-    const GROUP = "0x07fa1874ad4655ad0c763a7876503509be11e29e";
+    const GROUP = "0x01b2b83fdf26afc3ca7062c35bc68c8dde56db04";
     const TESTING_ADDRESS = [
       "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
       "0xcecdcb570c5433d8ba004b7a5a793cc97aa517b6",

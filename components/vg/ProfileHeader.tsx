@@ -5,7 +5,17 @@ import MailIcon from "../icons/mail";
 import TwitterIcon from "../icons/twitter";
 import DiscordIcon from "../icons/discord";
 import CopyIcon from "../icons/copy";
-import VerifiedDnsBadge from "../icons/profile-claimed";
+import ProfileBadge from "../icons/profile-claimed";
+
+function hasProfile(VG) {
+  console.log(VG);
+  return (
+    VG.Email !== "" ||
+    VG.GeographicLocation !== "" ||
+    VG.TwitterUsername !== "" ||
+    VG.DiscordTag !== ""
+  );
+}
 
 export default function ProfileHeader({ VG }: { VG: ValidatorGroup }) {
   return (
@@ -15,7 +25,7 @@ export default function ProfileHeader({ VG }: { VG: ValidatorGroup }) {
           <h3 className="text-2xl font-medium text-gray-dark">
             {VG.Name ? VG.Name : "Unkown Group"}
           </h3>
-          {VG.VerifiedDns && <VerifiedDnsBadge />}
+          {hasProfile(VG) && <ProfileBadge />}
         </div>
         <div className="text-lg text-gray">
           {VG.WebsiteUrl && (
