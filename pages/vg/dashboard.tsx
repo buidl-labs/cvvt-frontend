@@ -8,6 +8,8 @@ import Link from "next/link";
 import VGDash from "../../components/vg/dash";
 import VGMapping from "../../vg-mapping";
 
+import { FaVolumeUp } from "react-icons/fa";
+
 function Dashboard() {
   const { connect, address, network } = useContractKit();
   const state = useStore();
@@ -29,7 +31,7 @@ function Dashboard() {
 
     const GROUP = "0x614b7654ba0cc6000abe526779911b70c1f7125a";
     const TESTING_ADDRESS = [
-      "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
+      // "0x6f80f637896e7068ad28cc45d6810b1dc8b08cf5",
       "0xcecdcb570c5433d8ba004b7a5a793cc97aa517b6",
       "0x3a85a88a1d7ced078066ce8f9cd524e965265b1e",
       "0xec687AF2f05e6472BfE3eD63Bef9261609040700",
@@ -102,6 +104,19 @@ function Dashboard() {
                         It seems like this account is not registered as a
                         Validator Group. Try logging in as a CELO Holder
                         instead?
+                      </p>
+                      <p className="text-gray-dark mt-1 text-lg">
+                        In case you're having trouble logging in to your
+                        dashboard as a validator group, please fill up this{" "}
+                        <a
+                          href="https://forms.gle/5trDsGFgPWr2c2Ra7"
+                          target="_blank"
+                          rel="norefferer"
+                          className="font-medium text-primary-dark-dark"
+                        >
+                          form
+                        </a>
+                        .
                       </p>
                       <Link href="/app/dashboard" passHref>
                         <a className="mt-6 text-white text-lg bg-primary rounded-md px-10 py-3 inline-block">
