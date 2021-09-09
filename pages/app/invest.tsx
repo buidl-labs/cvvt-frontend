@@ -25,6 +25,8 @@ import {
 import { useRouter } from "next/router";
 import { intervalToDuration, add } from "date-fns";
 
+import { FaTwitter } from "react-icons/fa";
+
 const InvestMachine = createMachine({
   id: "InvestFlow",
   initial: "idle",
@@ -671,38 +673,51 @@ function Invest() {
                 </span>{" "}
                 to activate your investment and start earning rewards.
               </p>
-              <button
-                className="mt-5 text-primary flex items-center justify-center border-2 border-primary bg-white font-medium py-2 w-full text-lg rounded-md"
-                onClick={() => setReminderModalOpen(true)}
-              >
-                <span className="mr-2">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10.606 8.08232L15.9999 11.4923V4.52832L10.606 8.08232Z"
-                      fill="#35D07F"
-                    />
-                    <path
-                      d="M0 4.52832V11.4923L5.394 8.08232L0 4.52832Z"
-                      fill="#35D07F"
-                    />
-                    <path
-                      d="M15 2.5H1.00003C0.501029 2.5 0.105029 2.872 0.0300293 3.351L8.00003 8.602L15.97 3.351C15.895 2.872 15.499 2.5 15 2.5Z"
-                      fill="#35D07F"
-                    />
-                    <path
-                      d="M9.68998 8.68557L8.27498 9.61757C8.19098 9.67257 8.09598 9.69957 7.99998 9.69957C7.90398 9.69957 7.80898 9.67257 7.72498 9.61757L6.30998 8.68457L0.0319824 12.6556C0.108982 13.1306 0.502982 13.4996 0.999982 13.4996H15C15.497 13.4996 15.891 13.1306 15.968 12.6556L9.68998 8.68557Z"
-                      fill="#35D07F"
-                    />
-                  </svg>
-                </span>
-                Add Email Reminder
-              </button>
+              <div className="mt-5 grid grid-cols-2 gap-5">
+                <button
+                  className="text-primary flex items-center justify-center border-2 border-primary bg-white font-medium py-2 w-full text-lg rounded-md"
+                  onClick={() => setReminderModalOpen(true)}
+                >
+                  <span className="mr-2">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.606 8.08232L15.9999 11.4923V4.52832L10.606 8.08232Z"
+                        fill="#35D07F"
+                      />
+                      <path
+                        d="M0 4.52832V11.4923L5.394 8.08232L0 4.52832Z"
+                        fill="#35D07F"
+                      />
+                      <path
+                        d="M15 2.5H1.00003C0.501029 2.5 0.105029 2.872 0.0300293 3.351L8.00003 8.602L15.97 3.351C15.895 2.872 15.499 2.5 15 2.5Z"
+                        fill="#35D07F"
+                      />
+                      <path
+                        d="M9.68998 8.68557L8.27498 9.61757C8.19098 9.67257 8.09598 9.69957 7.99998 9.69957C7.90398 9.69957 7.80898 9.67257 7.72498 9.61757L6.30998 8.68457L0.0319824 12.6556C0.108982 13.1306 0.502982 13.4996 0.999982 13.4996H15C15.497 13.4996 15.891 13.1306 15.968 12.6556L9.68998 8.68557Z"
+                        fill="#35D07F"
+                      />
+                    </svg>
+                  </span>
+                  Add Email Reminder
+                </button>
+                <a
+                  className="text-primary flex items-center justify-center border-2 border-primary bg-white font-medium py-2 w-full text-lg rounded-md"
+                  href={`https://twitter.com/intent/tweet?text=I just invested some $CELO via @ChurroFi. Earn profits on the go with one of the simplest staking experiences on @CeloOrg protocol. Give it a try: https://churrofi.app`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="mr-2">
+                    <FaTwitter />
+                  </span>
+                  Tweet!
+                </a>
+              </div>
             </div>
           </div>
         </main>
