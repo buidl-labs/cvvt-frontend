@@ -187,8 +187,6 @@ function Withdraw() {
           "unlock"
         )
       );
-
-      send("UNVOTE");
     } catch (e) {
       console.log(`Unable to vote ${e.message}`);
     } finally {
@@ -200,6 +198,11 @@ function Withdraw() {
   return (
     <Layout>
       <div>
+        <ReminderModal
+          open={reminderModalOpen}
+          setOpen={setReminderModalOpen}
+          action="withdraw"
+        />
         <Transition.Root show={current.value === "withdraw"} as={Fragment}>
           <Dialog
             as="div"
@@ -285,99 +288,6 @@ function Withdraw() {
           </Dialog>
         </Transition.Root>
 
-        <Transition.Root show={current.value === "unvote"} as={Fragment}>
-          <Dialog
-            as="div"
-            static
-            className="fixed z-30 inset-0 overflow-y-auto"
-            open={current.value === "unvote"}
-            onClose={() => send("NEXT")}
-          >
-            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Overlay className="fixed inset-0 bg-gray bg-opacity-75 transition-opacity" />
-              </Transition.Child>
-
-              {/* This element is to trick the browser into centering the modal contents. */}
-              <span
-                className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <div className="relative inline-block align-bottom border border-primary-light bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full px-12 py-14">
-                  <button
-                    onClick={() => send("NEXT")}
-                    className="fixed right-0 top-0 mr-10 mt-10 text-gray-dark"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                  <div>
-                    <div className="mt-3 text-center sm:mt-5">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-2xl leading-6 font-medium text-primary"
-                      >
-                        Requested!
-                      </Dialog.Title>
-                      <Dialog.Description className="text-gray mt-5">
-                        CELO has been unvoted and set for unlocking.
-                      </Dialog.Description>
-                      <Dialog.Description className="text-gray-dark mt-14">
-                        Please come back after 3 days (Unlocking Period) to
-                        withdraw CELO in your Wallet.
-                      </Dialog.Description>
-                    </div>
-                  </div>
-                  <div className="mt-12">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center w-full rounded shadow-sm px-4 py-3 text-base font-medium text-white bg-primary hover:bg-primary-dark focus:bg-primary-dark focus:outline-none active:bg-primary-dark-dark"
-                      onClick={() => send("NEXT")}
-                    >
-                      Go back
-                    </button>
-                  </div>
-                </div>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition.Root>
-        <ReminderModal
-          open={reminderModalOpen}
-          setOpen={setReminderModalOpen}
-          action="withdraw"
-        />
         <h3 className="text-gray-dark font-medium text-2xl">
           Withdraw Invested CELO
         </h3>
